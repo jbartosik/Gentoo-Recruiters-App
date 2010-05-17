@@ -6,12 +6,16 @@ class User < ActiveRecord::Base
     name          :string, :required, :unique
     email_address :email_address, :login => true
     administrator :boolean, :default => false
+    role          Role, :default => 'recruit'
     timestamps
   end
 
-  # This gives admin rights to the first sign-up.
-  # Just remove it if you don't want that
-  before_create { |user| user.administrator = true if !Rails.env.test? && count == 0 }
+  # This gives admin rights and recruiter role to the first sign-up.
+  before_create { |user|
+    if !Rails.env.test? && count == 0
+      user.administrator  = true
+      user.role           = :recruiter
+    end }
 
   
   # --- Signup lifecycle --- #
@@ -33,6 +37,7 @@ class User < ActiveRecord::Base
 
   end
   
+  validate  :only_recruiter_can_be_administrator
 
   # --- Permissions --- #
 
@@ -41,11 +46,12 @@ class User < ActiveRecord::Base
   end
 
   def update_permitted?
-    acting_user.administrator? || 
+    acting_user.administrator? ||
       (acting_user == self && only_changed?(:email_address, :crypted_password,
                                             :current_password, :password, :password_confirmation))
     # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
     # directly from a form submission.
+
   end
 
   def destroy_permitted?
@@ -55,5 +61,11 @@ class User < ActiveRecord::Base
   def view_permitted?(field)
     true
   end
+
+  protected
+
+    def only_recruiter_can_be_administrator
+      errors.add(:administrator, 'only recruiters can be administrators' )  if administrator and !role.is_recruiter?
+    end
 
 end

@@ -1,0 +1,25 @@
+alice:
+  name:           Alice
+  email_address:  alice@admins.org
+  administrator:  true
+  role:           recruiter
+ann:
+  name:           Ann
+  email_address:  ann@admins.org
+  administrator:  true
+  role:           recruiter
+uriael:
+  name:           Uriael
+  email_address:  uriael@users.org
+mustafa:
+  name:           Mustafa
+  email_address:  mustafa@mentors.org
+  role:           mentor
+ron:
+  name:           Ron
+  email_address:  ron@recruits.org
+  role:           recruit
+ralph:
+  name:           Ralph Recruiter
+  email_address:  ralph@recruiter.org
+  role:           recruiter
