@@ -9,7 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100520194754) do
+ActiveRecord::Schema.define(:version => 20100520194824) do
+
+  create_table "question_categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "documentation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "question_category_id"
+  end
+
+  add_index "questions", ["question_category_id"], :name => "index_questions_on_question_category_id"
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40
