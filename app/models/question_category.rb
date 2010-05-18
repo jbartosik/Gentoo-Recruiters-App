@@ -7,6 +7,7 @@ class QuestionCategory < ActiveRecord::Base
     timestamps
   end
 
+  validates_presence_of :name
   has_many :questions
 
   include Permissions::AnyoneCanViewRecruiterCanChange

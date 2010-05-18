@@ -9,6 +9,10 @@ class Question < ActiveRecord::Base
     timestamps
   end
 
+  validates_presence_of :title, :content
+  #allow empty documentation and no category
+  #maybe add a page for not complete questions
+
   belongs_to :question_category
 
   include Permissions::AnyoneCanViewRecruiterCanChange

@@ -4,7 +4,7 @@ describe 'QuestionCategory' do
   fixtures :users
 
   before(:each) do
-    @new_category = QuestionCategory.create!
+    @new_category = QuestionCategory.create!(:name => "Example")
     @recruit      = users(:ron)
     @recruiter    = users(:ralph)
     @mentor       = users(:mustafa)
@@ -24,5 +24,14 @@ describe 'QuestionCategory' do
 
   it "should be allowed for everybody to view" do
     view_allowed([@recruit, @mentor, @recruiter, @admin, @guest], @new_category)
+  end
+
+  it "should be valid with nonempty name" do
+    @new_category.should be_valid
+  end
+
+  it "should be invalid with empty name" do
+    @new_category.name = ""
+    @new_category.should_not be_valid
   end
 end
