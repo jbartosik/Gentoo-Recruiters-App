@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
     timestamps
   end
 
+  has_many :user_categories
+  has_many :question_categories, :through => :user_categories, :accessible => true, :uniq => true
+
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
     if !Rails.env.test? && count == 0
@@ -48,7 +51,8 @@ class User < ActiveRecord::Base
   def update_permitted?
     acting_user.administrator? ||
       (acting_user == self && only_changed?(:email_address, :crypted_password,
-                                            :current_password, :password, :password_confirmation))
+                                            :current_password, :password, :password_confirmation))||
+      (User.user_is_recruiter?(acting_user) && only_changed?(:question_categories))
     # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
     # directly from a form submission.
 

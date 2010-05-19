@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100520194856) do
+ActiveRecord::Schema.define(:version => 20100520194927) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(:version => 20100520194856) do
   end
 
   add_index "questions", ["question_category_id"], :name => "index_questions_on_question_category_id"
+
+  create_table "user_categories", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+    t.integer  "question_category_id"
+  end
+
+  add_index "user_categories", ["question_category_id"], :name => "index_user_categories_on_question_category_id"
+  add_index "user_categories", ["user_id"], :name => "index_user_categories_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "crypted_password",          :limit => 40
