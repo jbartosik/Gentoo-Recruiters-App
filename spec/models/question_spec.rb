@@ -2,6 +2,7 @@ require 'spec_helper.rb'
 describe 'Question' do
 
   fixtures :users
+  include Permissions::TestPermissions
 
   before(:each) do
     @new_question = Question.create!( :title => "Example", :content => "Example")
@@ -11,8 +12,6 @@ describe 'Question' do
     @admin      = users(:ann)
     @guest      = Guest.new
   end
-
-  include Permissions::TestPermissions
 
   it "should be allowed for recruiters to create, edit, update and remove" do
     cud_allowed([@admin, @recruiter], @new_question)

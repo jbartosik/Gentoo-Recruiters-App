@@ -9,15 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100520194927) do
+ActiveRecord::Schema.define(:version => 20100520194946) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "question_id"
+    t.integer  "owner_id"
   end
 
+  add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
   add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
 
   create_table "question_categories", :force => true do |t|
