@@ -1,0 +1,18 @@
+<def tag="home-page" polymorphic >
+</def>
+<def tag="home-page" for="Guest">
+  Hello. Your not currently logged in. Feel free to browse publicly available resources.
+</def>
+<def tag="home-page" for="User">
+  <h3>Welcome, <name/>.</h3>
+  <section class="content-body">
+    Your current role is: <view:role/>.
+    <if:administrator>
+      and you are administrator
+    </if><br/>
+    <if:question_categories>
+      You are currently assigned to categories:
+      <collection/>
+    </if>
+  </section>
+</def>
