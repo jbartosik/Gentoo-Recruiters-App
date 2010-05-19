@@ -13,6 +13,6 @@ class Answer < ActiveRecord::Base
   owned_model owner_class = "User"
 
   def view_permitted?(field)
-    owned_soft? || Permissions::AnyoneCanViewRecruiterCanChange.user_is_recruiter?(acting_user)
+    owned_soft? || User.user_is_recruiter?(acting_user)
   end
 end

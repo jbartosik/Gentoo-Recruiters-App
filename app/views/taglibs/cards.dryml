@@ -1,0 +1,10 @@
+<def tag="card" for="Question">
+  <card class="question" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+      <if with="&this.answered?(current_user)">
+        answered
+      </if>
+    </header:>
+  </card>
+</def>

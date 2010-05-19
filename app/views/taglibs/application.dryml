@@ -8,3 +8,4 @@
 
 <def tag="app-name">Gentoo Recruiters App</def>
 <include src="pages"/>
+<include src="cards"/>

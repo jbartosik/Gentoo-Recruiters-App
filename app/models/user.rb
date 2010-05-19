@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   has_many :user_categories
   has_many :question_categories, :through => :user_categories, :accessible => true, :uniq => true
+  has_many :answers, :foreign_key => :owner_id
+  has_many :answered_questions, :through=> :answers, :class_name => "Question", :source => :question
 
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
