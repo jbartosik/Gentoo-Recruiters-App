@@ -22,6 +22,9 @@
         <li><a with="&Question" action="my_questions">All questions you should answer(including answered).</a></li>
       </ul>
     </if>
+    <if with="&!this.recruits.empty?">
+      Check <a with="&Answer" action="my_recruits">answers</a> of recruits you mentor.
+    </if>
     <if with="&this.role.is_recruiter?">
       <h3>Registered users:</h3>
       <collection with="&User.all"/>

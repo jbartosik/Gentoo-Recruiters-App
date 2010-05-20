@@ -88,6 +88,9 @@ class User < ActiveRecord::Base
     all_questions - answered_questions
   end
 
+  def my_recruits_answers
+    recruits.*.answers.flatten
+  end
   protected
 
     def only_recruiter_can_be_administrator

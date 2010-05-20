@@ -24,3 +24,13 @@ ralph:
   name:           Ralph Recruiter
   email_address:  ralph@recruiter.org
   role:           recruiter
+roland:
+  name:           Roland
+  email_address:  roland@recuits.org
+  role:           recruit
+  mentor:         mustafa
+albert:
+  name:           Albert
+  email_address:  albert@recruits.org
+  role:           recruit
+  mentor:         ann

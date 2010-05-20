@@ -106,4 +106,13 @@ describe 'User' do
       @recruit.should be_valid
     end
   end
+
+  it "should return proper my_recruits_anwers" do
+    for ans in @recruit.answers + users(:roland).answers
+      @mentor.my_recruits_answers.should be_include(ans)
+    end
+    for ans in users(:albert).answers
+      @mentor.my_recruits_answers.should_not be_include(ans)
+    end
+  end
 end
