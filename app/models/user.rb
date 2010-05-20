@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     user.signed_up? && user.role.is_recruiter?
   end
 
+  def self.user_is_mentor_of?(user, recruit)
+    user.signed_up? && recruit.mentor_is?(user)
+  end
+
   def all_questions
       question_categories.*.questions.flatten.uniq
   end

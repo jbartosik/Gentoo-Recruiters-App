@@ -32,7 +32,7 @@ describe 'Question' do
   it 'should be prohibited for non-recruiters to view answers someone else owns' do
     for user in @users
       @new_answer = Answer.create!(:owner => user)
-      view_denied(@users - [user, @recruiter, @admin] + [@guest], @new_answer)
+      view_denied(@users - [user, @recruiter, @admin, @mentor] + [@guest], @new_answer)
     end
   end
   
@@ -42,4 +42,10 @@ describe 'Question' do
       view_allowed([@recruiter, @admin], @new_answer)
     end
   end
+
+  it "should be viewable by mentor of it's owner" do
+   @new_answer = Answer.create!(:owner => @recruit)
+   view_allowed([@mentor], @new_answer)
+  end
+
 end
