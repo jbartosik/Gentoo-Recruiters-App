@@ -24,6 +24,10 @@
     </if>
     <if with="&!this.recruits.empty?">
       Check <a with="&Answer" action="my_recruits">answers</a> of recruits you mentor.
+      You also can view answers of the recruits you mentor:
+      <collection with="&QuestionCategory.all">
+        <a href="/answers/my_recruits_cat/#{this.id}"><name/></a>
+      </collection>
     </if>
     <if with="&this.role.is_recruiter?">
       <h3>Registered users:</h3>

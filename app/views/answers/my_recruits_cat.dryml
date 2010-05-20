@@ -1,0 +1,7 @@
+<index-page>
+  <content:>
+    <repeat with="&current_user.my_recruits_answers_in_category(params[:id])">
+      <card/>
+    </repeat>
+  </content:>
+</index-page>

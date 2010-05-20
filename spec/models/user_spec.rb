@@ -100,6 +100,16 @@ describe 'User' do
     end
   end
 
+  it "should return proper recruits answers in category" do
+    for ans in [answers(:apple), answers(:banana), answers(:cucumber),
+      answers(:roland_apple)]
+      @mentor.my_recruits_answers_in_category(question_categories(:fruit)).should
+        be_include(ans)
+    end
+    @mentor.my_recruits_answers_in_category(question_categories(:fruit)).should_not
+      be_include(answers(:albert_apple))
+  end
+
   it 'should be allowed for mentors and recruiters to mentor someone' do
     for user in [@admin, @recruiter, @mentor] do
       @recruit.mentor = user

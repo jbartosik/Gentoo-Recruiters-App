@@ -91,6 +91,11 @@ class User < ActiveRecord::Base
   def my_recruits_answers
     recruits.*.answers.flatten
   end
+
+  def my_recruits_answers_in_category(cat)
+    Answer.all :joins => [:question, :owner], :conditions => ['questions.question_category_id = ? AND users.mentor_id = ?', cat, id]
+  end
+
   protected
 
     def only_recruiter_can_be_administrator
