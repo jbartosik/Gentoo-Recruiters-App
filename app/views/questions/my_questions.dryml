@@ -1,0 +1,7 @@
+<index-page>
+  <content:>
+    <repeat with="&current_user.all_questions">
+      <card/>
+    </repeat>
+  </content:>
+</index-page>

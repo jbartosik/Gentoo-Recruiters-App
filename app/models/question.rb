@@ -13,8 +13,8 @@ class Question < ActiveRecord::Base
   #allow empty documentation and no category
   #maybe add a page for not complete questions
 
-  belongs_to :question_category
-
+  belongs_to  :question_category
+  has_many    :answers
   include Permissions::AnyoneCanViewRecruiterCanChange
 
   def answered?(user)

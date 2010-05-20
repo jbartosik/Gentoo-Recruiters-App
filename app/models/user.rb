@@ -72,6 +72,14 @@ class User < ActiveRecord::Base
     user.signed_up? && user.role.is_recruiter?
   end
 
+  def all_questions
+      question_categories.*.questions.flatten.uniq
+  end
+
+  def unanswered_questions
+    all_questions - answered_questions
+  end
+
   protected
 
     def only_recruiter_can_be_administrator
