@@ -1,3 +1,3 @@
 class UserHints < Hobo::ViewHints
-  children :question_categories
+  children :answers, :question_categories
 end
