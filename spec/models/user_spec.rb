@@ -20,6 +20,10 @@ describe 'User' do
 
     @answered   = [@apple_q, @banana_q, @cucumber_q, @carrot_q, @spinach_q]
     @unanswered = [@potatoes_q, @beef_q, @pork_q]
+
+    @recruit  = users(:ron)
+    @recruiter= users(:ralph)
+    @mentor   = users(:mustafa)
   end
 
   it "should be non-admin recruit" do
@@ -86,6 +90,20 @@ describe 'User' do
     end
     for question in @unanswered
       @ron.unanswered_questions.should be_include(question)
+    end
+  end
+
+  it 'should be invalid for recruit to mentor someone' do
+    for user in [@admin, @recruiter, @mentor] do
+      user.mentor = @recruit
+      user.should_not be_valid
+    end
+  end
+
+  it 'should be allowed for mentors and recruiters to mentor someone' do
+    for user in [@admin, @recruiter, @mentor] do
+      @recruit.mentor = user
+      @recruit.should be_valid
     end
   end
 end

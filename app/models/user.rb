@@ -10,10 +10,13 @@ class User < ActiveRecord::Base
     timestamps
   end
 
-  has_many :user_categories
-  has_many :question_categories, :through => :user_categories, :accessible => true, :uniq => true
-  has_many :answers, :foreign_key => :owner_id
-  has_many :answered_questions, :through=> :answers, :class_name => "Question", :source => :question
+  has_many    :user_categories
+  has_many    :question_categories, :through => :user_categories, :accessible => true, :uniq => true
+  has_many    :answers, :foreign_key => :owner_id
+  has_many    :answered_questions, :through => :answers, :class_name => "Question", :source => :question
+
+  belongs_to  :mentor, :class_name => "User"
+  has_many    :recruits, :class_name => "User", :foreign_key => :mentor_id
 
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
@@ -43,6 +46,7 @@ class User < ActiveRecord::Base
   end
   
   validate  :only_recruiter_can_be_administrator
+  validate  :recruit_cant_mentor
 
   # --- Permissions --- #
 
@@ -86,4 +90,7 @@ class User < ActiveRecord::Base
       errors.add(:administrator, 'only recruiters can be administrators' )  if administrator and !role.is_recruiter?
     end
 
+    def recruit_cant_mentor
+      errors.add(:mentor, "recruit can't mentor" )  if mentor && mentor.role.is_recruit?
+    end
 end
