@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
     true
   end
 
+  def self.user_is_recruiter?(user)
+    user.signed_up? && user.role.is_recruiter?
+  end
+
   protected
 
     def only_recruiter_can_be_administrator
