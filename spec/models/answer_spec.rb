@@ -1,7 +1,7 @@
 require 'spec_helper.rb'
-describe 'Question' do
+describe Answer do
 
-  fixtures :users
+  fixtures :users, :questions, :answers
   include Permissions::TestPermissions
 
   before( :each) do
@@ -11,6 +11,9 @@ describe 'Question' do
     @admin      = users(:ann)
     @guest      = Guest.new
     @users      = [@recruit, @mentor, @recruiter, @admin]
+
+    @question       = questions(:apple)
+    @recruit_ans_q  = answers(:apple)
   end
 
   it 'any user (not guest) should be allowed to create, read, update and delete owned answers' do
@@ -48,4 +51,7 @@ describe 'Question' do
    view_allowed([@mentor], @new_answer)
   end
 
+  it { should belong_to(:question) }
+  it { should validate_uniqueness_of(:question_id).scoped_to(:owner_id) }
+  it { should have_readonly_attribute(:owner) }
 end

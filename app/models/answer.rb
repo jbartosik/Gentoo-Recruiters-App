@@ -10,6 +10,8 @@ class Answer < ActiveRecord::Base
 
   belongs_to  :question
 
+  validates_uniqueness_of :question_id, :scope => :owner_id
+
   owned_model owner_class = "User"
 
   def view_permitted?(field)
