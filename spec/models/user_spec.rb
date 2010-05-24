@@ -69,6 +69,7 @@ describe User do
     for question in @answered + @unanswered
       @ron.all_questions.should be_include(question)
     end
+    @ron.all_questions.should == @ron.all_questions.uniq
   end
 
   it "should return proper answered_questions" do
@@ -78,6 +79,7 @@ describe User do
     for question in @unanswered
       @ron.answered_questions.should_not be_include(question)
     end
+    @ron.answered_questions.should == @ron.answered_questions.uniq
   end
 
   it "should return proper unanswered_questions" do
@@ -87,6 +89,7 @@ describe User do
     for question in @unanswered
       @ron.unanswered_questions.should be_include(question)
     end
+    @ron.unanswered_questions.should == @ron.unanswered_questions.uniq
   end
 
   it 'should be invalid for recruit to mentor someone' do
@@ -101,6 +104,8 @@ describe User do
       answers(:roland_apple)]
       @mentor.my_recruits_answers_in_category(question_categories(:fruit)).should
         be_include(ans)
+      @mentor.my_recruits_answers_in_category(question_categories(:fruit)).should ==
+      @mentor.my_recruits_answers_in_category(question_categories(:fruit)).uniq
     end
     @mentor.my_recruits_answers_in_category(question_categories(:fruit)).should_not
       be_include(answers(:albert_apple))
@@ -120,5 +125,6 @@ describe User do
     for ans in users(:albert).answers
       @mentor.my_recruits_answers.should_not be_include(ans)
     end
+    @mentor.my_recruits_answers.should == @mentor.my_recruits_answers.uniq
   end
 end

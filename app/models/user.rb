@@ -81,15 +81,18 @@ class User < ActiveRecord::Base
   end
 
   def all_questions
-      question_categories.*.questions.flatten.uniq
+    Question.find :all, :joins => {:question_category => :user_categories},
+      :conditions => ['questions.question_category_id = user_categories.question_category_id AND user_categories.user_id = ?', id]
   end
 
   def unanswered_questions
-    all_questions - answered_questions
+    Question.find :all, :joins => {:question_category => {:user_categories => :user}},
+    :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
+    'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', id, id]
   end
 
   def my_recruits_answers
-    recruits.*.answers.flatten
+    Answer.all :joins => :owner, :conditions => ['users.mentor_id = ?', id]
   end
 
   def my_recruits_answers_in_category(cat)
