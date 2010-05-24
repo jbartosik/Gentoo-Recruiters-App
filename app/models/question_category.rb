@@ -12,5 +12,5 @@ class QuestionCategory < ActiveRecord::Base
   has_many :questions
   has_many :user_categories
   has_many :users, :through => :user_categories, :accessible => true
-  include Permissions::AnyoneCanViewRecruiterCanChange
+  include Permissions::AnyoneCanViewAdminCanChange
 end

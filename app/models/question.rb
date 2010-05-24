@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
 
   belongs_to  :question_category
   has_many    :answers
-  include Permissions::AnyoneCanViewRecruiterCanChange
+  include Permissions::AnyoneCanViewAdminCanChange
 
   def answered?(user)
     user.signed_up? && user.answered_questions.include?(self)

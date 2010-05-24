@@ -14,12 +14,12 @@ describe QuestionCategory do
 
   include Permissions::TestPermissions
 
-  it "should be allowed for recruiters to create, edit, update and remove" do
-    cud_allowed([@admin, @recruiter], @new_category)
+  it "should allow admin to create, edit, update and remove" do
+    cud_allowed([@admin], @new_category)
   end
 
-  it "should be prohibited for nonrecruiters to create, edit, update and remove" do
-    cud_denied([@recruit, @mentor, @guest], @new_category)
+  it "should prohibit nonadmins to creating, editing, updating and removing" do
+    cud_denied([@recruit, @mentor, @guest, @recruiter], @new_category)
   end
 
   it "should be allowed for everybody to view" do
