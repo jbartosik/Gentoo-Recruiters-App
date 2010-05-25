@@ -1,1 +1,69 @@
 This will be web based application for Gentoo Recruiters team.
+
+To start testing application you should:
+
+1.Install gems. If you want only to run it install hobo gem. If you want to run
+  tests you will need also shoulda and rspec. Install them how you would any
+  other gem. You can have rake install it for you:
+
+  rake gems:install
+
+  or install them manually:
+
+  gem install hobo rspec shoulda
+
+  For detailed instructions see:
+
+  http://docs.rubygems.org/read/chapter/10#page33
+
+
+2.Install git.
+3.Get sources
+
+  git clone git://git.overlays.gentoo.org/proj/recruiting-webapp.git
+
+  to get accepted sources (recommended). Or if you want latest sources and
+  don't mind fact that commit history will be rewritten a few times a day
+
+  git clone git://github.com/ahenobarbi/Gentoo-Recruiters-App.git
+
+4. Create config/database.yml file. The default, using SQLite v3:
+
+  development:
+    adapter: sqlite3
+    database: db/development.sqlite3
+    pool: 5
+    timeout: 5000
+  test:
+    adapter: sqlite3
+    database: db/test.sqlite3
+    pool: 5
+    timeout: 5000
+  production:
+    adapter: sqlite3
+    database: db/production.sqlite3
+    pool: 5
+    timeout: 5000
+
+5. Initialize databases. Run
+
+  rake db:create
+  rake db:schema:load
+
+  in directory with sources
+
+6. (Optional) If you want some example data in you database before you start
+  testing run
+
+  rake db:seed
+
+  and answer y to the question (remember, this removes all data from database).
+
+7. (Optional) You can run some test I prepared
+
+  rake spec
+8. Start server
+
+  ruby script/server
+
+it will be listening for connections on port 3000.
