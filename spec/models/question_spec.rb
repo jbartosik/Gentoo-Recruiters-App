@@ -1,7 +1,7 @@
 require 'spec_helper.rb'
 describe Question do
 
-  fixtures :users
+  fixtures :users, :answers, :questions
   include Permissions::TestPermissions
 
   before(:each) do
@@ -27,4 +27,12 @@ describe Question do
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :content }
+
+  it "should return proper answer of user" do
+    for qa in [:apple, :banana]
+      questions(qa).answer_of(@recruit).should == answers(qa)
+      questions(qa).answer_of(@admin).should == nil
+      questions(qa).answer_of(@guest).should == nil
+    end
+  end
 end

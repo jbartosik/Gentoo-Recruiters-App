@@ -7,5 +7,7 @@
 <set-theme name="clean"/>
 
 <def tag="app-name">Gentoo Recruiters App</def>
-<include src="pages"/>
 <include src="cards"/>
+<include src="forms"/>
+<include src="detailed"/>
+<include src="pages"/>

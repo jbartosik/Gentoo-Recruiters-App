@@ -20,4 +20,8 @@ class Question < ActiveRecord::Base
   def answered?(user)
     user.signed_up? && user.answered_questions.include?(self)
   end
+
+  def answer_of(user)
+    answers.owner_is(user).first
+  end
 end

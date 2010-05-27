@@ -1,0 +1,11 @@
+<show-page>
+  <content:>
+    <detailed/>
+    <if with="&this.answer_of(current_user)">
+      <a>View you answer</a>
+    </if>
+    <else>
+      <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>
+    </else>
+  </content:>
+</show-page>
