@@ -1,5 +1,17 @@
 <show-page>
   <content:>
     <detailed/>
+    <with:question>
+      <if:reference_answer>
+        <card>
+          <header:>
+            <h5>Reference answer:</h5>
+          </header:>
+          <body:>
+            <view:content/>
+          </body:>
+        </card>
+      </if>
+    </with>
   </content>
 </show-page>

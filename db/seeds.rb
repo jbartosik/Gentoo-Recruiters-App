@@ -118,3 +118,10 @@ for q in [mentor_q1, mentor_q2]
 end
 
 answer_q(mentor, mentor_q3, 'Some answer')
+
+# reference answers
+for q in [mentor_q1, mentor_q2, mentor_q3, ebuild_q1, ebuild_q2, ebuild_q3,
+  non_q1, non_q2, non_q3]
+  Answer.create! :owner => recruiter, :question => q, :content => "Some reference answer",
+    :reference => true
+end

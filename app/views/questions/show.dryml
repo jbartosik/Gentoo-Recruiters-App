@@ -1,6 +1,6 @@
 <show-page>
   <content:>
-    <detailed/>
+    <detailed show-title/>
     <if with="&this.answer_of(current_user)">
       <a>View you answer</a>
     </if>

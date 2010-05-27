@@ -15,6 +15,7 @@ class Question < ActiveRecord::Base
 
   belongs_to  :question_category
   has_many    :answers
+  has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]
   include Permissions::AnyoneCanViewAdminCanChange
 
   def answered?(user)

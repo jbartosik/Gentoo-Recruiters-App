@@ -54,7 +54,7 @@ describe Answer do
     end
   end
 
-  it 'should prohibited editing of answer as whole and content field to non-owners' do
+  it 'should prohibited editing of non-reference answer as whole and content field to non-owners' do
     for user in @users
       @new_answer = Answer.create!(:owner => user)
       edit_denied(users - [user], @new_answer)
@@ -82,6 +82,20 @@ describe Answer do
   end
 
   it { should belong_to(:question) }
-  it { should validate_uniqueness_of(:question_id).scoped_to(:owner_id) }
   it { should have_readonly_attribute(:owner) }
+
+  it "should prohibit CUD and view of reference ans to non-recruiters" do
+    @new_answer = Answer.create!(:owner => @recruiter)
+    @new_answer.reference = true
+    cud_denied([@recruit], @new_answer)
+    @new_answer.should_not be_viewable_by(@recruit)
+  end
+
+  it "should allow CUD, view and edit of reference answers to recruiters" do
+    @new_answer = Answer.create!(:owner => @admin)
+    @new_answer.reference = true
+    cud_allowed([@recruiter, @admin], @new_answer)
+    edit_allowed([@recruiter, @admin], @new_answer)
+    edit_allowed([@recruiter, @admin], @new_answer, :content)
+  end
 end

@@ -2,7 +2,7 @@
   <form merge param="default">
     <error-messages param/>
     <input:question type="hidden"/>
-    <field-list fields="content">
+    <field-list fields="content, reference">
       <content-label:>Your Answer:</content-label:>
     </field-list>
     <div param="actions">
