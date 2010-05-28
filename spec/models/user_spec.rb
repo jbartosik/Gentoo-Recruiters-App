@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-describe 'User' do
+describe User do
 
   fixtures :users, :question_categories, :questions, :answers, :user_categories
 
@@ -31,12 +31,8 @@ describe 'User' do
     @new_user.role.should  == :recruit
   end
 
-  it "should be able to become mentor and recruiter" do
-    for new_role in [:mentor, :recruiter] do
-      @new_user.role        = new_role
-      @new_user.should      be_valid
-    end
-  end
+  it { should allow_value(:mentor).for(:role) }
+  it { should allow_value(:recruiter).for(:role) }
 
   it "should be valid if recruiter is administrator" do
     @new_user.role = :recruiter

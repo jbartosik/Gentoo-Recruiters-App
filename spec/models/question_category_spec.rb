@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-describe 'QuestionCategory' do
+describe QuestionCategory do
 
   fixtures :users
 
@@ -26,12 +26,5 @@ describe 'QuestionCategory' do
     view_allowed([@recruit, @mentor, @recruiter, @admin, @guest], @new_category)
   end
 
-  it "should be valid with nonempty name" do
-    @new_category.should be_valid
-  end
-
-  it "should be invalid with empty name" do
-    @new_category.name = ""
-    @new_category.should_not be_valid
-  end
+  it { should validate_presence_of :name }
 end

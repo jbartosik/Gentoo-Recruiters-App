@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-describe 'Question' do
+describe Question do
 
   fixtures :users
   include Permissions::TestPermissions
@@ -25,23 +25,6 @@ describe 'Question' do
     view_allowed([@recruit, @mentor, @recruiter, @admin, @guest], @new_question)
   end
 
-  it "should be invalid with empty title" do
-    @new_question.title = ""
-    @new_question.should_not be_valid
-  end
-
-  it "should be invalid with empty content" do
-    @new_question.content = ""
-    @new_question.should_not be_valid
-  end
-
-  it "should be invalid with empty content and title" do
-    @new_question.title = ""
-    @new_question.content = ""
-    @new_question.should_not be_valid
-  end
-
-  it "should be valid with non-empty title and content" do
-    @new_question.should be_valid
-  end
+  it { should validate_presence_of :title }
+  it { should validate_presence_of :content }
 end
