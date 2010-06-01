@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 describe User do
-
+  include Permissions::TestPermissions
   fixtures :users, :question_categories, :questions, :answers, :user_categories
 
   before(:each) do

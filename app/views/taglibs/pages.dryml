@@ -33,5 +33,8 @@
       <h3>Registered users:</h3>
       <collection with="&User.all"/>
     </if>
+    <if test="&current_user.signed_up?">
+      <a with="&current_user">See your profile</a>
+    </if>
   </section>
 </def>

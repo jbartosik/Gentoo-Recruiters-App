@@ -46,5 +46,33 @@ module Permissions
         testee.should_not be_editable_by(user, field)
       end
     end
+
+    # if testee is nil it will yield block in for each user in users
+    # giving user as paramter to generate testee
+    def deny_all(users, testee = nil)
+      for user in users
+        testee = yield(user) if testee.nil?
+
+        testee.should_not be_creatable_by(user)
+        testee.should_not be_destroyable_by(user)
+        testee.should_not be_updatable_by(user)
+        testee.should_not be_viewable_by(user)
+        testee.should_not be_editable_by(user)
+      end
+    end
+
+    # if testee is nil it will yield block in for each user in users
+    # giving user as paramter to generate testee
+    def allow_all(users, testee = nil)
+      for user in users
+        testee = yield(user) if testee.nil?
+
+        testee.should be_creatable_by(user)
+        testee.should be_updatable_by(user)
+        testee.should be_destroyable_by(user)
+        testee.should be_viewable_by(user)
+        testee.should be_editable_by(user)
+      end
+    end
   end
 end
