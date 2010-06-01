@@ -55,13 +55,17 @@ class User < ActiveRecord::Base
   end
 
   def update_permitted?
+    # Allow edit in one of three cases:
+      # Acting user is administrator
+      # Acting user is editing his/her self and changes only what [s]he is allowed to
+      # Acting user is recruiter and changes only what [s]he is allowed to
     acting_user.administrator? ||
-      (acting_user == self && only_changed?(:email_address, :crypted_password,
-                                            :current_password, :password, :password_confirmation))||
-      (User.user_is_recruiter?(acting_user) && only_changed?(:question_categories))
-    # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
-    # directly from a form submission.
+      (acting_user == self && changes_allowed_to_self?)||
+      (User.user_is_recruiter?(acting_user) && changes_allowed_for_recruiter?)
+  end
 
+  def role_edit_permitted?
+    acting_user.role.is_recruiter?
   end
 
   def destroy_permitted?
@@ -107,5 +111,18 @@ class User < ActiveRecord::Base
 
     def recruit_cant_mentor
       errors.add(:mentor, "recruit can't mentor" )  if mentor && mentor.role.is_recruit?
+    end
+
+    def changes_allowed_for_recruiter?
+      only_allowed_changed  = only_changed?(:question_categories, :role)
+      promoted_to_mentor    = role.is_mentor? && Role.new(role_was).is_recruit?
+      only_allowed_changed && ( !role_changed? || promoted_to_mentor)
+    end
+
+    def changes_allowed_to_self?
+      only_changed?(:email_address, :crypted_password, :current_password,
+        :password, :password_confirmation)
+        # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
+        # directly from a form submission.
     end
 end

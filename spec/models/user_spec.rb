@@ -49,7 +49,7 @@ describe User do
     end
   end
 
-  it "should be prohibited for non-admin to change anyone role" do
+  it "should be prohibited for non-admin to change anyone role to recruiter" do
     for new_role in [:recruiter, :mentor]
       @new_user.role        =  new_role
       @new_user.should_not  be_updatable_by(@new_user)
@@ -126,5 +126,19 @@ describe User do
       @mentor.my_recruits_answers.should_not be_include(ans)
     end
     @mentor.my_recruits_answers.should == @mentor.my_recruits_answers.uniq
+  end
+
+  it "should prohibit non-recruiter to change user role" do
+    @ron.role = :mentor
+    for user in [@new_user, @mentor]
+      @ron.should_not be_updatable_by(user)
+    end
+  end
+
+  it "should allow recruiter to change user role" do
+    @ron.role = :mentor
+    for user in [@admin, @recruiter]
+      @ron.should be_updatable_by(user)
+    end
   end
 end
