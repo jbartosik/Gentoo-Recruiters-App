@@ -101,23 +101,25 @@ UserCategory.create! [{:question_category => ebuild, :user => mentor},
   {:question_category => ebuild, :user => advanced},
   {:question_category => mentoring, :user => advanced}]
 
-def answer_q(user, question, content)
-  Answer.create! :owner => user, :question => question, :content => content
-end
-
-for q in [ebuild_q1, ebuild_q2, ebuild_q3]
-  for u in [mentor, recruit, advanced]
-    answer_q(u, q, 'Some answer')
+def answer_many(users, questions, answer_hash)
+  for question in questions
+    answer_hash[:question] = question
+    for user in users
+      answer_hash[:owner] = user
+      Answer.create! answer_hash
+    end
   end
 end
 
-for q in [mentor_q1, mentor_q2]
-  for u in [mentor, advanced]
-    answer_q(u, q, 'Some answer')
-  end
-end
+# non-approved answers
+ans_hash = {:content => 'Some answer'}
+answer_many [recruit], [ebuild_q1, ebuild_q2, ebuild_q3], ans_hash
+answer_many [advanced], [mentor_q1, mentor_q2, mentor_q3], ans_hash
 
-answer_q(mentor, mentor_q3, 'Some answer')
+# approved answers
+ans_hash[:approved] = true
+answer_many [mentor, advanced], [ebuild_q1, ebuild_q2, ebuild_q3], ans_hash
+answer_many [mentor], [mentor_q1, mentor_q2, mentor_q3], ans_hash
 
 # reference answers
 for q in [mentor_q1, mentor_q2, mentor_q3, ebuild_q1, ebuild_q2, ebuild_q3,

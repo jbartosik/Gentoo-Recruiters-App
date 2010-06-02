@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100603192118) do
+ActiveRecord::Schema.define(:version => 20100603193605) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(:version => 20100603192118) do
     t.integer  "question_id"
     t.integer  "owner_id"
     t.boolean  "reference",   :default => false
+    t.boolean  "approved",    :default => false
   end
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"

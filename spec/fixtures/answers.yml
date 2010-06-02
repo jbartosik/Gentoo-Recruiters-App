@@ -6,6 +6,7 @@ banana:
   content:  Yes
   owner:    ron
   question: banana
+  approved: true
 cucumber:
   content:  Yes
   owner:    ron

@@ -6,6 +6,7 @@ class Answer < ActiveRecord::Base
 
   fields do
     content   :text
+    approved  :boolean, :default => false
     reference :boolean, :default => false
     timestamps
   end
@@ -18,21 +19,28 @@ class Answer < ActiveRecord::Base
   owned_model owner_class = "User"
 
   multi_permission :update, :destroy do
-    (owned? && !reference) || (reference && acting_user.role.is_recruiter?)
+    (owned? && !reference && !approved) ||
+    (reference && acting_user.role.is_recruiter?) ||
+    (only_changed?(:approved) && owner.mentor_is?(acting_user))
   end
 
-  multi_permission :create, :view do
+  def create_permitted?
     (owned_soft? && !reference)||(reference && acting_user.role.is_recruiter?)
   end
 
   def edit_permitted?(field)
     owned_soft? ||
+    owner.mentor_is?(acting_user) ||
     (reference && acting_user.signed_up? && acting_user.role.is_recruiter?)
   end
 
   def content_edit_permitted?
     owned_soft? ||
     (reference && acting_user.signed_up? && acting_user.role.is_recruiter?)
+  end
+
+  def approved_edit_permitted?
+    owner.mentor_is?(acting_user)
   end
 
   def view_permitted?(field)
