@@ -42,4 +42,7 @@ describe UserCategory do
   it "should deny other users to CUD, edit and view user categories" do
     deny_all(users - [@recruit, @admin, @recruiter, @mentor], @recruit_cat)
   end
+
+  it {should validate_uniqueness_of(:user_id).scoped_to(:question_category_id)}
+
 end
