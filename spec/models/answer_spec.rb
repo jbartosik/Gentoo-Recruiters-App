@@ -32,6 +32,36 @@ describe Answer do
     end
   end
 
+  it 'should be creatable by any logged in user' do
+    for user in @users
+      @new_answer = Answer.create!(:owner => user)
+      @new_answer.should be_creatable_by user
+    end
+  end
+
+  it 'should not be creatable by guest' do
+    for user in @users
+      @new_answer = Answer.create!(:owner => user)
+      @new_answer.should_not be_creatable_by @guest
+    end
+  end
+
+  it 'should allow owner to edit answer as whole and content field' do
+    for user in @users
+      @new_answer = Answer.create!(:owner => user)
+      @new_answer.should be_editable_by user
+      @new_answer.should be_editable_by user, :content
+    end
+  end
+
+  it 'should prohibited editing of answer as whole and content field to non-owners' do
+    for user in @users
+      @new_answer = Answer.create!(:owner => user)
+      edit_denied(users - [user], @new_answer)
+      edit_denied(users - [user], @new_answer, :content)
+    end
+  end
+
   it 'should be prohibited for non-recruiters to view answers someone else owns' do
     for user in @users
       @new_answer = Answer.create!(:owner => user)

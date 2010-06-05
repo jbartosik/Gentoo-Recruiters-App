@@ -34,5 +34,17 @@ module Permissions
         testee.should_not be_viewable_by(user)
       end
     end
+
+    def edit_allowed( users, testee, field = nil)
+      for user in users
+        testee.should be_editable_by(user, field)
+      end
+    end
+
+    def edit_denied( users, testee, field = nil)
+      for user in users
+        testee.should_not be_editable_by(user, field)
+      end
+    end
   end
 end
