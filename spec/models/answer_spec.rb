@@ -127,4 +127,11 @@ describe Answer do
     @ans.approved_changed?.should be_true
     @ans.should                   be_updatable_by(@ans.owner)
   end
+
+  it "should mark questions with changed content as unapproved" do
+    @ans.approved.should  be_true
+    @ans.content          = "changed"
+    @ans.save
+    @ans.approved.should  be_false
+  end
 end

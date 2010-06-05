@@ -18,6 +18,10 @@ class Answer < ActiveRecord::Base
 
   owned_model owner_class = "User"
 
+  before_validation do |record|
+    record.approved = false if record.content_changed?
+  end
+
   multi_permission :update, :destroy do
     (owned? && !reference && !approved) ||
     (reference && acting_user.role.is_recruiter?) ||
