@@ -22,6 +22,8 @@ class Answer < ActiveRecord::Base
     record.approved = false if record.content_changed?
   end
 
+  after_create :notify_new_answer
+
   multi_permission :update, :destroy do
     (owned? && !reference && !approved) ||
     (reference && acting_user.role.is_recruiter?) ||
@@ -52,4 +54,9 @@ class Answer < ActiveRecord::Base
       User.user_is_recruiter?(acting_user)||
       User.user_is_mentor_of?(acting_user, owner)
   end
+
+  protected
+    def notify_new_answer
+      UserMailer.deliver_new_answer(owner.mentor, self)unless owner.mentor.nil?
+    end
 end

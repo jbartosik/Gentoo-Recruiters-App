@@ -30,3 +30,6 @@ config.action_mailer.delivery_method = :test
 config.gem "rspec", :lib => false, :version => ">= 1.2.0"
 config.gem "rspec-rails", :lib => false, :version => ">= 1.2.0"
 config.gem 'shoulda', :lib => false
+config.gem 'email_spec', :lib => 'email_spec'
+
+config.action_mailer.default_url_options = { :host => 'localhost', :port => '3000' }
