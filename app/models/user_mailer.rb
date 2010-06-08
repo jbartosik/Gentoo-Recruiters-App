@@ -26,4 +26,11 @@ class UserMailer < ActionMailer::Base
     @body       = { :question_title=> question_title(answer), :recruit_name =>
       answer.owner.name, :id => answer.id}
   end
+
+  def changed_answer(user, answer)
+    common(user)
+    @subject    = "Changed answer"
+    @body       = { :question_title=> question_title(answer), :recruit_name =>
+      answer.owner.name, :id => answer.id}
+  end
 end

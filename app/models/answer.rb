@@ -23,6 +23,7 @@ class Answer < ActiveRecord::Base
   end
 
   after_create :notify_new_answer
+  after_update :notify_changed_answer
 
   multi_permission :update, :destroy do
     (owned? && !reference && !approved) ||
@@ -58,5 +59,9 @@ class Answer < ActiveRecord::Base
   protected
     def notify_new_answer
       UserMailer.deliver_new_answer(owner.mentor, self)unless owner.mentor.nil?
+    end
+
+    def notify_changed_answer
+      UserMailer.deliver_changed_answer owner.mentor, self
     end
 end

@@ -20,4 +20,14 @@ describe UserMailer do
     notification.should have_text(/http:\/\/localhost:3000\/answers\/#{@answer.id}/)
     notification.should have_subject('New answer')
   end
+
+  it "should prepare proper changed answer notification" do
+    notification = UserMailer.create_changed_answer(@recruit.mentor, @answer)
+    notification.should deliver_to(@recruit.mentor.email_address)
+    notification.should deliver_from("no-reply@localhost")
+    notification.should have_text(/Recruit you are mentoring - #{@recruit.name}/)
+    notification.should have_text(/edited answer for question "#{@answer.question.title}"/)
+    notification.should have_text(/http:\/\/localhost:3000\/answers\/#{@answer.id}/)
+    notification.should have_subject('Changed answer')
+  end
 end
