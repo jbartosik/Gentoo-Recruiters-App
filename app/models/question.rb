@@ -18,6 +18,8 @@ class Question < ActiveRecord::Base
   has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]
   include Permissions::AnyoneCanViewAdminCanChange
 
+  after_create :notify_new_question
+
   def answered?(user)
     user.signed_up? && user.answered_questions.include?(self)
   end
@@ -25,4 +27,14 @@ class Question < ActiveRecord::Base
   def answer_of(user)
     answers.owner_is(user).first
   end
+
+  protected
+    def notify_new_question
+      # If question category isn't assigned don't try to access it
+      if question_category
+        for user in question_category.users
+          UserMailer.deliver_new_question user, self
+        end
+      end
+    end
 end

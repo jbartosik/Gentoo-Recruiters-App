@@ -20,6 +20,13 @@ class UserMailer < ActionMailer::Base
     @body       = { :user => user, :key => key, :app_name => app_name }
   end
 
+  def new_question(user, question)
+    common(user)
+    @subject    = "New question"
+    @body       = { :title=> question.title, :category => question.question_category,
+      :id => question.id}
+  end
+
   def new_answer(user, answer)
     common(user)
     @subject    = "New answer"
