@@ -1,7 +1,7 @@
 require 'spec_helper.rb'
 describe Question do
 
-  fixtures :users, :answers, :questions
+  fixtures :users, :answers, :questions, :question_categories
   include Permissions::TestPermissions
 
   before(:each) do
@@ -34,5 +34,15 @@ describe Question do
       questions(qa).answer_of(@admin).should == nil
       questions(qa).answer_of(@guest).should == nil
     end
+  end
+
+  it "should send email notifications to watching recruits when created" do
+    category = question_categories(:fruit)
+    question = Question.new(:title => "new question", :content => "some content",
+      :question_category => category)
+
+    UserMailer.should_receive(:deliver_new_question).with(@recruit, question)
+
+    question.save!
   end
 end

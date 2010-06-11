@@ -134,4 +134,21 @@ describe Answer do
     @ans.save
     @ans.approved.should  be_false
   end
+
+  it "should send email notification to mentor when created" do
+    question  = questions(:pork)
+    answer    = Answer.new(:owner => @recruit, :question => question, :content => "Some answer.")
+
+    UserMailer.should_receive(:deliver_new_answer).with(@recruit.mentor, answer)
+
+    answer.save!
+  end
+
+  it "should send email notification to mentor when changed" do
+    @recruit_ans_q.content = "changed"
+
+    UserMailer.should_receive(:deliver_changed_answer).with(@recruit.mentor, @recruit_ans_q)
+
+    @recruit_ans_q.save!
+  end
 end
