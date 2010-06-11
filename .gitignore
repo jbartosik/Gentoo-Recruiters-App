@@ -6,3 +6,4 @@ test
 app/views/taglibs/auto
 .*.swp
 config/database.yml
+tmp
