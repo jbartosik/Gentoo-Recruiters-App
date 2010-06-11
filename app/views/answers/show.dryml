@@ -1,17 +1,15 @@
 <show-page>
   <content:>
     <detailed/>
-    <with:question>
-      <if:reference_answer>
-        <card>
-          <header:>
-            <h5>Reference answer:</h5>
-          </header:>
-          <body:>
-            <view:content/>
-          </body:>
-        </card>
-      </if>
+    <with with="&this.question.reference_answer">
+      <card if="&this.try.viewable_by? current_user">
+        <header:>
+          <h5>Reference answer:</h5>
+        </header:>
+        <body:>
+          <view:content/>
+        </body:>
+      </card>
     </with>
   </content>
 </show-page>
