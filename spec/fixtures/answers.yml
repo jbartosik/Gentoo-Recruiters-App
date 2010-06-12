@@ -27,3 +27,8 @@ albert_apple:
   content:  Not really
   owner:    albert
   question: apple
+reference_apple:
+  content:    Reference
+  owner:      ralph
+  question:   apple
+  reference:  true

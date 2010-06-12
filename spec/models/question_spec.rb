@@ -36,6 +36,10 @@ describe Question do
     end
   end
 
+  it "should not return reference answer as answer of user" do
+      questions(:apple).answer_of(@recruiter).should_not == answers(:reference_apple)
+  end
+
   it "should send email notifications to watching recruits when created" do
     category = question_categories(:fruit)
     question = Question.new(:title => "new question", :content => "some content",

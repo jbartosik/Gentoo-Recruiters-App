@@ -25,7 +25,7 @@ class Question < ActiveRecord::Base
   end
 
   def answer_of(user)
-    answers.owner_is(user).first
+    answers.owner_is(user).not_reference.first
   end
 
   protected
