@@ -25,7 +25,7 @@ class Question < ActiveRecord::Base
   end
 
   def answer_of(user)
-    answers.owner_is(user).not_reference.first
+    answers.owner_is(user).not_reference.first if user.signed_up?
   end
 
   protected
