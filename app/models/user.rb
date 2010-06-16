@@ -90,9 +90,7 @@ class User < ActiveRecord::Base
   end
 
   def unanswered_questions
-    Question.find :all, :joins => {:question_category => {:user_categories => :user}},
-    :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
-    'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', id, id]
+    Question.unanswered(id)
   end
 
   def my_recruits_answers
@@ -103,6 +101,13 @@ class User < ActiveRecord::Base
     Answer.all :joins => [:question, :owner], :conditions => ['questions.question_category_id = ? AND users.mentor_id = ?', cat, id]
   end
 
+  def answered_all_questions?
+    Question.unanswered(id).count.zero?
+  end
+
+  def self.recruits_answered_all
+    User.role_is("recruit").find_all{ |recruit| recruit.answered_all_questions? }
+  end
   protected
 
     def only_recruiter_can_be_administrator

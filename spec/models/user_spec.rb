@@ -139,4 +139,27 @@ describe User do
       mentor.my_recruits_answers.include?(ans).should be_false
     end
   end
+
+  it "should properly check if user answered all questions" do
+    r = recruit_with_answered_and_unanswered_questions
+    r.recruit.answered_all_questions?.should            be_false
+    Factory(:recruit).answered_all_questions?.should  be_true
+  end
+
+  it "should return proper recruits with all questions` answered" do
+    # recruits that should be returned
+    correct_answered_all = [Factory(:recruit)]
+    correct_answered_all.push recruit_with_answers_in_categories.recruit
+
+    # and some other users
+    recruit_with_answered_and_unanswered_questions
+    Factory(:administrator)
+    Factory(:mentor)
+    Factory(:recruiter)
+
+    answered_all = User.recruits_answered_all
+
+    (answered_all - correct_answered_all).should be_empty
+    (correct_answered_all - answered_all).should be_empty
+  end
 end

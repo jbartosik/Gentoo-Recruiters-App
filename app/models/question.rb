@@ -20,6 +20,11 @@ class Question < ActiveRecord::Base
 
   after_create :notify_new_question
 
+  named_scope  :unanswered, lambda { |uid|{
+      :joins => {:question_category => {:user_categories => :user}},
+      :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
+      'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', uid, uid]}}
+
   def answered?(user)
     user.signed_up? && user.answered_questions.include?(self)
   end
