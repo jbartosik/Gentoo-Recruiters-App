@@ -121,7 +121,8 @@ class User < ActiveRecord::Base
     def changes_allowed_for_recruiter?
       only_allowed_changed  = only_changed?(:question_categories, :role)
       promoted_to_mentor    = role.is_mentor? && Role.new(role_was).is_recruit?
-      only_allowed_changed && ( !role_changed? || promoted_to_mentor)
+      demoted_mentor        = role.is_recruit? && Role.new(role_was).is_mentor?
+      only_allowed_changed && ( !role_changed? || promoted_to_mentor || demoted_mentor)
     end
 
     def changes_allowed_to_self?

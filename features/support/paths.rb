@@ -19,6 +19,9 @@ module NavigationHelpers
 
     when /"([^\"]*)" user page/
       user_path(User.find_by_name($1))
+
+    when /unanswered questions page/
+      unanswered_questions_questions_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
