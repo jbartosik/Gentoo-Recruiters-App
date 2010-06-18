@@ -1,0 +1,76 @@
+  Factory.sequence :recruit do |n|
+    "recruit-#{n}"
+  end
+
+  Factory.sequence :mentor do |n|
+    "mentor-#{n}"
+  end
+
+  Factory.sequence :recruiter do |n|
+    "recruiter-#{n}"
+  end
+
+  Factory.sequence :administrator do |n|
+    "administrator-#{n}"
+  end
+
+  # Creates a new mentor for recruit by default
+  Factory.define :recruit, :class => User do |u|
+    u.name          { Factory.next(:recruit) }
+    u.email_address { |u| "#{u.name}@recruits.org" }
+    u.mentor        { Factory(:mentor) }
+  end
+
+  Factory.define :mentor, :class => User do |u|
+    u.name          { Factory.next(:mentor) }
+    u.email_address { |u| "#{u.name}@recruiters.org" }
+    u.role          :mentor
+  end
+
+  Factory.define :recruiter, :class => User do |u|
+    u.name          { Factory.next(:recruiter) }
+    u.email_address { |u| "#{u.name}@recruiters.org" }
+    u.role          :recruiter
+  end
+
+  Factory.define :administrator, :class => User do |u|
+    u.name          { Factory.next(:administrator) }
+    u.email_address { |u| "#{u.name}@admins.org" }
+    u.role          :recruiter
+    u.administrator true
+  end
+
+  Factory.sequence :question_category do |n|
+    "question category-#{n}"
+  end
+
+  Factory.define :question_category do |q|
+    q.name  { Factory.next(:question_category) }
+  end
+
+  Factory.sequence :question do |n|
+    "question-#{n}"
+  end
+
+  # it'll belong to new category by default
+  Factory.define :question do |q|
+    q.title             { Factory.next(:question) }
+    q.content           { |q| "#{q.title} content." }
+    q.question_category { Factory(:question_category)}
+  end
+
+  Factory.sequence :answer do |n|
+    "answer-#{n}"
+  end
+
+  # It'll be answer of new recruit for a new question by default
+  Factory.define :answer do |a|
+    a.content   { Factory.next(:answer) }
+    a.question  { Factory(:question)}
+    a.owner     { Factory(:recruit)}
+  end
+
+  Factory.define :user_category do |q|
+    q.user              { Factory(:recruit) }
+    q.question_category { Factory(:question_category) }
+  end

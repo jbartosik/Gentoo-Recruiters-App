@@ -1,51 +1,56 @@
 require 'spec_helper.rb'
 describe Question do
 
-  fixtures :users, :answers, :questions, :question_categories
   include Permissions::TestPermissions
 
-  before(:each) do
-    @new_question = Question.create!( :title => "Example", :content => "Example")
-    @recruit    = users(:ron)
-    @recruiter  = users(:ralph)
-    @mentor     = users(:mustafa)
-    @admin      = users(:ann)
-    @guest      = Guest.new
-  end
-
   it "should allow admin to create, edit, update and remove" do
-    cud_allowed([@admin], @new_question)
+    cud_allowed([Factory(:administrator)], Factory(:question))
   end
 
   it "should prohibit nonadmins to creating, editing, updating and removing" do
-    cud_denied([@recruit, @mentor, @guest, @recruiter], @new_question)
+    cud_denied([Factory(:recruit), Factory(:mentor), Guest.new,
+      Factory(:recruiter)], Factory(:question))
   end
 
   it "should be allowed for everybody to view" do
-    view_allowed([@recruit, @mentor, @recruiter, @admin, @guest], @new_question)
+    view_allowed([Factory(:recruit), Factory(:mentor), Factory(:recruiter),
+      Factory(:administrator), Guest.new], Factory(:question))
   end
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :content }
 
   it "should return proper answer of user" do
-    for qa in [:apple, :banana]
-      questions(qa).answer_of(@recruit).should == answers(qa)
-      questions(qa).answer_of(@admin).should == nil
-      questions(qa).answer_of(@guest).should == nil
+    question  = Factory(:question)
+    answer1   = Factory(:answer, :question => question)
+    answer2   = Factory(:answer, :question => question)
+
+    for answer in [answer1, answer1]
+      question.answer_of(answer.owner).should == answer
     end
+
+    question.answer_of(Factory(:recruit)).should        == nil
+    question.answer_of(Factory(:mentor)).should         == nil
+    question.answer_of(Factory(:recruiter)).should      == nil
+    question.answer_of(Factory(:administrator)).should  == nil
+    question.answer_of(Guest.new).should                == nil
   end
 
   it "should not return reference answer as answer of user" do
-      questions(:apple).answer_of(@recruiter).should_not == answers(:reference_apple)
+      question  = Factory(:question)
+      recruiter = Factory(:recruiter)
+      reference = Factory(:answer, :question => question, :reference => true, :owner => recruiter)
+                  Factory(:answer, :question => question, :owner => recruiter)
+      question.answer_of(recruiter).should_not == reference
   end
 
   it "should send email notifications to watching recruits when created" do
-    category = question_categories(:fruit)
-    question = Question.new(:title => "new question", :content => "some content",
+    category  = Factory(:question_category)
+    recruit   = Factory(:recruit, :question_categories => [category])
+    question  = Question.new(:title => "new question", :content => "some content",
       :question_category => category)
 
-    UserMailer.should_receive(:deliver_new_question).with(@recruit, question)
+    UserMailer.should_receive(:deliver_new_question).with(recruit, question)
 
     question.save!
   end

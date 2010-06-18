@@ -1,9 +1,0 @@
-ron_fruit:
-  user:               ron
-  question_category:  fruit
-ron_veggies:
-  user:               ron
-  question_category:  veggies
-ron_meat:
-  user:               ron
-  question_category:  meat

@@ -7,6 +7,8 @@ require 'spec/rails'
 require 'shoulda'
 require "email_spec"
 
+Factory.find_definitions
+
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
