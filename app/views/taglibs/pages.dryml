@@ -34,7 +34,10 @@
       <collection with="&User.all"/>
     </if>
     <if test="&current_user.signed_up?">
-      <a with="&current_user">See your profile</a>
+      <a with="&current_user">See your profile</a><br/>
+    </if>
+    <if test="&current_user.try.any_pending_project_acceptances?">
+      <a with="&ProjectAcceptance" action="pending_acceptances">Recruits waiting for your acceptance</a>.
     </if>
   </section>
 </def>

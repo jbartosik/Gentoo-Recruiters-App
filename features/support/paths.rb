@@ -31,6 +31,12 @@ module NavigationHelpers
 
     when /newest comment page/
       comment_path(Comment.last)
+
+    when /recruits waiting for your acceptance page/
+      pending_acceptances_project_acceptances_path
+
+    when /project acceptance of "([^\"]*)" by "([^\"]*)" edit page/
+      edit_project_acceptance_path(ProjectAcceptance.find_by_user_name_and_accepting_nick($1, $2))
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

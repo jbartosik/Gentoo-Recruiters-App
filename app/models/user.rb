@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many    :question_categories, :through => :user_categories, :accessible => true, :uniq => true
   has_many    :answers, :foreign_key => :owner_id
   has_many    :answered_questions, :through => :answers, :class_name => "Question", :source => :question
+  has_many    :project_acceptances, :accessible => true, :uniq => true
 
   belongs_to  :mentor, :class_name => "User"
   has_many    :recruits, :class_name => "User", :foreign_key => :mentor_id
@@ -109,6 +110,10 @@ class User < ActiveRecord::Base
 
   def self.recruits_answered_all
     User.role_is("recruit").find_all{ |recruit| recruit.answered_all_questions? }
+  end
+
+  def any_pending_project_acceptances?
+    (ProjectAcceptance.count :conditions => { :accepting_nick => nick }) > 0
   end
   protected
 

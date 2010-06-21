@@ -87,3 +87,9 @@
     c.owner   { |c| c.answer.owner.mentor }
     c.content { Factory.next(:comment) }
   end
+
+  # create new recruit (being accepted) and mentor (accepting) by default
+  Factory.define :project_acceptance do |a|
+    a.user            { Factory(:recruit) }
+    a.accepting_nick  { Factory(:mentor).nick }
+  end

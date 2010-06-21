@@ -8,3 +8,19 @@
     </header:>
   </card>
 </def>
+
+<def tag="card" for="ProjectAcceptance">
+  <card class="project acceptance" param="default" merge>
+    <header: param>
+      <h4 param="heading">
+        <a:user><name/></a>
+        <a action="edit" if="&can_edit?">(edit)</a>
+      </h4>
+    </header:>
+    <body:>
+      <if test="accepted">
+        Accepted by <view:accepting_nick/>
+      </if>
+    </body>
+  </card>
+</def>
