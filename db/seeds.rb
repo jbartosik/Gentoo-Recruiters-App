@@ -94,10 +94,16 @@ advanced = User.create! :email_address => 'advanced@recruits.org',
   :name => 'Advanced Recruit', :role => :recruit, :password => 'secret',
   :password_confirmation => 'secret', :mentor => mentor
 
+# Recruit - some questions answered
+recruit_mid = User.create! :email_address => 'recruit-mid@recruits.org',
+  :name => 'Recruit in middle of ebuild quizz', :role => :recruit, :password => 'secret',
+  :password_confirmation => 'secret', :mentor => mentor
+
 # Categories for users
 UserCategory.create! [{:question_category => ebuild, :user => mentor},
   {:question_category => mentoring, :user => mentor},
   {:question_category => ebuild, :user => recruit},
+  {:question_category => ebuild, :user => recruit_mid},
   {:question_category => ebuild, :user => advanced},
   {:question_category => mentoring, :user => advanced}]
 
@@ -114,6 +120,7 @@ end
 # non-approved answers
 ans_hash = {:content => 'Some answer'}
 answer_many [recruit], [ebuild_q1, ebuild_q2, ebuild_q3], ans_hash
+answer_many [recruit_mid], [ebuild_q1, ebuild_q2], ans_hash
 answer_many [advanced], [mentor_q1, mentor_q2, mentor_q3], ans_hash
 
 # approved answers
