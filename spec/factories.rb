@@ -25,12 +25,14 @@
     u.name          { Factory.next(:mentor) }
     u.email_address { |u| "#{u.name}@recruiters.org" }
     u.role          :mentor
+    u.nick          { |u| u.name }
   end
 
   Factory.define :recruiter, :class => User do |u|
     u.name          { Factory.next(:recruiter) }
     u.email_address { |u| "#{u.name}@recruiters.org" }
     u.role          :recruiter
+    u.nick          { |u| u.name }
   end
 
   Factory.define :administrator, :class => User do |u|
@@ -38,6 +40,7 @@
     u.email_address { |u| "#{u.name}@admins.org" }
     u.role          :recruiter
     u.administrator true
+    u.nick          { |u| u.name }
   end
 
   Factory.sequence :question_category do |n|

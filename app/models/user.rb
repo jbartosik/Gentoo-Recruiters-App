@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
     email_address :email_address, :login => true
     administrator :boolean, :default => false
     role          Role, :default => 'recruit'
+    nick          :string
     timestamps
   end
 
@@ -45,9 +46,10 @@ class User < ActiveRecord::Base
 
   end
   
-  validate  :only_recruiter_can_be_administrator
-  validate  :recruit_cant_mentor
-
+  validate                :only_recruiter_can_be_administrator
+  validate                :recruit_cant_mentor
+  validate                :mentors_and_recruiters_must_have_nick
+  validates_uniqueness_of :nick, :if => :nick
   # --- Permissions --- #
 
   def create_permitted?
@@ -118,8 +120,14 @@ class User < ActiveRecord::Base
       errors.add(:mentor, "recruit can't mentor" )  if mentor && mentor.role.is_recruit?
     end
 
+    def mentors_and_recruiters_must_have_nick
+      if (role.is_mentor? || role.is_recruiter?) && (nick.nil? || nick.empty?)
+        errors.add(:nick, "Mentors and administrators must have nicks set")
+      end
+    end
+
     def changes_allowed_for_recruiter?
-      only_allowed_changed  = only_changed?(:question_categories, :role)
+      only_allowed_changed  = only_changed?(:question_categories, :role, :nick)
       promoted_to_mentor    = role.is_mentor? && Role.new(role_was).is_recruit?
       demoted_mentor        = role.is_recruit? && Role.new(role_was).is_mentor?
       only_allowed_changed && ( !role_changed? || promoted_to_mentor || demoted_mentor)
@@ -127,7 +135,7 @@ class User < ActiveRecord::Base
 
     def changes_allowed_to_self?
       only_changed?(:email_address, :crypted_password, :current_password,
-        :password, :password_confirmation)
+        :password, :password_confirmation, :nick)
         # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
         # directly from a form submission.
     end

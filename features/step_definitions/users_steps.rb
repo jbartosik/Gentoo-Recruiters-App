@@ -2,7 +2,7 @@ Given /^user "([^\"]*)"$/ do |user_name|
   @user      = User.find_by_name(user_name)
   if @user.nil?
     @user = User.create!( :name => user_name, :email_address => "#{user_name}@users.org",
-      :password => "secret", :password_confirmation => "secret")
+      :password => "secret", :password_confirmation => "secret", :nick => user_name)
   end
 end
 

@@ -72,17 +72,18 @@ non_q3  = Question.create! :title => 'Gentoo Council',
 
 # Recruiters
 admin = User.create! :email_address => 'admin@recruiters.org', :name => 'Admin',
-  :role => :recruiter, :password => 'secret', :password_confirmation => 'secret'
+  :role => :recruiter, :password => 'secret', :password_confirmation => 'secret',
+  :nick => 'admin'
 
 recruiter = User.create! :email_address => 'recruiter@recruiters.org',
   :name => 'Recruiter', :role => :recruiter, :password => 'secret',
-  :password_confirmation => 'secret'
+  :password_confirmation => 'secret', :nick => 'recruiter'
 
 # Mentor. Used to be recruit, has answered questions
 # in ebuild and end of mentoring quizzes and question categories.
 mentor = User.create! :email_address => 'mentor@recruits.org',
   :name => 'Recruit who is Mentor', :role => :mentor, :password => 'secret',
-  :password_confirmation => 'secret', :mentor => recruiter
+  :password_confirmation => 'secret', :mentor => recruiter, :nick => 'mentor'
 
 # Recruit - no questions answered
 recruit = User.create! :email_address => 'recruit@recruits.org',

@@ -162,4 +162,22 @@ describe User do
     (answered_all - correct_answered_all).should be_empty
     (correct_answered_all - answered_all).should be_empty
   end
+
+  it "should allow recruiters to change nick of other users" do
+    for u in fabricate_all_roles
+      u.should be_editable_by Factory(:recruiter), :nick
+      u.should be_viewable_by Factory(:recruiter), :nick
+      u.nick = 'changed'
+      u.should be_updatable_by Factory(:recruiter)
+    end
+  end
+
+  it "should allow user to change their nicks" do
+    for u in fabricate_all_roles
+      u.should be_editable_by u, :nick
+      u.should be_viewable_by u, :nick
+      u.nick = 'changed'
+      u.should be_updatable_by u
+    end
+  end
 end
