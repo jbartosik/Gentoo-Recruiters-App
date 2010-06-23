@@ -74,3 +74,13 @@
     q.user              { Factory(:recruit) }
     q.question_category { Factory(:question_category) }
   end
+
+  Factory.sequence :comment do |n|
+    "comment-#{n}"
+  end
+
+  Factory.define :comment do |c|
+    c.answer  { Factory(:answer) }
+    c.owner   { |c| c.answer.owner.mentor }
+    c.content { Factory.next(:comment) }
+  end

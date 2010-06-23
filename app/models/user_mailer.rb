@@ -40,4 +40,10 @@ class UserMailer < ActionMailer::Base
     @body       = { :question_title=> question_title(answer), :recruit_name =>
       answer.owner.name, :id => answer.id}
   end
+
+  def new_comment(user, comment)
+    common(user)
+    @subject    = "New comment"
+    @body       = { :question_title=> question_title(comment.answer), :id => comment.answer.id }
+  end
 end

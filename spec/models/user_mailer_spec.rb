@@ -36,4 +36,14 @@ describe UserMailer do
     notification.should have_text(/http:\/\/localhost:3000\/answers\/#{answer.id}/)
     notification.should have_subject('Changed answer')
   end
+
+  it "should prepare proper new comment notification" do
+    comment      = Factory(:comment)
+    notification = UserMailer.create_new_comment(comment.answer.owner, comment)
+    notification.should deliver_to(comment.answer.owner.email_address)
+    notification.should deliver_from("no-reply@localhost")
+    notification.should have_text(/Your mentor made a comment on your answer for question "#{comment.answer.question.title}"/)
+    notification.should have_text(/http:\/\/localhost:3000\/answers\/#{comment.answer.id}/)
+    notification.should have_subject('New comment')
+  end
 end

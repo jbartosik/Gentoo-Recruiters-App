@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100603193605) do
+ActiveRecord::Schema.define(:version => 20100616183223) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(:version => 20100603193605) do
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
   add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
+
+  create_table "comments", :force => true do |t|
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "answer_id"
+    t.integer  "owner_id"
+  end
+
+  add_index "comments", ["answer_id"], :name => "index_comments_on_answer_id"
+  add_index "comments", ["owner_id"], :name => "index_comments_on_owner_id"
 
   create_table "question_categories", :force => true do |t|
     t.string   "name"

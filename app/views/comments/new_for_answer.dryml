@@ -1,0 +1,8 @@
+<%# Form Hobo inserts by default is broken, because it asks for owner%>
+<new-for-answer-page>
+  <content-body:>
+    <form>
+      <submit: label="#{ht 'answers.actions.create', :default=>['Create Comment']}"/>
+    </form>
+  </content-body:>
+</new-for-answer-page>

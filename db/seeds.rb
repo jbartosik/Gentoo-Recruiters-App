@@ -134,3 +134,11 @@ for q in [mentor_q1, mentor_q2, mentor_q3, ebuild_q1, ebuild_q2, ebuild_q3,
   Answer.create! :owner => recruiter, :question => q, :content => "Some reference answer",
     :reference => true
 end
+
+for ans in advanced.answers
+  Comment.create( :answer => ans, :owner => advanced.mentor, :content => "some comment")
+end
+
+for q in [ebuild_q1, ebuild_q2, ebuild_q3]
+  Comment.create( :answer => q.answer_of(advanced), :owner => advanced.mentor, :content => "some other comment")
+end

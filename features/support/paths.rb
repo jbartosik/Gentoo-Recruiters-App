@@ -22,6 +22,15 @@ module NavigationHelpers
 
     when /unanswered questions page/
       unanswered_questions_questions_path
+
+    when /answer of "([^\"]*)" for question "([^\"]*)" page/
+      answer_path(Question.find_by_title($2).answer_of(User.find_by_name($1)))
+
+    when /new comment for answer of "([^\"]*)" for question "([^\"]*)"/
+      new_comment_for_answer_path(Question.find_by_title($2).answer_of(User.find_by_name($1)))
+
+    when /newest comment page/
+      comment_path(Comment.last)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

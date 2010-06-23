@@ -16,6 +16,13 @@ module Permissions
       end
     end
     
+    def ud_allowed( users, testee)
+      for user in users
+        testee.should be_updatable_by(user)
+        testee.should be_destroyable_by(user)
+      end
+    end
+
     def ud_denied( users, testee)
       for user in users
         testee.should_not be_updatable_by(user)

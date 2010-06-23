@@ -10,3 +10,16 @@
     </div>
   </form>
 </def>
+
+<def tag="form" for="Comment">
+  <form merge param="default">
+    <error-messages param/>
+    <input:answer type="hidden"/>
+    <field-list fields="content">
+      <content-label:>Your comment:</content-label:>
+    </field-list>
+    <div param="actions">
+      <submit label="#{ht 'answers.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>

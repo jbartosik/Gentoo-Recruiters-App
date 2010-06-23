@@ -12,6 +12,7 @@ class Answer < ActiveRecord::Base
   end
   attr_readonly :reference
   belongs_to    :question
+  has_many      :comments
 
   validates_uniqueness_of :question_id, :scope => :reference, :if => :reference
   validates_uniqueness_of :question_id, :scope => :owner_id, :unless => :reference
