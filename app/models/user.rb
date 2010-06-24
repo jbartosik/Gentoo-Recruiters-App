@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
     administrator :boolean, :default => false
     role          Role, :default => 'recruit'
     nick          :string
+    contributions :text
     timestamps
   end
 
@@ -20,6 +21,7 @@ class User < ActiveRecord::Base
   belongs_to  :mentor, :class_name => "User"
   has_many    :recruits, :class_name => "User", :foreign_key => :mentor_id
 
+  named_scope :mentorless_recruits, :conditions => { :role => 'recruit', :mentor_id => nil}
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
     if !Rails.env.test? && count == 0
@@ -140,7 +142,7 @@ class User < ActiveRecord::Base
 
     def changes_allowed_to_self?
       only_changed?(:email_address, :crypted_password, :current_password,
-        :password, :password_confirmation, :nick)
+        :password, :password_confirmation, :nick, :contributions)
         # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
         # directly from a form submission.
     end

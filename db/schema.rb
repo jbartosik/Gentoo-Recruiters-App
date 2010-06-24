@@ -9,16 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100623172612) do
+ActiveRecord::Schema.define(:version => 20100625160008) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
+    t.boolean  "approved",    :default => false
+    t.boolean  "reference",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "question_id"
     t.integer  "owner_id"
-    t.boolean  "reference",   :default => false
-    t.boolean  "approved",    :default => false
   end
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
@@ -76,17 +76,18 @@ ActiveRecord::Schema.define(:version => 20100623172612) do
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
     t.string   "name"
+    t.string   "email_address"
     t.boolean  "administrator",                           :default => false
     t.string   "role",                                    :default => "recruit"
+    t.string   "nick"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "mentor_id"
     t.string   "state",                                   :default => "active"
     t.datetime "key_timestamp"
-    t.integer  "mentor_id"
-    t.string   "email_address"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
-    t.string   "nick"
+    t.text     "contributions"
   end
 
   add_index "users", ["mentor_id"], :name => "index_users_on_mentor_id"

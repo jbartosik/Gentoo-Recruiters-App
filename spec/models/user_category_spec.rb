@@ -34,4 +34,33 @@ describe UserCategory do
   it "should deny other users to CUD, edit and view user categories" do
     deny_all(fabricate_users(:recruit, :mentor) + [Guest.new], Factory(:user_category))
   end
+
+  it "should allow everybody to view contributons" do
+    for u in fabricate_all_roles + [Guest.new]
+      Factory(:recruit).should be_viewable_by(u, :contributions)
+    end
+  end
+
+  it "should allow to edit and update users own contributons" do
+    recruit = Factory(:recruit)
+    recruit.should        be_editable_by(recruit, :contributions)
+    recruit.contributions = "changed"
+    recruit.should        be_updatable_by(recruit)
+  end
+
+  it "should allow admins to edit and update users contributons" do
+    recruit = Factory(:recruit)
+    recruit.should        be_editable_by(Factory(:administrator), :contributions)
+    recruit.contributions = "changed"
+    recruit.should        be_updatable_by(Factory(:administrator))
+  end
+
+  it "should prohibit non-admins to edit and update someone else contributons" do
+    recruit = Factory(:recruit)
+    for u in fabricate_users(:recruit, :mentor, :recruiter) + [Guest.new]
+      recruit.should_not    be_editable_by(u, :contributions)
+      recruit.contributions = "changed"
+      recruit.should_not    be_updatable_by(u)
+    end
+  end
 end
