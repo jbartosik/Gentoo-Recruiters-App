@@ -60,17 +60,24 @@ class User < ActiveRecord::Base
   end
 
   def update_permitted?
-    # Allow edit in one of three cases:
+    # Allow edit in one of four cases:
       # Acting user is administrator
       # Acting user is editing his/her self and changes only what [s]he is allowed to
       # Acting user is recruiter and changes only what [s]he is allowed to
+      # Acting user was mentor of edited user and resigned
+      # Acting user became mentor of edited recruit and edited user had no mentor
     acting_user.administrator? ||
       (acting_user == self && changes_allowed_to_self?)||
-      (User.user_is_recruiter?(acting_user) && changes_allowed_for_recruiter?)
+      (User.user_is_recruiter?(acting_user) && changes_allowed_for_recruiter?)||
+      (role.is_recruit? && acting_user.try.role.try.is_mentor? && mentor_picked_up_or_resigned?)
   end
 
   def role_edit_permitted?
     acting_user.role.is_recruiter?
+  end
+
+  def mentor_edit_permitted?
+    mentor.nil? || mentor_is?(acting_user)
   end
 
   def destroy_permitted?
@@ -120,11 +127,11 @@ class User < ActiveRecord::Base
   protected
 
     def only_recruiter_can_be_administrator
-      errors.add(:administrator, 'only recruiters can be administrators' )  if administrator and !role.is_recruiter?
+      errors.add(:administrator, 'only recruiters can be administrators')  if administrator and !role.is_recruiter?
     end
 
     def recruit_cant_mentor
-      errors.add(:mentor, "recruit can't mentor" )  if mentor && mentor.role.is_recruit?
+      errors.add(:mentor, "recruit can't mentor")  if mentor && mentor.role.is_recruit?
     end
 
     def mentors_and_recruiters_must_have_nick
@@ -137,7 +144,7 @@ class User < ActiveRecord::Base
       only_allowed_changed  = only_changed?(:question_categories, :role, :nick)
       promoted_to_mentor    = role.is_mentor? && Role.new(role_was).is_recruit?
       demoted_mentor        = role.is_recruit? && Role.new(role_was).is_mentor?
-      only_allowed_changed && ( !role_changed? || promoted_to_mentor || demoted_mentor)
+      only_allowed_changed && (!role_changed? || promoted_to_mentor || demoted_mentor)
     end
 
     def changes_allowed_to_self?
@@ -145,5 +152,15 @@ class User < ActiveRecord::Base
         :password, :password_confirmation, :nick, :contributions)
         # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
         # directly from a form submission.
+    end
+
+    def mentor_picked_up_or_resigned?
+      # Mentor picked up or resigned if
+      #   only mentor attribute was changed
+      #   and mentor was nil or acting user
+      #   and mentor is nil or current user
+      only_changed?(:mentor) &&
+      (mentor_id_was.nil? || (mentor_id_was == acting_user.try.id)) &&
+      (mentor_id.nil? || (mentor_id == acting_user.try.id))
     end
 end

@@ -180,4 +180,22 @@ describe User do
       u.should be_updatable_by u
     end
   end
+
+  it "that is mentorless recruit should allow mentor to pick up" do
+    recruit = Factory(:recruit, :mentor => nil)
+    mentor  = Factory(:mentor)
+    recruit.should be_editable_by(mentor)
+    recruit.should be_editable_by(mentor, :mentor)
+    recruit.mentor = mentor
+    recruit.should be_updatable_by(mentor)
+  end
+
+  it "should allow mentor to resign" do
+    recruit = Factory(:recruit)
+    mentor  = recruit.mentor
+    recruit.should be_editable_by(mentor)
+    recruit.should be_editable_by(mentor, :mentor)
+    recruit.mentor = nil
+    recruit.should be_updatable_by(mentor)
+  end
 end
