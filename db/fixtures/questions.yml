@@ -1,0 +1,60 @@
+ebuild_q1:
+  title:              Big changes in Gentoo
+  documentation:      GLEPs
+  question_category:  ebuild
+  content:  What is the proper method for suggesting a wide-ranging feature
+    or enhancement to Gentoo? Describe the process for getting this feature
+    approved and implemented.
+
+ebuild_q2:
+  title:              Responsibilities
+  documentation:      devrel policy
+  question_category:  ebuild
+  content:  Who should be contacted with complaints about specific developers
+    or projects?
+
+ebuild_q3:
+  title:              Gentoo mailing lists
+  documentation:      gentoo.org
+  question_category:  ebuild
+  content:  "When is it appropriate to post to the following mailing lists:
+    gentoo-core, gentoo-dev, gentoo-dev-announce, gentoo-project?"
+
+mentor_q1:
+  title:              Scopes in ebuild
+  documentation:      handbook
+  question_category:  mentoring
+  content: "What's the difference between local and global scope in an ebuild?"
+
+mentor_q2:
+  title:              Optional SSL support in ebuild
+  documentation:      devmanual
+  question_category:  mentoring
+  content: 'You have a patch for foomatic which enables SSL support that is
+    optional at build time. Assuming that foomatic uses an autotools based
+    build system provide most probable changes required in an EAPI="0" ebuild.
+    What should be done for the ebuild in case it uses EAPI="2"?'
+
+mentor_q3:
+  title:              Improve maintainability of ebuild
+  documentation:      devmanual
+  question_category:  mentoring
+  content: You are writing an ebuild for the foomatic package. Upstream calls
+    the current version "1.3-7b" (but this is _not_ a beta release). How would the
+    ebuild be named? What's wrong with the ebuild snippet below and how should this
+    be written to aid maintainability?<br/><br/>
+    SRC_URI="http://foomatic.example.com/download/foomatic-1.3-7b.tar.bz2"
+    S=${WORKDIR}/foomatic-1.3-7b'
+
+non_q1:
+  title:              Gentoo Foundation
+  documentation:      gentoo.org
+  question_category:  non_ebuild
+  content:            What is the Gentoo Foundation? How does one apply for
+    membership and who are eligible?
+
+non_q2:
+  title:              Gentoo Council
+  documentation:      GLEPs
+  question_category:  non_ebuild
+  content:            What is the purpose of the Gentoo Council?

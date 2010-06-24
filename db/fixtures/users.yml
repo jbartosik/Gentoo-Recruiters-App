@@ -1,0 +1,48 @@
+admin:
+  email_address:          admin@recruiters.org
+  name:                   Admin
+  nick:                   Admin
+  role:                   recruiter
+  password:               secret
+  password_confirmation:  secret
+  administrator:          true
+
+recruiter:
+  email_address:          recruiter@recruiters.org
+  name:                   Recruiter
+  nick:                   Recruiter
+  role:                   recruiter
+  password:               secret
+  password_confirmation:  secret
+
+mentor:
+  email_address:          mentor@recruits.org
+  name:                   Mentor who was recruit
+  nick:                   Mentor who was recruit
+  role:                   mentor
+  password:               secret
+  password_confirmation:  secret
+
+recruit:
+  email_address:          recruit@recruits.org
+  name:                   Recruit
+  role:                   recruit
+  password:               secret
+  password_confirmation:  secret
+  mentor:                 mentor
+
+advanced:
+  email_address:          advanced@recruits.org
+  name:                   Advanced Recruit
+  role:                   recruit
+  password:               secret
+  password_confirmation:  secret
+  mentor:                 mentor
+
+middle:
+  email_address:          middle@recruits.org
+  name:                   Middle Recruit
+  role:                   recruit
+  password:               secret
+  password_confirmation:  secret
+  mentor:                 mentor
