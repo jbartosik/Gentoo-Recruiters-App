@@ -33,4 +33,5 @@ config.gem 'shoulda', :lib => false
 config.gem 'email_spec', :lib => 'email_spec'
 config.gem 'factory_girl'
 
+config.action_mailer.delivery_method = :test
 config.action_mailer.default_url_options = { :host => 'localhost', :port => '3000' }
