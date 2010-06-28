@@ -22,6 +22,12 @@ class User < ActiveRecord::Base
   has_many    :recruits, :class_name => "User", :foreign_key => :mentor_id
 
   named_scope :mentorless_recruits, :conditions => { :role => 'recruit', :mentor_id => nil}
+  named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS (SELECT questions.id FROM questions
+    INNER JOIN question_categories cat ON questions.question_category_id = cat.id INNER JOIN
+    user_categories ON user_categories.question_category_id = cat.id LEFT OUTER JOIN
+    answers ON answers.question_id = questions.id AND answers.owner_id = users.id WHERE
+    user_categories.user_id = users.id AND answers.id IS NULL)"
+
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
     if !Rails.env.test? && count == 0
@@ -115,10 +121,6 @@ class User < ActiveRecord::Base
 
   def answered_all_questions?
     Question.unanswered(id).count.zero?
-  end
-
-  def self.recruits_answered_all
-    User.role_is("recruit").find_all{ |recruit| recruit.answered_all_questions? }
   end
 
   def any_pending_project_acceptances?

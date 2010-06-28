@@ -1,9 +1,1 @@
-<index-page>
-  <content:>
-    <section class="user collection">
-    <repeat with="&User.recruits_answered_all">
-      <card/>
-    </repeat>
-    </section>
-  </content:>
-</index-page>
+<index-page/>

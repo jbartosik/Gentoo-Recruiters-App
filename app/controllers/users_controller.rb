@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   index_action :mentorless_recruits
 
   def ready_recruits
-    hobo_index
+    hobo_index User.recruits_answered_all
   end
 
   def mentorless_recruits
