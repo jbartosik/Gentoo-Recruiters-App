@@ -10,3 +10,5 @@ require 'rake/rdoctask'
 require 'tasks/rails'
 
 require 'hobo/tasks/rails'
+
+task :default => [:cucumber, :spec]
