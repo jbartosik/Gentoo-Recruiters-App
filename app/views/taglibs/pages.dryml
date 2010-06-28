@@ -39,6 +39,9 @@
     <if test="&current_user.try.any_pending_project_acceptances?">
       <a with="&ProjectAcceptance" action="pending_acceptances">Recruits waiting for your acceptance</a>.
     </if>
+    <if test="&(User.recruits_answered_all.count > 0) && current_user.try.role.try.is_recruiter?">
+      <a with="&User" action="ready_recruits">Recruits that answered all questions</a>.<br/>
+    </if>
     <if test="&current_user.try.role.try.is_mentor? && User.mentorless_recruits.count > 0">
       <a with="&User" action="mentorless_recruits">See mentorless recruits</a><br/>
     </if>
