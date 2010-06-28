@@ -1,0 +1,4 @@
+hobo -v '>=1.0.0'
+rails
+pg
+bluecloth

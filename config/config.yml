@@ -1,0 +1,19 @@
+defaults: &defaults
+  developer_data:
+    check:                    true
+    uri:                      http://www.gentoo.org/proj/en/devrel/roll-call/devlist.xml?mode=yaml
+    min_months_mentor_is_dev: 6
+  seed:
+    users_domain:               example.com
+development:
+  <<: *defaults
+production:
+  <<: *defaults
+test:
+  <<: *defaults
+  developer_data:
+    check:                    false
+cucumber:
+  <<: *defaults
+  developer_data:
+    check:                    false
