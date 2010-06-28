@@ -3,7 +3,6 @@ db/migrate
 db/seeds.rb
 log
 test
-app/views/taglibs/auto
 .*.swp
 config/database.yml
 tmp
