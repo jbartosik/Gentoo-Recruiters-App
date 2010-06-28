@@ -6,4 +6,5 @@ Rails::Initializer.run do |config|
   config.gem 'hobo'
 
   config.time_zone = 'UTC'
+  config.action_mailer.default_url_options = { :host => 'localhost', :port => '3000' }
 end
