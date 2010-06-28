@@ -11,6 +11,25 @@
   </card>
 </def>
 
+<def tag="card" for="Comment">
+  <card class="comment" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <a:owner param="creator-link"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="ProjectAcceptance">
+  <card class="project-acceptance" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+  </card>
+</def>
+
 <def tag="card" for="Question">
   <card class="question" param="default" merge>
     <header: param>
