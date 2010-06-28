@@ -12,6 +12,30 @@
 
 
 
+<def tag="form" for="Comment">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="content, answer" param/>
+    <div param="actions">
+      <submit label="#{ht 'comments.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="ProjectAcceptance">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="accepting_nick, accepted, user" param/>
+    <div param="actions">
+      <submit label="#{ht 'project_acceptances.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
 <def tag="form" for="QuestionCategory">
   <form merge param="default">
     <error-messages param/>
@@ -39,7 +63,7 @@
 <def tag="form" for="User">
   <form merge param="default">
     <error-messages param/>
-    <field-list fields="name, email_address, administrator, role, state, mentor, question_categories" param/>
+    <field-list fields="name, email_address, administrator, role, nick, contributions, state, mentor, project_acceptances, question_categories" param/>
     <div param="actions">
       <submit label="#{ht 'users.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>

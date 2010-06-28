@@ -5,6 +5,7 @@
 <def tag="main-nav">
   <navigation class="main-nav" merge-attrs param="default">
     <nav-item href="#{base_url}/">Home</nav-item>
+    <nav-item with="&ProjectAcceptance"><ht key="project_acceptances.nav_item">Project Acceptances</ht></nav-item>
     <nav-item with="&Question"><ht key="questions.nav_item">Questions</ht></nav-item>
     <nav-item with="&QuestionCategory"><ht key="question_categories.nav_item">Question Categories</ht></nav-item>
   </navigation>
@@ -92,7 +93,7 @@
               </ht>
             </h2>
 
-            <record-flags fields="reference, approved" param/>
+            <record-flags fields="approved, reference" param/>
 
             <a:owner param="creator-link"/>
 
@@ -165,6 +166,285 @@
         </form>
       </section>
     </content:>
+  </page>
+</def>
+
+
+
+
+
+<!-- ====== Comment Pages ====== -->
+
+<def tag="index-page" for="Comment">
+  <page merge title="#{ht 'comments.index.title', :default=>['Comments'] }">
+    <body: class="index-page comment" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="comments.index.heading">
+            Comments
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="comments.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+        <div param="new-form">
+          <h3 param="new-form-heading">
+            <ht key="comments.form.new.heading">New Comment</ht>
+          </h3>
+          <form with="&@invalid_record || new_for_current_user(Comment)" param/>
+        </div>
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="Comment">
+  <page merge title="#{ht 'comments.new.title', :default=>[' New Comment'] }">
+    <body: class="new-page comment" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="comments.new.heading">
+            New Comment
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'comments.actions.create', :default=>['Create Comment']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="Comment">
+  <page merge title="#{ht 'comments.show.title', :default=>['Comment'] }">
+
+    <body: class="show-page comment" param/>
+
+    <content: param>
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="comments.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="" param/>
+
+            <a:owner param="creator-link"/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="comments.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Comment
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <view:content param="description"/>
+            <field-list fields="answer" param/>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="Comment">
+  <page merge title="#{ht 'comments.edit.title', :default=>['Edit Comment'] }">
+
+    <body: class="edit-page comment" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="comments.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'comments.actions.delete', :default=>['Remove This Comment']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+
+
+<def tag="new-for-answer-page" polymorphic/>
+<def tag="new-for-answer-page" for="Comment">
+  <page merge title="#{ht 'comments.new_for_owner.title', :default=>['New Comment for']} #{name :with => @answer}">
+    <body: class="new-for-owner-page  comment" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="comments.new_for_owner.heading">
+            New Comment
+          </ht>
+        </h2>
+        <h3 param="subheading">
+          <ht key="comments.new_for_owner.subheading">
+            For:
+          </ht>
+          <a with="&@answer"/>
+        </h3>
+      </header>
+
+      <section param="content-body">
+        <form owner="answer" method="post" param>
+          <field-list: skip="answer"/>
+          <submit: label="#{ht 'comments.actions.create', :default=>['Create Comment']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+
+
+
+<!-- ====== ProjectAcceptance Pages ====== -->
+
+<def tag="index-page" for="ProjectAcceptance">
+  <page merge title="#{ht 'project_acceptances.index.title', :default=>['Project Acceptances'] }">
+    <body: class="index-page project-acceptance" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="project_acceptances.index.heading">
+            Project Acceptances
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="project_acceptances.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+        <a action="new" to="&model" param="new-link">
+          <ht key="project_acceptances.actions.new">New Project Acceptance</ht>
+        </a>
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="ProjectAcceptance">
+  <page merge title="#{ht 'project_acceptances.new.title', :default=>[' New Project Acceptance'] }">
+    <body: class="new-page project-acceptance" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="project_acceptances.new.heading">
+            New Project Acceptance
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'project_acceptances.actions.create', :default=>['Create Project Acceptance']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="ProjectAcceptance">
+  <page merge title="#{ht 'project_acceptances.show.title', :default=>['Project Acceptance'] }">
+
+    <body: class="show-page project-acceptance" param/>
+
+    <content: param>
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="project_acceptances.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="accepted" param/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="project_acceptances.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Project Acceptance
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <field-list fields="accepting_nick, user" param/>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="ProjectAcceptance">
+  <page merge title="#{ht 'project_acceptances.edit.title', :default=>['Edit Project Acceptance'] }">
+
+    <body: class="edit-page project-acceptance" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="project_acceptances.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'project_acceptances.actions.delete', :default=>['Remove This Project Acceptance']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
   </page>
 </def>
 
@@ -506,7 +786,7 @@
           </header>
 
           <section param="content-body" with-flash-messages>
-            <field-list fields="email_address, role, state, mentor" param/>
+            <field-list fields="email_address, role, nick, contributions, state, mentor" param/>
             <section param="collection-section">
               <h3 param="collection-heading">
                 <ht key="users.collection.heading.your" >
@@ -527,6 +807,14 @@
               </ht>
             </h3>
             <collection:question_categories  param="question_categories-collection"/>
+          </section>
+          <section param="project_acceptances-collection-section">
+            <h3 param="project_acceptances-collection-heading">
+              <ht key="project_acceptances.collection.heading.other" >
+                Project Acceptances
+              </ht>
+            </h3>
+            <collection:project_acceptances  param="project_acceptances-collection"/>
           </section>
         </aside>
       </section-group>
