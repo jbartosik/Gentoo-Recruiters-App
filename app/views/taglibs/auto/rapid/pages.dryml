@@ -1,0 +1,610 @@
+<!-- AUTOMATICALLY GENERATED FILE - DO NOT EDIT -->
+
+<!-- ====== Main Navigation ====== -->
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item href="#{base_url}/">Home</nav-item>
+    <nav-item with="&Question"><ht key="questions.nav_item">Questions</ht></nav-item>
+    <nav-item with="&QuestionCategory"><ht key="question_categories.nav_item">Question Categories</ht></nav-item>
+  </navigation>
+</def>
+
+
+
+
+<!-- ====== Answer Pages ====== -->
+
+<def tag="index-page" for="Answer">
+  <page merge title="#{ht 'answers.index.title', :default=>['Answers'] }">
+    <body: class="index-page answer" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="answers.index.heading">
+            Answers
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="answers.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+        <div param="new-form">
+          <h3 param="new-form-heading">
+            <ht key="answers.form.new.heading">New Answer</ht>
+          </h3>
+          <form with="&@invalid_record || new_for_current_user(Answer)" param/>
+        </div>
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="Answer">
+  <page merge title="#{ht 'answers.new.title', :default=>[' New Answer'] }">
+    <body: class="new-page answer" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="answers.new.heading">
+            New Answer
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'answers.actions.create', :default=>['Create Answer']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="Answer">
+  <page merge title="#{ht 'answers.show.title', :default=>['Answer'] }">
+
+    <body: class="show-page answer" param/>
+
+    <content: param>
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="answers.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="reference, approved" param/>
+
+            <a:owner param="creator-link"/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="answers.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Answer
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <view:content param="description"/>
+            <field-list fields="question" param/>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="Answer">
+  <page merge title="#{ht 'answers.edit.title', :default=>['Edit Answer'] }">
+
+    <body: class="edit-page answer" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="answers.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'answers.actions.delete', :default=>['Remove This Answer']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+
+
+<def tag="new-for-question-page" polymorphic/>
+<def tag="new-for-question-page" for="Answer">
+  <page merge title="#{ht 'answers.new_for_owner.title', :default=>['New Answer for']} #{name :with => @question}">
+    <body: class="new-for-owner-page  answer" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="answers.new_for_owner.heading">
+            New Answer
+          </ht>
+        </h2>
+        <h3 param="subheading">
+          <ht key="answers.new_for_owner.subheading">
+            For:
+          </ht>
+          <a with="&@question"/>
+        </h3>
+      </header>
+
+      <section param="content-body">
+        <form owner="question" method="post" param>
+          <field-list: skip="question"/>
+          <submit: label="#{ht 'answers.actions.create', :default=>['Create Answer']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+
+
+
+<!-- ====== QuestionCategory Pages ====== -->
+
+<def tag="index-page" for="QuestionCategory">
+  <page merge title="#{ht 'question_categories.index.title', :default=>['Question Categories'] }">
+    <body: class="index-page question-category" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="question_categories.index.heading">
+            Question Categories
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="question_categories.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+        <a action="new" to="&model" param="new-link">
+          <ht key="question_categories.actions.new">New Question Category</ht>
+        </a>
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="QuestionCategory">
+  <page merge title="#{ht 'question_categories.new.title', :default=>[' New Question Category'] }">
+    <body: class="new-page question-category" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="question_categories.new.heading">
+            New Question Category
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'question_categories.actions.create', :default=>['Create Question Category']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="QuestionCategory">
+  <page merge title="#{ht 'question_categories.show.title', :default=>['Question Category'] }">
+
+    <body: class="show-page question-category" param/>
+
+    <content: param>
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="question_categories.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="" param/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="question_categories.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Question Category
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <section param="collection-section">
+              <h3 param="collection-heading">
+                <ht key="question_categories.collection.heading.other" >
+                  Questions
+                </ht>
+              </h3>
+
+              <collection:questions param/>
+            </section>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="QuestionCategory">
+  <page merge title="#{ht 'question_categories.edit.title', :default=>['Edit Question Category'] }">
+
+    <body: class="edit-page question-category" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="question_categories.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'question_categories.actions.delete', :default=>['Remove This Question Category']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+
+
+
+
+<!-- ====== Question Pages ====== -->
+
+<def tag="index-page" for="Question">
+  <page merge title="#{ht 'questions.index.title', :default=>['Questions'] }">
+    <body: class="index-page question" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="questions.index.heading">
+            Questions
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="questions.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+        <a action="new" to="&model" param="new-link">
+          <ht key="questions.actions.new">New Question</ht>
+        </a>
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="Question">
+  <page merge title="#{ht 'questions.new.title', :default=>[' New Question'] }">
+    <body: class="new-page question" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="questions.new.heading">
+            New Question
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'questions.actions.create', :default=>['Create Question']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="Question">
+  <page merge title="#{ht 'questions.show.title', :default=>['Question'] }">
+
+    <body: class="show-page question" param/>
+
+    <content: param>
+          <header param="content-header">
+            <a:question_category param="parent-link">&laquo; <ht key="questions.actions.back" to="question_category"><name/></ht></a:question_category>
+            <h2 param="heading">
+              <ht key="questions.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="" param/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="questions.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Question
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <view:content param="description"/>
+            <field-list fields="documentation" param/>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="Question">
+  <page merge title="#{ht 'questions.edit.title', :default=>['Edit Question'] }">
+
+    <body: class="edit-page question" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="questions.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'questions.actions.delete', :default=>['Remove This Question']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+
+
+
+
+<!-- ====== User Pages ====== -->
+
+<def tag="index-page" for="User">
+  <page merge title="#{ht 'users.index.title', :default=>['Users'] }">
+    <body: class="index-page user" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="users.index.heading">
+            Users
+          </ht>
+        </h2>
+
+        <p param="count" if>
+          <ht key="users.collection.count" count="&this.size">
+            There <count prefix="are"/>
+          </ht>
+        </p>
+      </header>
+
+      <section param="content-body">
+
+        <page-nav param="top-page-nav"/>
+
+        <collection param/>
+
+        <page-nav param="bottom-page-nav"/>
+
+
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="new-page" for="User">
+  <page merge title="#{ht 'users.new.title', :default=>[' New User'] }">
+    <body: class="new-page user" param/>
+
+    <content: param>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="users.new.heading">
+            New User
+          </ht>
+        </h2>
+      </section>
+
+      <section param="content-body">
+        <form param>
+          <submit: label="#{ht 'users.actions.create', :default=>['Create User']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+<def tag="show-page" for="User">
+  <page merge title="#{ht 'users.show.title', :default=>['User'] }">
+
+    <body: class="show-page user" param/>
+
+    <content: param>
+      <section-group>
+        <section param="main-content">
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="users.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <name/>
+              </ht>
+            </h2>
+
+            <record-flags fields="administrator" param/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="users.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit User
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body" with-flash-messages>
+            <field-list fields="email_address, role, state, mentor" param/>
+            <section param="collection-section">
+              <h3 param="collection-heading">
+                <ht key="users.collection.heading.your" >
+                  <Your/>Answers
+                </ht>
+              </h3>
+
+              <collection:answers param/>
+            </section>
+          </section>
+        </section>
+
+        <aside param>
+          <section param="question_categories-collection-section">
+            <h3 param="question_categories-collection-heading">
+              <ht key="question_categories.collection.heading.other" >
+                Question Categories
+              </ht>
+            </h3>
+            <collection:question_categories  param="question_categories-collection"/>
+          </section>
+        </aside>
+      </section-group>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="edit-page" for="User">
+  <page merge title="#{ht 'users.edit.title', :default=>['Edit User'] }">
+
+    <body: class="edit-page user" param/>
+
+    <content:>
+      <section param="content-header">
+        <h2 param="heading">
+          <ht key="users.edit.heading" name="&this.respond_to?(:name) ? this.name : ''">
+            Edit <type-name/>
+          </ht>
+        </h2>
+        <delete-button label="#{ht 'users.actions.delete', :default=>['Remove This User']}" param/>
+      </section>
+
+      <section param="content-body">
+        <form param/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+
+<def tag="signup-page" polymorphic/>
+<def tag="signup-page" for="User">
+  
+  <page title="#{ht 'users.signup.title', :default=>['Signup']}" merge>  
+
+    <body: class="lifecycle-start-page signup-page" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="users.signup.heading">
+            Signup
+          </ht>
+        </h2>
+      </header>
+
+      <section param="content-body">
+        <signup-form param="form"/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+<def tag="reset-password-page" polymorphic/>
+<def tag="reset-password-page" for="User">
+  <page title="#{ht 'users.reset_password.title', :default=>['Reset Password']}" merge>
+
+    <body: class="lifecycle-transition-page reset-password-page" param/>
+
+    <content:>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="users.reset_password.heading">
+            Reset Password
+          </ht>
+        </h2>
+      </header>
+
+      <section param="content-body">
+        <reset-password-form param="form"/>
+      </section>
+    </content:>
+
+  </page>
+</def>
+
+

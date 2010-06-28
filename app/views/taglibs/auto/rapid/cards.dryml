@@ -1,0 +1,55 @@
+<!-- AUTOMATICALLY GENERATED FILE - DO NOT EDIT -->
+
+<def tag="card" for="Answer">
+  <card class="answer" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <a:owner param="creator-link"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="Question">
+  <card class="question" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionCategory">
+  <card class="question-category" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <ht key="questions.collection.count" count="&this.questions.size">
+         <count:questions param/>
+      </ht>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="User">
+  <card class="user" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <ht key="answers.collection.count" count="&this.answers.size">
+         <count:answers param/>
+      </ht>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="UserCategory">
+  <card class="user-category" param="default" merge>
+    <header: param>
+      <h4 param="heading"><name/></h4>
+    </header:>
+  </card>
+</def>
+
