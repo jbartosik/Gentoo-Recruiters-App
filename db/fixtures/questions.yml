@@ -20,6 +20,41 @@ ebuild_q3:
   content:  "When is it appropriate to post to the following mailing lists:
     gentoo-core, gentoo-dev, gentoo-dev-announce, gentoo-project?"
 
+ebuild_q4:
+  title:              src_install
+  documentation:      GLEPs
+  question_category:  ebuild
+  question_group:     ebuild_group1
+  content:            "src_install () {
+                        dobin uvconvert/${PN}
+                        doman uvconv.1
+                        dodoc readme.txt AUTHORS CREDITS changes.txt
+                      }"
+
+
+ebuild_q5:
+  title:              src_install
+  documentation:      devmanual
+  question_category:  ebuild
+  question_group:     ebuild_group1
+  content:            "src_install() {
+                        dobin utrac
+                        doman utrac.1
+                        dodoc README CHANGES CREDITS
+                      }"
+
+
+ebuild_q6:
+  title:              src_install
+  documentation:      handbook
+  question_category:  ebuild
+  question_group:     ebuild_proup1
+  content:            "src_install() {
+                        dobin tree
+                        doman man/tree.1
+                        dodoc CHANGES README*
+                      }"
+
 mentor_q1:
   title:              Scopes in ebuild
   documentation:      handbook

@@ -35,8 +35,10 @@ end
 User.destroy_all
 Answer.destroy_all
 QuestionCategory.destroy_all
+QuestionGroup.destroy_all
 Question.destroy_all
 UserCategory.destroy_all
+UserQuestionGroup.destroy_all
 User.destroy_all
 
 seeder = SeedHelper.new
@@ -46,8 +48,11 @@ seeder.objects['ebuild']    = QuestionCategory.create! :name => 'Ebuild quiz'
 seeder.objects['mentoring'] = QuestionCategory.create! :name => 'End of mentoring quiz'
 seeder.objects['non']       = QuestionCategory.create! :name => 'Non-ebuild staff quiz'
 
+# Question groups
+seeder.objects['ebuild_group1'] = QuestionGroup.create! :name => 'ebuild_group1', :description => 'src_install implementations to comment on'
+
 # Questions - load from YAML file
-seeder.read_yaml 'db/fixtures/questions.yml', Question, 'question_category'
+seeder.read_yaml 'db/fixtures/questions.yml', Question, ['question_category', 'question_group']
 
 # Users - load from YAML file
 seeder.read_yaml 'db/fixtures/users.yml', User, 'mentor'
