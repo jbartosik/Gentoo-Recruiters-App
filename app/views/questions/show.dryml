@@ -2,7 +2,23 @@
   <content:>
     <detailed show-title/>
     <if with="&this.answer_of(current_user)">
-      <a>View you answer</a>
+      <a>View you answer</a>'
+    </if>
+    <else>
+      <if test="& current_user.signed_up? && this.content.try.new_answer_of(current_user)">
+        <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>
+      </if>
+    </else>
+
+    <if test="&this.content.nil?">
+      <h2><name/><a action="edit" if="&can_edit?">(Edit)</a></h2>
+      This question doesn't have content yet.
+      <if test="&can_edit?">
+        <ul>
+          <li><a href="&new_question_content_text_for_question_path(this.id)">Add text content</a></li>
+          <li><a href="&new_question_content_multiple_choice_for_question_path(this.id)">Add multiple choice content</a></li>
+         </ul>
+      </if>
     </if>
     <else>
       <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>

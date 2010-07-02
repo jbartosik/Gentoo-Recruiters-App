@@ -5,20 +5,24 @@
 class SeedHelper
   attr_accessor :objects
   def initialize
-    @objects  ={}
+    @objects = {}
   end
 
   # Read data from file
   # in each item replace values of fields given in replace_with_objects with objects
   # and create!
-  def read_yaml(file, klass, replace_with_objects)
+  def read_yaml(file, klass, replace_with_objects, &block)
     for item_array in  YAML::load_file(file)
       name = item_array[0]
       hash = item_array[1]
       for field in replace_with_objects
         hash[field] = @objects[hash[field]]
       end
-      @objects[name] = klass.create! hash
+      if block.nil?
+        @objects[name] = klass.create! hash
+      else
+        yield(name, hash, @objects, klass)
+      end
     end
   end
 
@@ -51,8 +55,11 @@ seeder.objects['non']       = QuestionCategory.create! :name => 'Non-ebuild staf
 # Question groups
 seeder.objects['ebuild_group1'] = QuestionGroup.create! :name => 'ebuild_group1', :description => 'src_install implementations to comment on'
 
-# Questions - load from YAML file
-seeder.read_yaml 'db/fixtures/questions.yml', Question, ['question_category', 'question_group']
+# Questions with text content - load from YAML file
+seeder.read_yaml('db/fixtures/questions.yml', Question, ['question_category', 'question_group']) do |name, hash, objects, klass|
+  objects[name] = klass.create! (hash - {'content' => nil})
+  objects["#{name}-content"] = QuestionContentText.create! :question => objects[name], :content => hash['content']
+end
 
 # Users - load from YAML file
 seeder.read_yaml 'db/fixtures/users.yml', User, 'mentor'

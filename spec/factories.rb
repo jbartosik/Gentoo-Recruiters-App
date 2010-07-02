@@ -58,7 +58,6 @@
   # it'll belong to new category by default
   Factory.define :question do |q|
     q.title             { Factory.next(:question) }
-    q.content           { |q| "#{q.title} content." }
     q.question_category { Factory(:question_category)}
   end
 
@@ -106,4 +105,11 @@
   Factory.define :user_question_group do |c|
     c.user            { Factory(:user) }
     c.question        { Factory(:question, :question_group => Factory(:question_group)) }
+  end
+
+  Factory.define :question_content_text do |q|
+    q.content         "fake"
+  end
+
+  Factory.define :question_content_multiple_choice do |q|
   end

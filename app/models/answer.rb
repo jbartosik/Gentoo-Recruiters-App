@@ -57,6 +57,18 @@ class Answer < ActiveRecord::Base
       User.user_is_mentor_of?(acting_user, owner)
   end
 
+  def self.new_from(params)
+
+    if params.include? "answer"
+      Answer.new params["answer"]
+    elsif params.include? "multiple_choice_answer"
+      ans_hash            = params["multiple_choice_answer"]
+      new_ans             = MultipleChoiceAnswer.new  ans_hash
+      new_ans.options     = params["options"].inject(Array.new){ |a, cur| a.push cur.to_i }
+      return new_ans
+    end
+
+  end
   protected
     def notify_new_answer
       UserMailer.deliver_new_answer(owner.mentor, self)unless owner.mentor.nil?

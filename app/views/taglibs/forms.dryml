@@ -23,3 +23,18 @@
     </div>
   </form>
 </def>
+
+<def tag="form" for="MultipleChoiceAnswer" >
+  <form merge param="default">
+    <error-messages param/>
+    <table>
+    <input:question type="hidden"/>
+    <input:owner    type="hidden"/>
+    <input:options/>
+    <field-list fields="reference, approved"/>
+    </table>
+    <div param="actions">
+      <submit label="#{ht 'answers.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>

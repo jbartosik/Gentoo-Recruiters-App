@@ -52,6 +52,9 @@ module NavigationHelpers
 
     when /question groups index page/
       category_question_groups_path
+
+    when /show "([^\"]*)" question page/
+      question_path(Question.find_by_title($1))
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

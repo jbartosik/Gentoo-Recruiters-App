@@ -1,7 +1,7 @@
 Given /^a question "([^\"]*)"$/ do |title|
   @question = Question.find_by_title(title)
   if @question.nil?
-    @question = Question.create!( :title => title, :content => "fake")
+    @question = Question.create!( :title => title)
   end
 end
 

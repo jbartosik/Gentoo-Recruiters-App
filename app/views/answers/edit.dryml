@@ -1,0 +1,10 @@
+<edit-page>
+  <content:>
+    <%
+      # This form is used to edit various types inheriting Answer
+      # but result is alway posted to AnswersController#update
+      # so action must be specified explicitly
+    %>
+    <form action="&update_answer_path"/>
+  </content:>
+</edit-page>

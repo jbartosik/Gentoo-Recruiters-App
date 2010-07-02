@@ -1,7 +1,12 @@
 <def tag="detailed" polymorphic>You should define detailed tag if you want to use it</def>
 
 <def tag="detailed" for="Question">
-  <h2><name/><a action="edit" if="&can_edit?">(Edit)</a></h2>
+  <h2><name/></h2>
+  <if test="&can_edit?">
+    (Edit: question
+      <a action="edit">information</a>,
+      <a:content action="edit">content</a>)<br/>
+  </if>
   <unless test="&this.approved">Not approved.</unless>
   <view:content/>
 </def>
@@ -19,4 +24,19 @@
 
   <h5>Answer:</h5>
   <view:content/>
+</def>
+
+<def tag="detailed" for="MultipleChoiceAnswer">
+  <h2>
+    Answer of
+      <with:owner><name/></with>
+    for question
+    "<with:question><name/></with>
+    <a action="edit" if="&can_edit?">(Edit)</a>
+  </h2>
+  <h5>Question:</h5>
+  <with:question><view:content/></with>
+
+  <h5>Answer:</h5>
+  <view:options/>
 </def>

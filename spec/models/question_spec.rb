@@ -40,7 +40,6 @@ describe Question do
   end
 
   it { should validate_presence_of :title }
-  it { should validate_presence_of :content }
 
   it "should return proper answer of user" do
     question  = Factory(:question)
@@ -69,7 +68,7 @@ describe Question do
   it "should send email notifications to watching recruits when created by recruiter" do
     category  = Factory(:question_category)
     recruit   = Factory(:recruit, :question_categories => [category])
-    question  = Question.new(:title => "new question", :content => "some content",
+    question  = Question.new(:title => "new question",
       :question_category => category)
 
     UserMailer.should_receive(:deliver_new_question).with(recruit, question)
@@ -80,7 +79,7 @@ describe Question do
   it "should send email notifications to watching recruits when approved" do
     category  = Factory(:question_category)
     recruit   = Factory(:recruit, :question_categories => [category])
-    question  = Factory(:question, :title => "new question", :content => "some content",
+    question  = Factory(:question, :title => "new question",
       :question_category => category, :user => Factory(:recruit))
 
     UserMailer.should_receive(:deliver_new_question).with(recruit, question)
@@ -91,18 +90,18 @@ describe Question do
   it "should not send email notifications to watching recruits when approved is changed" do
     category  = Factory(:question_category)
     recruit   = Factory(:recruit, :question_categories => [category])
-    question  = Factory(:question, :title => "new question", :content => "some content",
+    question  = Factory(:question, :title => "new question",
       :question_category => category, :user => Factory(:recruit), :approved => true)
 
     UserMailer.should_not_receive(:deliver_new_question).with(recruit, question)
 
-    question.content = "changed"
+    question.title = "changed"
     question.save!
   end
 
   it "should allow signed up users to CRUD users their own unapproved questions" do
     for user in fabricate_all_roles
-      question = Question.new :user => user, :content => "fake", :title => "fake"
+      question = Question.new :user => user, :title => "fake"
       allow_all([user], question)
       question.save!
       allow_all([user], question)
@@ -111,7 +110,7 @@ describe Question do
 
   it "should prohibit signed up users to CUD users their own approved questions" do
     for user in fabricate_users(:recruit, :mentor)
-      question = Question.new :user => user, :content => "fake", :title => "fake", :approved => true
+      question = Question.new :user => user, :title => "fake", :approved => true
       question.should_not be_editable_by(user)
       question.should_not be_creatable_by(user)
       question.should_not be_destroyable_by(user)
@@ -146,7 +145,6 @@ describe Question do
 
     question.should     be_editable_by(recruit)
     question.should     be_editable_by(recruit, :title)
-    question.should     be_editable_by(recruit, :content)
     question.should     be_editable_by(recruit, :documentation)
     question.should     be_editable_by(recruit, :question_category)
 
@@ -160,7 +158,6 @@ describe Question do
 
     question.should     be_editable_by(recruit)
     question.should     be_editable_by(recruit, :title)
-    question.should     be_editable_by(recruit, :content)
     question.should     be_editable_by(recruit, :documentation)
     question.should     be_editable_by(recruit, :question_category)
 
@@ -174,7 +171,6 @@ describe Question do
 
     question.should be_editable_by(admin)
     question.should be_editable_by(admin, :title)
-    question.should be_editable_by(admin, :content)
     question.should be_editable_by(admin, :documentation)
     question.should be_editable_by(admin, :question_category)
     question.should be_editable_by(admin, :approved)

@@ -48,7 +48,7 @@ ebuild_q6:
   title:              src_install
   documentation:      handbook
   question_category:  ebuild
-  question_group:     ebuild_proup1
+  question_group:     ebuild_group1
   content:            "src_install() {
                         dobin tree
                         doman man/tree.1

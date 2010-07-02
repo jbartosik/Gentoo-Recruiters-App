@@ -1,8 +1,8 @@
 <%# Form Hobo inserts by default is broken, because it asks for owner%>
 <new-for-question-page>
   <content-body:>
-    <form>
-      <submit: label="#{ht 'answers.actions.create', :default=>['Create Answer']}"/>
+      <form with="&this.question.content.new_answer_of(current_user)" action="&create_answer_path">
+        <submit: label="#{ht 'answers.actions.create', :default=>['Create Answer']}"/>
     </form>
   </content-body:>
 </new-for-question-page>

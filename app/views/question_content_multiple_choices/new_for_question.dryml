@@ -1,0 +1,4 @@
+<%
+  # For unknown reason Hobo does not render a proper new_for page without this file
+%>
+<new-page/>

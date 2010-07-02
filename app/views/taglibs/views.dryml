@@ -1,0 +1,20 @@
+<def tag="view" for="QuestionContentText">
+  <%raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}" unless can_view?%>
+  <div>
+    <%= this.content%>
+  </div>
+</def>
+
+<def tag="view" for="QuestionContentMultipleChoice">
+  <%raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}" unless can_view?%>
+  <%= this.content %>
+  <ul>
+    <repeat:options>
+      <li><%=this.content%></li>
+    </repeat>
+  </ul>
+</def>
+
+<def tag="view" for="RichTypes::CheckList">
+  <input disabled/>
+</def>

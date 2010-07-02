@@ -1,0 +1,14 @@
+<def tag="input" for="RichTypes::CheckList" attrs="disabled">
+  <ul>
+    <repeat:options>
+      <li>
+        <%= %{
+          <input name="options[]" type="checkbox" #{this[:checked]?'checked':''} value="#{this[:id]}" id="option-#{this[:id]}" #{'disabled' if disabled}/>
+          } %>
+        <label for="option-<%=this[:id]%>" >
+          <%= this[:content] %>
+        </label>
+      </li>
+    </repeat>
+  </ul>
+</def>

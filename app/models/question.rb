@@ -4,14 +4,13 @@ class Question < ActiveRecord::Base
 
   fields do
     title         :string
-    content       :text
     documentation :string
     approved      :boolean, :default => false
     timestamps
   end
 
   attr_readonly         :user
-  validates_presence_of :title, :content
+  validates_presence_of :title
   #allow empty documentation and no category
   #maybe add a page for not complete questions
 
@@ -21,6 +20,8 @@ class Question < ActiveRecord::Base
   has_many    :answers
   has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]
   has_many    :user_question_groups
+  has_one     :question_content_text
+  has_one     :question_content_multiple_choice
 
   multi_permission :create, :update, :destroy do
     # Allow changes if user is administrator
@@ -107,6 +108,10 @@ class Question < ActiveRecord::Base
 
   def answer_of(user)
     answers.owner_is(user).not_reference.first if user.signed_up?
+  end
+
+  def content
+    question_content_text || question_content_multiple_choice
   end
 
   before_create{ |question|

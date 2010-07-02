@@ -8,7 +8,6 @@ Feature: Suggest Questions
     And I am on the home page
     When I follow "Suggestion Questions" within ".navigation.main-nav"
     And I follow "New question"
-    And I fill in "question[content]" with "Some question"
     And I fill in "question[title]" with "Some question"
     And press "Create Question"
     And I should see "The question was created successfully" within ".flash.notice"
