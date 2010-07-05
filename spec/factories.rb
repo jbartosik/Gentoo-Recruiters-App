@@ -99,7 +99,8 @@
   end
 
   Factory.define :question_group do |c|
-    c.name { Factory.next(:question_group) }
+    c.name        { Factory.next(:question_group) }
+    c.description "Just another group"
   end
 
   Factory.define :user_question_group do |c|

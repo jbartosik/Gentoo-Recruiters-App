@@ -49,6 +49,9 @@ module NavigationHelpers
 
     when /questions index page/
       questions_path
+
+    when /question groups index page/
+      category_question_groups_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

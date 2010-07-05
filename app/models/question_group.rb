@@ -3,12 +3,13 @@ class QuestionGroup < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    name :string, :null => false
+    name        :string, :null => false
+    description :text, :null => false
     timestamps
   end
 
   has_many :questions
-  validates_presence_of   :name
+  validates_presence_of   :name, :description
   validates_uniqueness_of :name
   include Permissions::AnyoneCanViewAdminCanChange
 

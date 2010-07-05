@@ -1,0 +1,11 @@
+<index-page>
+  <content:>
+    <form action="/question_groups/category">
+      <%=
+        select("id", nil, QuestionCategory.as_select_opts, {:include_blank => false, :selected =>  params['id'].try[0].to_i})
+      %>
+      <submit label="view in this category"/>
+    </form>
+    <collection/>
+  </content:>
+</index-page>
