@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
   end
 
   has_many    :user_categories
+  has_many    :user_question_groups
   has_many    :question_categories, :through => :user_categories, :accessible => true, :uniq => true
+  has_many    :grouped_questions, :through => :user_question_groups
   has_many    :answers, :foreign_key => :owner_id
   has_many    :answered_questions, :through => :answers, :class_name => "Question", :source => :question
   has_many    :project_acceptances, :accessible => true, :uniq => true
@@ -22,11 +24,16 @@ class User < ActiveRecord::Base
   has_many    :recruits, :class_name => "User", :foreign_key => :mentor_id
 
   named_scope :mentorless_recruits, :conditions => { :role => 'recruit', :mentor_id => nil}
-  named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS (SELECT questions.id FROM questions
+  named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS
+    (SELECT questions.id FROM questions
     INNER JOIN question_categories cat ON questions.question_category_id = cat.id INNER JOIN
     user_categories ON user_categories.question_category_id = cat.id LEFT OUTER JOIN
     answers ON answers.question_id = questions.id AND answers.owner_id = users.id WHERE
-    user_categories.user_id = users.id AND answers.id IS NULL)"
+    user_categories.user_id = users.id AND answers.id IS NULL AND questions.question_group_id IS NULL)
+    AND NOT EXISTS
+    (SELECT questions.id FROM questions INNER JOIN user_question_groups ON questions.id = user_question_groups.question_id
+    LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.owner_id = users.id
+     WHERE user_question_groups.user_id = users.id AND answers.id IS NULL)"
 
   # This gives admin rights and recruiter role to the first sign-up.
   before_create { |user|
@@ -103,12 +110,11 @@ class User < ActiveRecord::Base
   end
 
   def all_questions
-    Question.find :all, :joins => {:question_category => :user_categories},
-      :conditions => ['questions.question_category_id = user_categories.question_category_id AND user_categories.user_id = ?', id]
+    Question.ungrouped_questions_of_user(id) + Question.grouped_questions_of_user(id)
   end
 
   def unanswered_questions
-    Question.unanswered(id)
+    Question.unanswered_grouped(id) + Question.unanswered_ungrouped(id)
   end
 
   def my_recruits_answers
@@ -120,7 +126,7 @@ class User < ActiveRecord::Base
   end
 
   def answered_all_questions?
-    Question.unanswered(id).count.zero?
+    Question.unanswered_grouped(id).count.zero? && Question.unanswered_ungrouped(id).count.zero?
   end
 
   def any_pending_project_acceptances?

@@ -21,4 +21,12 @@ class UserCategory < ActiveRecord::Base
       user_is?(acting_user)||
       user.mentor_is?(acting_user)
   end
+
+  def before_create
+    for group in QuestionGroup.unassociated_in_category(user, question_category).all
+      chosen_question = rand(group.questions.count)
+      UserQuestionGroup.create! :user => user, :question =>
+        (Question.all :limit => 1, :offset => chosen_question, :conditions => {:question_group_id => group.id})[0]
+    end
+  end
 end

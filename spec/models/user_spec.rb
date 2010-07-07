@@ -82,8 +82,7 @@ describe User do
     for question in r.answered + r.unanswered
       r.recruit.all_questions.include?(question).should be_true
     end
-
-    (r.recruit.all_questions - r.recruit.all_questions.uniq).should be_empty
+    r.recruit.all_questions.count.should == r.recruit.all_questions.uniq.count
   end
 
   it "should return proper answered_questions" do

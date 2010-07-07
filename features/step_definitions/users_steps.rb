@@ -32,7 +32,9 @@ end
 Given /^user "([^\"]*)" answered all questions in "([^\"]*)"$/ do |user_name,  category_name|
   Given "a question category \"#{category_name}\""
   for q in @question_category.questions
-    And "\"#{user_name}\" answered question \"#{q.title}\""
+    if q.question_group.nil?
+      Given "\"#{user_name}\" answered question \"#{q.title}\""
+    end
   end
 end
 
@@ -78,4 +80,10 @@ Given /^"([^"]*)" suggested question "([^"]*)"$/ do |user, question|
   @question.user = @user
   @question.approved = false
   @question.save!
+end
+
+Given /^user "([^"]*)" is associated with question "([^"]*)"$/ do |user, question|
+  Given "user \"#{user}\""
+  Given "a question \"#{question}\""
+  UserQuestionGroup.create! :user => @user, :question => question
 end

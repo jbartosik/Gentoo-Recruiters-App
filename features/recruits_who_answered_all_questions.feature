@@ -23,3 +23,30 @@ Feature: Viewing recruits who answered all questions
     When I am on the home page
     And I follow "Recruits that answered all questions"
     Then I should be on ready recruits page
+
+  Scenario: Recruit that answered assigned and ungrouped questions is ready
+    Given following questions:
+      |q1|cat1|grp1|
+      |q2|cat1|grp1|
+    And following questions:
+      |q3|cat1|
+      |q4|cat1|
+    And user "recruit" is associated with question "q1"
+    And answer of "recruit" for question "q1"
+    And user "recruit" has category "cat1"
+    And user "recruit" answered all questions in "cat1"
+    When I am on ready recruits page
+    Then I should see "recruit" within ".user .collection"
+
+  Scenario: Recruit that answered didn't answer assigned grouped question isn't ready
+    Given following questions:
+      |q1|cat1|grp1|
+      |q2|cat1|grp1|
+    And following questions:
+      |q3|cat1|
+      |q4|cat1|
+    And user "recruit" is associated with question "q1"
+    And user "recruit" has category "cat1"
+    And user "recruit" answered all questions in "cat1"
+    When I am on ready recruits page
+    Then I should see "No users to display" within ".empty-collection-message"

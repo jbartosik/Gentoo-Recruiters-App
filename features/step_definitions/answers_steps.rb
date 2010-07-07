@@ -3,6 +3,6 @@ Given /^(?:|a )answer of "([^\"]*)" for question "([^\"]*)"$/ do |user, question
   Given "user \"#{user}\""
   @answer = @question.answer_of @user
   if @answer.nil?
-    @answer = Answer.create!( :owner => @user, :question => @question, :content => "fake")
+    @answer = Answer.create!(:owner => @user, :question => @question, :content => "fake")
   end
 end

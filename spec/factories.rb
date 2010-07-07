@@ -93,3 +93,16 @@
     a.user            { Factory(:recruit) }
     a.accepting_nick  { Factory(:mentor).nick }
   end
+
+  Factory.sequence :question_group do |n|
+    "question_group-#{n}"
+  end
+
+  Factory.define :question_group do |c|
+    c.name { Factory.next(:question_group) }
+  end
+
+  Factory.define :user_question_group do |c|
+    c.user            { Factory(:user) }
+    c.question        { Factory(:question, :question_group => Factory(:question_group)) }
+  end

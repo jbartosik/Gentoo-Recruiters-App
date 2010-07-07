@@ -17,9 +17,10 @@ class Question < ActiveRecord::Base
 
   belongs_to  :user, :creator => true
   belongs_to  :question_category
+  belongs_to  :question_group
   has_many    :answers
   has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]
-  include Permissions::AnyoneCanViewAdminCanChange
+  has_many    :user_question_groups
 
   multi_permission :create, :update, :destroy do
     # Allow changes if user is administrator
@@ -43,18 +44,62 @@ class Question < ActiveRecord::Base
       return user_is?(acting_user) || acting_user.try.role.try.is_recruiter?
     end
 
-    true
+    # Allow viewing ungrouped questions to everybody
+    return true if question_group.nil?
+
+    # Deny viewing grouped qestions to guests, so we can assume that
+    # acting_user is valid User instance in next tests
+    return false unless acting_user.signed_up?
+
+    # Allow viewing all questions to recruiters
+    return true if acting_user.role.is_recruiter?
+
+    # Allow viewing grouped question if it's associated with user
+    return true if (UserQuestionGroup.find_by_user_and_question(acting_user.id, id).count) > 0
+
+    # Allow viewing grouped question if one of user's recruits is associated with it
+    return true if (UserQuestionGroup.find_by_mentor_and_question(acting_user.id, id).count) > 0
+
+    false
   end
 
-  named_scope   :suggested_questions, lambda { |user_id|{
+  named_scope :unanswered_ungrouped, lambda { |uid|{
+      :joins => {:question_category => :user_categories},
+      :conditions => [ 'user_categories.user_id = ? AND questions.question_group_id IS NULL ' +
+      'AND NOT EXISTS (' +
+      'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)',
+      uid,uid]}}
+
+  named_scope :unanswered_grouped, lambda { |uid|{
+      :joins => :user_question_groups,
+      :conditions => [ 'user_question_groups.user_id = ? AND NOT EXISTS (
+      SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)',
+      uid, uid]}}
+
+  named_scope :user_questions_in_group, lambda { |user_id, group_id| {
+      :joins => {:user_question_groups => :user}, :conditions =>
+      ['questions.question_group_id = ? AND users.id = ?', group_id, user_id]}}
+
+  named_scope :id_is_not, lambda { |id|{
+      :conditions => ['questions.id != ?', id]}}
+
+  named_scope :ungrouped_questions_of_user, lambda { |user_id|{
+    :joins => {:question_category => :user_categories},
+    :conditions => ['user_categories.user_id = ? AND questions.question_group_id IS NULL', user_id]}}
+
+  named_scope :grouped_questions_of_user, lambda { |user_id|{
+      :joins => {:user_question_groups => :user}, :conditions =>
+      ['users.id = ?', user_id]}}
+
+  named_scope :suggested_questions, lambda { |user_id|{
     :conditions => { :user_id => user_id, :approved => false }}}
 
-  named_scope  :unanswered, lambda { |uid|{
+  named_scope :unanswered, lambda { |uid|{
       :joins => {:question_category => {:user_categories => :user}},
       :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
       'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', uid, uid]}}
 
-  named_scope   :questions_to_approve, :conditions => { :approved => false }
+  named_scope :questions_to_approve, :conditions => { :approved => false }
 
   def answered?(user)
     user.signed_up? && user.answered_questions.include?(self)
