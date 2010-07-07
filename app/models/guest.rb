@@ -4,4 +4,7 @@ class Guest < Hobo::Guest
     false
   end
 
+  def questions_to_approve
+    []
+  end
 end

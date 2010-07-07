@@ -2,6 +2,7 @@
 
 <def tag="detailed" for="Question">
   <h2><name/><a action="edit" if="&can_edit?">(Edit)</a></h2>
+  <unless test="&this.approved">Not approved.</unless>
   <view:content/>
 </def>
 

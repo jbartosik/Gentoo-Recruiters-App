@@ -11,3 +11,14 @@
 <include src="forms"/>
 <include src="detailed"/>
 <include src="pages"/>
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item href="#{base_url}/">Home</nav-item>
+    <nav-item with="&ProjectAcceptance"><ht key="project_acceptances.nav_item">Project Acceptances</ht></nav-item>
+    <nav-item with="&Question"><ht key="questions.nav_item">Questions</ht></nav-item>
+    <nav-item with="&QuestionCategory"><ht key="question_categories.nav_item">Question Categories</ht></nav-item>
+    <nav-item href="&suggest_questions_questions_path"><ht key="questions.nav_item">Suggestion Questions</ht></nav-item>
+    <nav-item href="&approve_questions_questions_path" if="&current_user.questions_to_approve.count > 0"><ht key="questions.nav_item">Approve Questions</ht></nav-item>
+  </navigation>
+</def>

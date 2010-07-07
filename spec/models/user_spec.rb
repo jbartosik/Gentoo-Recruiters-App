@@ -78,10 +78,12 @@ describe User do
 
   it "should return proper all_questions" do
     r = recruit_with_answered_and_unanswered_questions
+
     for question in r.answered + r.unanswered
       r.recruit.all_questions.include?(question).should be_true
     end
-    r.recruit.all_questions.should == r.recruit.all_questions.uniq
+
+    (r.recruit.all_questions - r.recruit.all_questions.uniq).should be_empty
   end
 
   it "should return proper answered_questions" do
@@ -97,13 +99,10 @@ describe User do
 
   it "should return proper unanswered_questions" do
     r = recruit_with_answered_and_unanswered_questions
-    for question in r.answered
-      r.recruit.unanswered_questions.include?(question).should be_false
-    end
-    for question in r.unanswered
-      r.recruit.unanswered_questions.include?(question).should be_true
-    end
-    r.recruit.unanswered_questions.should == r.recruit.unanswered_questions.uniq
+    unanswered = r.recruit.unanswered_questions
+    (r.unanswered - unanswered).should be_empty
+    (unanswered - r.unanswered).should be_empty
+    unanswered.should == unanswered.uniq
   end
 
   it "should return proper recruits answers in category" do
@@ -142,7 +141,7 @@ describe User do
 
   it "should properly check if user answered all questions" do
     r = recruit_with_answered_and_unanswered_questions
-    r.recruit.answered_all_questions?.should            be_false
+    r.recruit.answered_all_questions?.should          be_false
     Factory(:recruit).answered_all_questions?.should  be_true
   end
 

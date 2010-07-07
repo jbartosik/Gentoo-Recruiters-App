@@ -64,3 +64,18 @@ Given /^I am logged in as "([^\"]*)" who is "([^\"]*)"$/ do |login, role|
   Given "user \"#{login}\" who is \"#{role}\""
   Given "I am logged in as \"#{login}\""
 end
+
+Given /^I am logged in as administrator$/ do
+  Given "user \"admin\" who is \"recruiter\""
+  @user.administrator = true
+  @user.save!
+  Given "I am logged in as \"admin\""
+end
+
+Given /^"([^"]*)" suggested question "([^"]*)"$/ do |user, question|
+  Given "user \"#{user}\""
+  Given "a question \"#{question}\""
+  @question.user = @user
+  @question.approved = false
+  @question.save!
+end

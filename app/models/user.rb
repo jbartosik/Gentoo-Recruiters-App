@@ -126,6 +126,17 @@ class User < ActiveRecord::Base
   def any_pending_project_acceptances?
     (ProjectAcceptance.count :conditions => { :accepting_nick => nick }) > 0
   end
+
+  # This returns named scope, so it's efficient to use
+  #   some_user.questions_to_approve.count
+  def questions_to_approve
+    if administrator?
+      Question.questions_to_approve
+    else
+      []
+    end
+  end
+
   protected
 
     def only_recruiter_can_be_administrator
