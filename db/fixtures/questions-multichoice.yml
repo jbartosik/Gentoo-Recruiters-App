@@ -1,0 +1,6 @@
+multichoice_q1:
+  title:              Fake multiple choice
+  documentation:      Fake
+  question_category:  ebuild
+  content:            Some question
+  options:            Option 1; Option 2; Option 3
