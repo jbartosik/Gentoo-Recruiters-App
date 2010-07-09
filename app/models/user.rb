@@ -143,6 +143,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def answered_all_multi_choice
+    Question.multiple_choice.ungrouped_questions_of_user(id).unanswered(id).count == 0 &&
+      Question.multiple_choice.grouped_questions_of_user(id).unanswered(id).count == 0
+  end
+
   protected
 
     def only_recruiter_can_be_administrator

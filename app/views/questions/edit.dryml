@@ -1,0 +1,10 @@
+<edit-page>
+  <content-body:>
+    <form/>
+    <form:content if="&this.content">
+      <actions:>
+        <submit label="Update question content"/>
+      </actions:>
+    </form>
+  </content-body:>
+</edit-page>

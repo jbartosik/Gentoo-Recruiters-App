@@ -155,8 +155,8 @@ describe Answer do
 
   it "shouldn't try to send notifications to mentor of mentorless recruit" do
     recruit =  Factory(:recruit, :mentor => nil)
-    answer  = Answer.new, :owner => recruit, :content => "example", :question => Factory(:question)
     UserMailer.should_not_receive(:deliver_changed_answer)
+    answer  = Factory(:answer, :owner => recruit)
     answer.save!
     answer.content = "changed"
     answer.save!

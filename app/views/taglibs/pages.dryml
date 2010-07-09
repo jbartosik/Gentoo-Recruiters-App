@@ -45,5 +45,13 @@
     <if test="&current_user.try.role.try.is_mentor? && User.mentorless_recruits.count > 0">
       <a with="&User" action="mentorless_recruits">See mentorless recruits</a><br/>
     </if>
+    <if test="&current_user.answered_all_multi_choice">
+      <if test="&Answer.wrong_answers_of(current_user.try.id).count > 0">
+        You answered all multiple choice questions, but some of them wrong.<br/>
+      </if>
+      <else>
+        You answered all multiple choice questions, correctly.<br/>
+      </else>
+    </if>
   </section>
 </def>
