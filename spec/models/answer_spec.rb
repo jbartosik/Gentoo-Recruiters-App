@@ -52,7 +52,7 @@ describe Answer do
       view_denied(fabricate_users(:recruit, :mentor)+ [Guest.new], new_answer)
     end
   end
-  
+
   it 'should be allowed for recruiters to view all answers' do
     for user in fabricate_all_roles
       new_answer = Answer.new(:owner => user)
@@ -149,6 +149,15 @@ describe Answer do
   it "should send email notification to mentor when changed" do
     answer = Factory(:answer)
     UserMailer.should_receive(:deliver_changed_answer).with(answer.owner.mentor, answer)
+    answer.content = "changed"
+    answer.save!
+  end
+
+  it "shouldn't try to send notifications to mentor of mentorless recruit" do
+    recruit =  Factory(:recruit, :mentor => nil)
+    answer  = Answer.new, :owner => recruit, :content => "example", :question => Factory(:question)
+    UserMailer.should_not_receive(:deliver_changed_answer)
+    answer.save!
     answer.content = "changed"
     answer.save!
   end
