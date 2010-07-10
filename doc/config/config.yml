@@ -1,0 +1,17 @@
+defaults: &defaults
+  developer_data:
+    check:                    true
+    uri:                      http://gamma.mini.pw.edu.pl/~bartosikj/new_dj.xml
+    min_months_mentor_is_dev: 6
+development:
+  <<: *defaults
+production:
+  <<: *defaults
+test:
+  <<: *defaults
+  developer_data:
+    check: false
+cucumber:
+  <<: *defaults
+  developer_data:
+    check: false

@@ -35,6 +35,9 @@ class SeedHelper
   end
 end
 
+# disable check of developer data (if mentor joined Gentoo long enough)
+APP_CONFIG['developer_data']['check'] = false
+
 # Remove existing database entries
 User.destroy_all
 Answer.destroy_all

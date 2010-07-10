@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   validate                :only_recruiter_can_be_administrator
   validate                :recruit_cant_mentor
   validate                :mentors_and_recruiters_must_have_nick
+  validate                :mentor_is_gentoo_dev_long_enough
   validates_uniqueness_of :nick, :if => :nick
   # --- Permissions --- #
 
@@ -178,5 +179,32 @@ class User < ActiveRecord::Base
       only_changed?(:mentor) &&
       (mentor_id_was.nil? || (mentor_id_was == acting_user.try.id)) &&
       (mentor_id.nil? || (mentor_id == acting_user.try.id))
+    end
+
+    def mentor_is_gentoo_dev_long_enough
+      return unless role.is_mentor?                         # User isn't mentor
+      return unless APP_CONFIG['developer_data']['check']   # Configured not to check
+
+      dev_data_str  = APP_CONFIG['developer_data']['data']  # Data about developers from configuration
+      if dev_data_str.nil?                                  # If there isn't any fetch it from configured location
+        uri         = URI.parse(APP_CONFIG['developer_data']['uri'])
+        dev_data    = Net::HTTP.get_response(uri).body
+      end
+
+      dev_data      = ActiveSupport::JSON.decode(dev_data_str)['developers']
+      max_join_date = APP_CONFIG['developer_data']['min_months_mentor_is_dev'].to_i.months.ago.to_date
+
+      for dev in dev_data
+        if dev['nick'] == nick                              # Found dev
+          joined  = dev['joined'].to_date
+          return  if joined < max_join_date                 # Joined early enough: finish check, no errors
+                                                            # Otherwise: finish check, report error
+          errors.add(:role, "developer with provided nick can't be mentor yet(joined Gentoo less then
+            #{ APP_CONFIG['min_months_mentor_is_dev']} months ago)")
+          return
+        end
+      end
+
+      errors.add(:nick, "not found this nick amoung Gentoo Developers.")
     end
 end

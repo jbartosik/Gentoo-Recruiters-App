@@ -2,9 +2,11 @@ email_q1:
   title:              Gentoo-dev-announce posting
   documentation:
   question_category:  ebuild
-  content:            Email A Major eclass change announcement to (email address that will notify webapp).
-                      Remember to replace @gento.org with @localhost in all addressest(to not put
-                      unecessary messages on mailing lists).
+  content:            "Email A Major eclass change announcement to <your configured address>.
+                      The from field should match your account in the web application.
+                      To configure postfix use for example recruiting:\n
+                      | \"<project dir>/script/runner 'UserMailer.receive(STDIN.read)'\"
+                      \n in /etc/mail/aliases"
   req_text:           'To : gentoo-dev-announce@loacalhost
                       To : gentoo-dev@loacalhost
                       Reply-to : gentoo-dev@localhost'
