@@ -48,10 +48,58 @@
 
 
 
+<def tag="form" for="QuestionContentEmail">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="description, question" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_content_emails.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="QuestionContentMultipleChoice">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="content, options, question" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_content_multiple_choices.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="QuestionContentText">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="content, question" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_content_texts.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="QuestionGroup">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="name, description" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_groups.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
 <def tag="form" for="Question">
   <form merge param="default">
     <error-messages param/>
-    <field-list fields="title, content, documentation, question_category" param/>
+    <field-list fields="title, documentation, approved, question_category, question_group, user" param/>
     <div param="actions">
       <submit label="#{ht 'questions.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>
