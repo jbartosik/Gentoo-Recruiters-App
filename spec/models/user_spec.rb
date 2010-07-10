@@ -196,4 +196,30 @@ describe User do
     recruit.mentor = nil
     recruit.should be_updatable_by(mentor)
   end
+
+  it "should check if mentors were Gentoo devs long enough if configured to" do
+    user            = Factory(:recruit)
+
+    # Configure to check using test data
+    old_config                              =  APP_CONFIG # to restore it after his test
+    APP_CONFIG['developer_data']['check']   = true
+    APP_CONFIG['developer_data']['min_months_mentor_is_dev']  = '6'
+    APP_CONFIG['developer_data']['data']    = %{{"developers": [
+      {"joined": "#{4.years.ago.strftime('%Y/%m/%d')}", "nick": "long"},
+      {"joined": "#{4.months.ago.strftime('%Y/%m/%d')}", "nick": "short"}
+    ]}}
+
+    user.role       = :mentor
+
+    user.nick       = "long"
+    user.should     be_valid
+
+    user.nick       = "short"
+    user.should_not be_valid
+
+    user.nick       = "short"
+    user.should_not be_valid
+
+    silence_warnings { APP_CONFIG = old_config } # restore config
+  end
 end

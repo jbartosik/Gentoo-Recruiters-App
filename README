@@ -40,6 +40,12 @@ it will be listening for connections on port 3000.
 Configuration
 
 In config/config.yml you can set:
+
+  developer_data:
+    check                       - Should developer data be checked (Gentoo join time for mentors)
+    data                        - String with developer data to use (overrides uri)
+    uri                         - URI from which developer data shall be obtained
+    min_months_mentor_is_dev: 6 - Number of months mentor must spend as Gentoo Dev before [s]h can became a mentor
   seed:
     users_domain                - Domain for emails of users from default seed
 
