@@ -46,4 +46,8 @@ class UserMailer < ActionMailer::Base
     @subject    = "New comment"
     @body       = { :question_title=> question_title(comment.answer), :id => comment.answer.id }
   end
+
+  def receive(email)
+    EmailAnswer.answer_from_email(email) if /answer/.match(email.subject)
+  end
 end

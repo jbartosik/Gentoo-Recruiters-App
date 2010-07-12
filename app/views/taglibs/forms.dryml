@@ -38,3 +38,15 @@
     </div>
   </form>
 </def>
+
+<def tag="form" for="QuestionContentEmail">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="description, req_text" param>
+      <req_text-label:>Requirements</req_text-label:>
+    </field-list>
+    <div param="actions">
+      <submit label="#{ht 'question_content_emails.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>

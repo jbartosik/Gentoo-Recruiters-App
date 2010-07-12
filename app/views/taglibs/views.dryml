@@ -18,3 +18,16 @@
 <def tag="view" for="RichTypes::CheckList">
   <input disabled/>
 </def>
+
+<def tag="view" for="QuestionContentEmail">
+  <%=
+    if this.viewable_by?(current_user, :req_text)
+      "#{h(this.req_text).sub("\n", "<br/>\n")}<br/>"
+    end
+  %>
+  <%=
+    if this.viewable_by?(current_user, :description)
+      "#{h(this.description).sub("\n", "<br/>\n")}<br/>"
+    end
+  %>
+</def>

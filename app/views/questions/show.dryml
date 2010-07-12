@@ -1,8 +1,9 @@
 <show-page>
   <content:>
     <detailed show-title/>
+
     <if with="&this.answer_of(current_user)">
-      <a>View you answer</a>'
+      <a href="&answer_path(this)">View you answer</a><br/>
     </if>
     <else>
       <if test="& current_user.signed_up? && this.content.try.new_answer_of(current_user)">
@@ -17,12 +18,10 @@
         <ul>
           <li><a href="&new_question_content_text_for_question_path(this.id)">Add text content</a></li>
           <li><a href="&new_question_content_multiple_choice_for_question_path(this.id)">Add multiple choice content</a></li>
+          <li><a href="&new_question_content_email_for_question_path(this.id)">Add email content</a></li>
          </ul>
       </if>
     </if>
-    <else>
-      <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>
-    </else>
     <if test="&this.reference_answer.try.viewable_by? current_user">
       <br/>
       <a:reference_answer>View reference answer</a>.

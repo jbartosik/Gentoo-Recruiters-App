@@ -22,6 +22,7 @@ class Question < ActiveRecord::Base
   has_many    :user_question_groups
   has_one     :question_content_text
   has_one     :question_content_multiple_choice
+  has_one     :question_content_email
 
   multi_permission :create, :update, :destroy do
     # Allow changes if user is administrator
@@ -113,7 +114,9 @@ class Question < ActiveRecord::Base
   end
 
   def content
-    question_content_text || question_content_multiple_choice
+    question_content_text ||
+      question_content_multiple_choice ||
+      question_content_email
   end
 
   before_create{ |question|

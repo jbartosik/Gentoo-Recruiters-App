@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file,
+# This file is auto-generated from the current state of the database. Instead of editing this file, 
 # please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100709164217) do
+ActiveRecord::Schema.define(:version => 20100712085519) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20100709164217) do
     t.integer  "question_id"
     t.integer  "owner_id"
     t.string   "type"
+    t.boolean  "correct"
   end
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
@@ -62,6 +63,16 @@ ActiveRecord::Schema.define(:version => 20100709164217) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "question_content_emails", :force => true do |t|
+    t.text     "requirements", :default => ""
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "question_id"
+  end
+
+  add_index "question_content_emails", ["question_id"], :name => "index_question_content_emails_on_question_id"
 
   create_table "question_content_multiple_choices", :force => true do |t|
     t.text     "content"

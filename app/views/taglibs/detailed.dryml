@@ -40,3 +40,23 @@
   <h5>Answer:</h5>
   <view:options/>
 </def>
+
+<def tag="detailed" for="EmailAnswer">
+  <h2>
+    Answer of
+      <with:owner><name/></with>
+    for question
+    "<with:question><name/></with>
+    <a action="edit" if="&can_edit?">(Edit)</a>
+  </h2>
+  <h5>Question:</h5>
+  <with:question><view:content/></with>
+
+  <h5>Answer:</h5>
+  <if:correct>
+    You sent proper email.
+  </if>
+  <else>
+    Email you sent didn't match requirements.
+  </else>
+</def>
