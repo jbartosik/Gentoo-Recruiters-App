@@ -35,14 +35,6 @@ class User < ActiveRecord::Base
     LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.owner_id = users.id
      WHERE user_question_groups.user_id = users.id AND answers.id IS NULL)"
 
-  # This gives admin rights and recruiter role to the first sign-up.
-  before_create { |user|
-    if !Rails.env.test? && count == 0
-      user.administrator  = true
-      user.role           = :recruiter
-    end }
-
-  
   # --- Signup lifecycle --- #
 
   lifecycle do
@@ -52,7 +44,7 @@ class User < ActiveRecord::Base
     create :signup, :available_to => "Guest",
            :params => [:name, :email_address, :password, :password_confirmation],
            :become => :active
-             
+
     transition :request_password_reset, { :active => :active }, :new_key => true do
       UserMailer.deliver_forgot_password(self, lifecycle.key)
     end
@@ -61,7 +53,7 @@ class User < ActiveRecord::Base
                :params => [ :password, :password_confirmation ]
 
   end
-  
+
   validate                :only_recruiter_can_be_administrator
   validate                :recruit_cant_mentor
   validate                :mentors_and_recruiters_must_have_nick
