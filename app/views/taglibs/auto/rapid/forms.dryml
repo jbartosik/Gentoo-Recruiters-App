@@ -3,7 +3,7 @@
 <def tag="form" for="Answer">
   <form merge param="default">
     <error-messages param/>
-    <field-list fields="content, approved, reference, question" param/>
+    <field-list fields="content, approved, reference, correct, question" param/>
     <div param="actions">
       <submit label="#{ht 'answers.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>

@@ -93,7 +93,7 @@
               </ht>
             </h2>
 
-            <record-flags fields="approved, reference" param/>
+            <record-flags fields="approved, reference, correct" param/>
 
             <a:owner param="creator-link"/>
 
@@ -811,6 +811,12 @@
             </h2>
 
             <record-flags fields="" param/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="question_content_multiple_choices.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Question Content Multiple Choice
+              </ht>
+            </a>
           </header>
 
           <section param="content-body">

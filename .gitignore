@@ -5,5 +5,4 @@ log
 test
 .*.swp
 config/database.yml
-config/config.yml
 tmp

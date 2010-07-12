@@ -73,6 +73,13 @@
 
 <def tag="card" for="QuestionContentMultipleChoice">
   <card class="question-content-multiple-choice" param="default" merge>
+    <header: param>
+      <div param="actions">
+        <a action="edit" if="&can_edit?" param="edit-link">
+          <ht key="question_content_multiple_choices.actions.edit">Edit</ht>
+        </a>
+      </div>
+    </header:>
     <body: param>
       <view:content param="description"/>
     </body:>
