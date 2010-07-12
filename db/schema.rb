@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100728172058) do
+ActiveRecord::Schema.define(:version => 20100729170624) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20100728172058) do
     t.integer  "owner_id"
     t.string   "type"
     t.string   "feedback",    :default => ""
+    t.boolean  "correct"
   end
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
@@ -63,6 +64,16 @@ ActiveRecord::Schema.define(:version => 20100728172058) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "question_content_emails", :force => true do |t|
+    t.text     "requirements", :default => ""
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "question_id"
+  end
+
+  add_index "question_content_emails", ["question_id"], :name => "index_question_content_emails_on_question_id"
 
   create_table "question_content_multiple_choices", :force => true do |t|
     t.text     "content",     :null => false
@@ -141,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20100728172058) do
     t.string   "state",                                   :default => "active"
     t.datetime "key_timestamp"
     t.boolean  "project_lead",                            :default => false
+    t.string   "token"
   end
 
   add_index "users", ["mentor_id"], :name => "index_users_on_mentor_id"

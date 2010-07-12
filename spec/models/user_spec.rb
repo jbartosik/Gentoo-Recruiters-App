@@ -200,4 +200,10 @@ describe User do
     user.should_not be_editable_by(Factory(:recruit), :project_acceptances)
     user.should_not be_editable_by(Guest.new, :project_acceptances)
   end
+
+  it "should have token right after creation" do
+    for u in fabricate_all_roles
+      u.token.should_not be_nil
+    end
+  end
 end

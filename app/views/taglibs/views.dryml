@@ -19,3 +19,25 @@
   <%raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}" unless can_view?%>
   <input disabled/>
 </def>
+
+<def tag="view" for="QuestionContentEmail">
+  <%=
+    if this.viewable_by?(current_user, :req_text)
+      "#{h(this.req_text).sub("\n", "<br/>\n")}<br/>"
+    else
+      raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}"
+    end
+  %>
+
+  <%=
+    if this.viewable_by?(current_user, :description)
+      "#{this.description.to_html}"
+    else
+      raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}"
+    end
+  %>
+
+  <if test="&current_user.signed_up?">
+    Your answer should have subject (without quotes) "<%= "#{this.question.id}-#{current_user.try.token}" %>".
+  </if>
+</def>

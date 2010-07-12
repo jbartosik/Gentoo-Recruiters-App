@@ -79,6 +79,11 @@ seeder.read_yaml('db/fixtures/questions-multichoice.yml', Question, ['question_c
   end
 end
 
+# Questions with email content - load from YAML file
+seeder.read_yaml('db/fixtures/questions-email.yml', Question, ['question_category', 'question_group']) do |name, hash, objects, klass|
+  objects[name] = klass.create!(hash - {'content' => nil, 'req_text' => nil})
+  objects["#{name}-content"] = QuestionContentEmail.create! :question => objects[name], :description=> hash['content'], :req_text => hash['req_text']
+end
 # Users - load from YAML file
 seeder.read_yaml 'db/fixtures/users.yml', User, 'mentor'
 

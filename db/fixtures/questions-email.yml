@@ -1,0 +1,14 @@
+email_q1:
+  title:              Gentoo-dev-announce posting
+  documentation:
+  question_category:  ebuild
+  content:            "Email a major eclass change announcement. Replace all
+                      @gentoo.org addresses with @localhost addresses.
+                      The from field should match email you set in the application.
+                      \n\nTo configure postfix use for example recruiting:
+                      \n\n    gentoo-dev-announce: | \"curl -F 'email=<-' http://localhost:3000/users/receive_email\"
+                      \n    gentoo-dev: /dev/null
+                      \n\nin /etc/mail/aliases."
+  req_text:           'To : gentoo-dev-announce@localhost
+                      To : gentoo-dev@localhost
+                      Reply-to : gentoo-dev@localhost'

@@ -38,4 +38,10 @@ class UserMailer < ActionMailer::Base
     common(user, "New comment")
     @body = { :question_title=> question_title(comment.answer), :id => comment.answer.id }
   end
+
+  def receive(email)
+    # For now email answers for questions are only emails app receives
+    # so try use any received email as answer.
+    EmailAnswer.answer_from_email(email)
+  end
 end

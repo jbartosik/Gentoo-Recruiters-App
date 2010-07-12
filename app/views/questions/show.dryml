@@ -8,12 +8,13 @@
         <ul>
           <li><a href="&new_question_content_text_for_question_path(this.id)">Add text content</a></li>
           <li><a href="&new_question_content_multiple_choice_for_question_path(this.id)">Add multiple choice content</a></li>
+          <li><a href="&new_question_content_email_for_question_path(this.id)">Add email content</a></li>
          </ul>
       </if>
     </if>
     <else>
       <if with="&this.answer_of(current_user)">
-        <a>View you answer</a>'
+        <a href="&answer_path(this)">View you answer</a>'
       </if>
       <else>
         <if test="& current_user.signed_up? && this.content.try.new_answer_of(current_user)">

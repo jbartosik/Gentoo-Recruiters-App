@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
     nick          :string
     contributions HoboFields::MarkdownString
     project_lead  :boolean, :default => false
+    token         :string
     timestamps
   end
 
@@ -61,6 +62,23 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :nick, :if => :nick
 
   never_show              :project_lead
+
+  # Token
+  never_show              :token
+
+  # Generate new token
+  def token=(more_salt)
+    # Time.now.to_f.to_s gives enough precision to be considered random
+    token = Digest::SHA1.hexdigest("#{Time.now.to_f.to_s}#{@salt}#{more_salt}")
+    write_attribute("token", token)
+    token
+  end
+
+  # Give user token on creation
+  before_create do |u|
+    u.token = ''
+  end
+
   # --- Permissions --- #
 
   def create_permitted?
