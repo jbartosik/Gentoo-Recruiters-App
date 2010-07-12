@@ -10,5 +10,7 @@ Feature: Answering text question
     When I am on show "question" question page
     And I follow "Answer it!"
     And fill in "answer[content]" with "my answer"
-    And I press "Create Answer"
+    Then I should not see "Reference"
+
+    When I press "Create Answer"
     Then I should see "The answer was created successfully" within ".flash.notice"

@@ -36,6 +36,8 @@ class Answer < ActiveRecord::Base
     (owned_soft? && !reference)||(reference && acting_user.role.is_recruiter?)
   end
 
+  # Proper edit permissions can't be deduced, because we need to access value
+  # of some fields to set them
   def edit_permitted?(field)
     owned_soft? ||
     owner.mentor_is?(acting_user) ||
@@ -49,6 +51,10 @@ class Answer < ActiveRecord::Base
 
   def approved_edit_permitted?
     owner.mentor_is?(acting_user)
+  end
+
+  def reference_edit_permitted?
+    acting_user.try.role.try.is_recruiter?
   end
 
   def view_permitted?(field)

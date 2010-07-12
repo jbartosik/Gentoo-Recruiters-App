@@ -161,4 +161,10 @@ describe Answer do
     answer.content = "changed"
     answer.save!
   end
+
+  it "should prohibit editing of reference and approved fields to recruits" do
+    answer = Factory(:answer)
+    answer.should_not be_editable_by(answer.owner, :approved)
+    answer.should_not be_editable_by(answer.owner, :reference)
+  end
 end
