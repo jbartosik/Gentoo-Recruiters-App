@@ -20,4 +20,12 @@ class UsersController < ApplicationController
       @user = this
     end
   end
+
+  skip_before_filter :verify_authenticity_token, :only => [:receive_email]
+
+  def receive_email
+    raise Hobo::PermissionDeniedError unless request.remote_ip == '127.0.0.1'
+    UserMailer.receive(params[:email])
+    render :text => 'Email Received'
+  end
 end
