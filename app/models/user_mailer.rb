@@ -39,6 +39,24 @@ class UserMailer < ActionMailer::Base
     @body = { :question_title=> question_title(comment.answer), :id => comment.answer.id }
   end
 
+  def unrecognized_email(user, email)
+    common(user, "Your email sent to #{@app_name} wasn't recognized")
+
+    fields          = [:subject, :from, :to].inject(String.new) do |res, cur|
+      field_name    = cur.to_s.camelize
+      field_content = email.send(cur)
+
+      if field_content.class == Array # string with comma-separated values
+        field_content = field_content.inject(String.new){ |r,c| r += "#{c.to_s}, " }
+        field_content = field_content[0..-3]
+      end
+
+      res += "#{field_name}: #{field_content}\n"
+    end
+
+    @body = { :email => email, :app_name => @app_name, :fields => fields }
+  end
+
   def receive(email)
     # For now email answers for questions are only emails app receives
     # so try use any received email as answer.

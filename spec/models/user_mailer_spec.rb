@@ -46,4 +46,24 @@ describe UserMailer do
     notification.should have_text(/http:\/\/localhost:3000\/answers\/#{comment.answer.id}/)
     notification.should have_subject('New comment')
   end
+
+  it "should prepare proper unrecognized message email" do
+    user          = Factory(:recruit)
+    mail          = TMail::Mail.new
+    mail.subject  = "some subject"
+    mail.from     = user.email_address
+    mail.to       = ["a@a.a", "b@b.b"]
+    notification  = UserMailer.create_unrecognized_email(user, mail)
+
+    notification.should have_subject("Your email sent to #{@app_name} wasn't recognized")
+    notification.should deliver_from("no-reply@localhost")
+    notification.should deliver_to(user.email_address)
+
+    notification.should have_text(/You sent email to #{@app_name} with following headers:/)
+    notification.should have_text(/From: #{user.email_address}/)
+    notification.should have_text(/To: a@a.a, b@b.b/)
+    notification.should have_text(/Subject: some subject/)
+    # don't test rest of the message
+    notification.should have_text(/If you are answering question check if your message has proper subject./)
+  end
 end

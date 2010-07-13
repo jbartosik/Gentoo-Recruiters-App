@@ -18,8 +18,11 @@ class EmailAnswer < Answer
     return unless user.token == subject.captures[1]
 
     question      = Question.first :conditions => { :id => subject.captures[0] }
-    return if     question.nil?
-    return unless question.content.is_a? QuestionContentEmail
+
+    if(question.nil? || !question.content.is_a?(QuestionContentEmail))
+      UserMailer.deliver_unrecognized_email(user, email)
+      return
+    end
 
     # Fetch existing answer, if it doesn't exist create a new one
     # them mark it as incorrect (if it passes all tests it will be correct)
