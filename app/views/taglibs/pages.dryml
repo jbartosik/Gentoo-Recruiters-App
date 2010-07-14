@@ -53,5 +53,8 @@
         You answered all multiple choice questions, correctly.<br/>
       </else>
     </if>
+    <if:try.project_acceptances>
+      <collection/>
+    </if>
   </section>
 </def>

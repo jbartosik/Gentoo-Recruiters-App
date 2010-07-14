@@ -18,9 +18,12 @@
       </h4>
     </header:>
     <body:>
-      <if test="accepted">
+      <if test="&this.accepted">
         Accepted by <view:accepting_nick/>
       </if>
+      <else>
+        Waiting for acceptance by <view:accepting_nick/>
+      </else>
     </body>
   </card>
 </def>

@@ -43,3 +43,27 @@ Feature: Project Lead Approval
     And I am logged in as "recruit"
     When I am on "recruit" user page
     Then I should see "Accepted by some_project_lead" within ".project-acceptances"
+
+  Scenario: Do not have useless index
+    When I am on the home page
+    Then I should not see "Project Acceptances" within ".navigation.main-nav"
+
+    When I am logged in as "recruit"
+    Then I should not see "Project Acceptances" within ".navigation.main-nav"
+
+  Scenario: View my project acceptances on homepage
+    Given pending project acceptance of "recruit" by "some project lead"
+    And accepted project acceptance of "recruit" by "other project lead"
+    When I am logged in as "recruit"
+    And I am on the home page
+    Then I should see "Waiting for acceptance by some project lead"
+    And I should see "Accepted by other project lead"
+
+  Scenario: View my project acceptances in user profile
+    Given pending project acceptance of "recruit" by "some project lead"
+    And accepted project acceptance of "recruit" by "other project lead"
+    When I am logged in as "recruiter" who is "recruiter"
+    And I am on the home page
+    And I follow "recruit"
+    Then I should see "Waiting for acceptance by some project lead"
+    And I should see "Accepted by other project lead"
