@@ -27,3 +27,11 @@
     </body>
   </card>
 </def>
+
+<def tag="card" for="Answer">
+  <card class="answer" param="default" merge>
+    <a>
+      Answer of <name:owner/> for <name:question/>
+    </a>
+  </card>
+</def>
