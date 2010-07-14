@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
 
   hobo_model_controller
 
-  auto_actions :all
+  auto_actions :all, :except => :index
   index_action :answered_questions, :unanswered_questions, :my_questions, :suggest_questions, :approve_questions
 
   def answered_questions

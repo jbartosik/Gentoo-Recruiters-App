@@ -17,7 +17,6 @@
 <def tag="main-nav">
   <navigation class="main-nav" merge-attrs param="default">
     <nav-item href="#{base_url}/">Home</nav-item>
-    <nav-item with="&Question"><ht key="questions.nav_item">Questions</ht></nav-item>
     <nav-item with="&QuestionCategory"><ht key="question_categories.nav_item">Question Categories</ht></nav-item>
     <nav-item with="&QuestionGroup" action="category"><ht key="question_groups.nav_item">Question Groups</ht></nav-item>
     <nav-item href="&suggest_questions_questions_path"><ht key="questions.nav_item">Suggestion Questions</ht></nav-item>
