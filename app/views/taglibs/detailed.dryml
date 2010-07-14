@@ -23,6 +23,8 @@
   <with:question><view:content/></with>
 
   <h5>Answer:</h5>
+  <if:approved>Approved</if>
+  <else:approved>Not approved</else>
   <view:content/>
 </def>
 

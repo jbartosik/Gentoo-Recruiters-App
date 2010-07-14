@@ -27,9 +27,11 @@ class Answer < ActiveRecord::Base
   after_update :notify_changed_answer
 
   multi_permission :update, :destroy do
+    # It's fine to change correct, because it's ignored in non-email answers
+    # and email answers have separate permissions
     (owned? && !reference && !approved) ||
     (reference && acting_user.role.is_recruiter?) ||
-    (only_changed?(:approved) && owner.mentor_is?(acting_user))
+    (only_changed?(:approved, :correct) && owner.mentor_is?(acting_user))
   end
 
   def create_permitted?
