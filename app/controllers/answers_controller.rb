@@ -6,9 +6,15 @@ class AnswersController < ApplicationController
   auto_actions_for  :question, :new
   index_action      :my_recruits, :my_recruits_cat
 
- def create
-  # This creates answer with type deduced from params
-  # (as opposed answer with type Answer)
-  hobo_create Answer.new_from params
- end
+  def update
+    # This creates answer with type deduced from params
+    # (as opposed answer with type Answer)
+    hobo_update Answer.find(params['id']),:attributes => Answer.update_from(params)
+  end
+
+  def create
+    # This creates answer with type deduced from params
+    # (as opposed answer with type Answer)
+    hobo_create Answer.new_from params
+  end
 end

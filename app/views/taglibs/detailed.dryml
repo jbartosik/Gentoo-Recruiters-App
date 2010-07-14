@@ -32,7 +32,7 @@
       <with:owner><name/></with>
     for question
     "<with:question><name/></with>
-    <a action="edit" if="&can_edit?">(Edit)</a>
+    <a href="&edit_answer_path(this)" if="&can_edit?">(Edit)</a>
   </h2>
   <h5>Question:</h5>
   <with:question><view:content/></with>

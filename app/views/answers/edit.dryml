@@ -5,6 +5,6 @@
       # but result is alway posted to AnswersController#update
       # so action must be specified explicitly
     %>
-    <form action="&update_answer_path"/>
+    <form action="&update_answer_path(this.id)" method="PUT"/>
   </content:>
 </edit-page>

@@ -25,7 +25,7 @@
     </else>
     <if test="&this.reference_answer.try.viewable_by? current_user">
       <br/>
-      <a:reference_answer>View reference answer</a>.
+      <a href="&answer_path(this.reference_answer)">View reference answer</a>.
     </if>
   </content:>
 </show-page>

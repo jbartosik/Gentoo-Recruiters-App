@@ -63,6 +63,26 @@ class Answer < ActiveRecord::Base
       User.user_is_mentor_of?(acting_user, owner)
   end
 
+  def self.update_from(params)
+   ans = Answer.find(params['id'])
+
+  if ans.class == Answer
+    update = params["answer"] || []
+  elsif ans.class == MultipleChoiceAnswer
+    params["multiple_choice_answer"] = {} unless params["multiple_choice_answer"]
+    params["multiple_choice_answer"]["options"] = params["options"].inject(Array.new){ |a, cur| a.push cur.to_i }
+    update = params["multiple_choice_answer"]
+  end
+
+   result = ans.attributes
+
+   for u in update
+    result[u[0]] = u[1]
+   end
+
+   result
+  end
+
   def self.new_from(params)
 
     if params.include? "answer"
