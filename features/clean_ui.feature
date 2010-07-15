@@ -79,3 +79,11 @@ Feature: Clean UI
     When I am logged in as "recruit"
     When I am on show "question" question page
     Then I should not see "Answer it"
+
+  Scenario: Instructions when creating new email question content
+    Given I am logged in as administrator
+    And a question "question"
+    And I am on new email question content for "question" page
+    Then I should see "Enter one requirement per line."
+    And I should see "Each requirement should be 'Field : regexp to match' (including spaces around colon)."
+    And I should see "If you want to use colon in field and regexp then escape it with backslash."

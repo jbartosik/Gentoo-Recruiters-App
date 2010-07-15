@@ -17,8 +17,7 @@ Feature: Answering text question
 
   Scenario: Create and edit text question
     Given I am logged in as administrator
-    When I follow "Suggestion questions"
-    And I follow "New question"
+    When I follow "New Question"
     And I fill in "some question" for "question[title]"
     And I press "Create Question"
     Then I should see "The question was created successfully" within ".flash.notice"
