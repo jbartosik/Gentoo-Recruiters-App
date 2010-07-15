@@ -54,12 +54,26 @@ Feature: Clean UI
       |Add text content|Add multiple choice content|Add email content|
 
   Scenario: Don't show questions with no content
-    Given a question "question" in category "category"
-    And question "question" has no content
+    Given a question "question 0" in category "category"
+    And question "question 0" has no content
     When I am logged in as "recruit"
     And I follow "Question Categories"
     And I follow "category"
     Then I should see "No questions to display"
+
+    Given following questions:
+      |question 1|category|
+      |question 3|category|
+      |question 3|category|
+    Given email question content for "question 1"
+    Given text content "something" for question "question 2"
+    Given a multiple choice content "multi choice" for "question 3"
+    When I follow "Question Categories"
+    And I follow "category"
+    Then I should see "No questions to display"
+    Then I should see following:
+      |question 1|question 3|question 3|
+    And I should not see "question 0"
 
   Scenario: I should not see double Answer it
     Given a question "question"
