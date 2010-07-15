@@ -37,3 +37,18 @@ Feature: Clean UI
     And I should not see following:
       |question 1|question 2|question 3|question 4|question 6|hidden|
     And I should not see /There are \d+/
+
+  Scenario: Administrator creating new question
+    Given I am logged in as administrator
+    When I follow "Suggestion Questions"
+    And I follow "New Question"
+    Then I should not see "Approved" within ".section.content-body"
+    And I should not see "User" within ".section.content-body"
+    And I should see "You will add content in next step"
+
+    When I fill in "Question" for "question[title]"
+    And I fill in "doc" for "question[documentation]"
+    And I press "Create Question"
+    Then I should see following:
+      |Add text content|Add multiple choice content|
+

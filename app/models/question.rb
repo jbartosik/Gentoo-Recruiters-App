@@ -40,6 +40,9 @@ class Question < ActiveRecord::Base
   end
 
   def view_permitted?(field)
+    # Don't allow viewing some fields on creation
+    return false if new_record? && [:user, :approved].include?(field)
+
     # Unapproved questions can be seen only by recruiters and owner
     if !approved
       return user_is?(acting_user) || acting_user.try.role.try.is_recruiter?
