@@ -19,10 +19,9 @@ class ProjectAcceptance < ActiveRecord::Base
     # Allow admins everything
     return true if acting_user.try.administrator?
 
-    # Allow user (relation), users mentor and recruiters if not accepted and
+    # Allow users mentor and recruiters if not accepted and
     # accepted was not changed
-    recruiter_user_or_mentor =  user_is?(acting_user) ||
-                                acting_user.try.role.try.is_recruiter? ||
+    recruiter_user_or_mentor =  acting_user.try.role.try.is_recruiter? ||
                                 user.try.mentor_is?(acting_user)
 
     return true if recruiter_user_or_mentor && !accepted && !accepted_changed?

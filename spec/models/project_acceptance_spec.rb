@@ -4,10 +4,10 @@ describe ProjectAcceptance do
 
   include Permissions::TestPermissions
 
-  it 'should allow any user (not guest), his/her mentor and recruiters to edit and CRUD (if not accepted)' do
+  it 'should allow any mentor of user and recruiters to edit and CRUD (if not accepted)' do
     for user in fabricate_all_roles
       acceptance = Factory(:project_acceptance, :user => user)
-      users = [user, Factory(:recruiter)]
+      users = [Factory(:recruiter)]
       users += [user.mentor] if user.mentor
 
       cud_allowed(users, acceptance)
@@ -18,7 +18,7 @@ describe ProjectAcceptance do
 
   it 'should prohibit user other then recuiter or mentor of recruit being accepted to edit and CUD' do
     acceptance  = Factory(:project_acceptance)
-    users       = fabricate_users(:recruit, :mentor) + [Guest.new]
+    users       = fabricate_users(:recruit, :mentor) + [Guest.new, acceptance.user]
 
     cud_denied(users, acceptance)
     edit_denied(users, acceptance)
