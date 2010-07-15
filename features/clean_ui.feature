@@ -52,3 +52,10 @@ Feature: Clean UI
     Then I should see following:
       |Add text content|Add multiple choice content|
 
+  Scenario: Don't show questions with no content
+    Given a question "question" in category "category"
+    And question "question" has no content
+    When I am logged in as "recruit"
+    And I follow "Question Categories"
+    And I follow "category"
+    Then I should see "No questions to display"

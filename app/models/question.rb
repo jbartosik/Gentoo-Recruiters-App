@@ -103,6 +103,10 @@ class Question < ActiveRecord::Base
       :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
       'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', uid, uid]}}
 
+  named_scope :with_content, :include => [:question_content_text,
+    :question_content_multiple_choice], :conditions =>
+    'question_content_texts.id IS NOT NULL OR question_content_multiple_choices.id IS NOT NULL'
+
   named_scope :questions_to_approve, :conditions => { :approved => false }
 
   named_scope   :multiple_choice, :joins => :question_content_multiple_choice

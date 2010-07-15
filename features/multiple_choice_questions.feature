@@ -6,6 +6,7 @@ Feature: Multiple Choice
   Scenario: Creating Multiple Choice Questions
    Given I am logged in as administrator
    And a question "question"
+   And question "question" has no content
    And I am on show "question" question page
    When I follow "Add multiple choice content"
    And fill in "question_content_multiple_choice[content]" with "Some question?"

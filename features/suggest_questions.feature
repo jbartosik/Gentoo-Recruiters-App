@@ -21,7 +21,7 @@ Feature: Suggest Questions
     Then I should see "question" within ".collection.questions"
     And I should not see "some question" within ".collection.questions"
     When I follow "question"
-    And follow "(Edit)"
+    And follow "information"
     And check "question[approved]"
     And press "Save"
     Then I should see "Changes to the question were saved" within ".flash.notice"

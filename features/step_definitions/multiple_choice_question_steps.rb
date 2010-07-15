@@ -8,6 +8,8 @@ end
 Given /^a multiple choice content "([^\"]*)" for "([^\"]*)"$/ do |content, question|
   Given "a multiple choice content \"#{content}\""
   Given "a question \"#{question}\""
+  @question.content.destroy unless @question.content.is_a?(QuestionContentMultipleChoice) || @question.content.nil?
+  @question.reload
   @content.question = @question
   @content.save!
 end
@@ -34,9 +36,9 @@ Given /^reference choice for "([^"]*)":$/ do |content, table|
     res.push cur.id if table.include?(cur.content)
     res
   end
-  Given "answer of \"#{user}\" for question \"#{content}\""
+  Given "reference answer for question \"#{content}\""
+
   @answer.options   = ans
-  @answer.reference = true
   @answer.save!
 end
 

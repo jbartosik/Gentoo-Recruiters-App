@@ -1,0 +1,6 @@
+<show-page>
+  <content-body:>
+    <h3>Questions</h3>
+    <collection:questions.with_content/>
+  </content-body:>
+</show-page>

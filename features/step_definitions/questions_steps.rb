@@ -3,6 +3,10 @@ Given /^a question "([^\"]*)"$/ do |title|
   if @question.nil?
     @question = Question.create!( :title => title)
   end
+  if @question.content.nil?
+    QuestionContentText.create! :question => @question, :content => "fake"
+    @question.reload
+  end
 end
 
 Given /^a question "([^\"]*)" in category "([^\"]*)"$/ do |title, category|
@@ -44,4 +48,9 @@ Then /^I should not see following:$/ do |table|
   for txt in table.raw.flatten
     Then "I should not see \"#{txt}\""
   end
+end
+
+Given /^question "([^"]*)" has no content$/ do |title|
+  Given "a question \"#{title}\""
+  @question.content._?.destroy
 end

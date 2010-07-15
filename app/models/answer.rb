@@ -106,11 +106,11 @@ class Answer < ActiveRecord::Base
 
   protected
     def notify_new_answer
-      UserMailer.deliver_new_answer(owner.mentor, self) unless owner.mentor.nil?
+      UserMailer.deliver_new_answer(owner.mentor, self) unless owner.try.mentor.nil?
     end
 
     def notify_changed_answer
-      UserMailer.deliver_changed_answer(owner.mentor, self) unless owner.mentor.nil?
+      UserMailer.deliver_changed_answer(owner.mentor, self) unless owner.try.mentor.nil?
     end
 
 end
