@@ -1,5 +1,5 @@
 admin:
-  email_address:          admin@recruiters.org
+  email_address:          admin@<%= domain %>
   name:                   Admin
   nick:                   Admin
   role:                   recruiter
@@ -8,7 +8,7 @@ admin:
   administrator:          true
 
 recruiter:
-  email_address:          recruiter@recruiters.org
+  email_address:          recruiter@<%= domain %>
   name:                   Recruiter
   nick:                   Recruiter
   role:                   recruiter
@@ -16,7 +16,7 @@ recruiter:
   password_confirmation:  secret
 
 mentor:
-  email_address:          mentor@recruits.org
+  email_address:          mentor@<%= domain %>
   name:                   Mentor who was recruit
   nick:                   Mentor who was recruit
   role:                   mentor
@@ -24,7 +24,7 @@ mentor:
   password_confirmation:  secret
 
 recruit:
-  email_address:          recruit@recruits.org
+  email_address:          recruit@<%= domain %>
   name:                   Recruit
   role:                   recruit
   password:               secret
@@ -32,7 +32,7 @@ recruit:
   mentor:                 mentor
 
 advanced:
-  email_address:          advanced@recruits.org
+  email_address:          advanced@<%= domain %>
   name:                   Advanced Recruit
   role:                   recruit
   password:               secret
@@ -40,7 +40,7 @@ advanced:
   mentor:                 mentor
 
 middle:
-  email_address:          middle@recruits.org
+  email_address:          middle@<%= domain %>
   name:                   Middle Recruit
   role:                   recruit
   password:               secret

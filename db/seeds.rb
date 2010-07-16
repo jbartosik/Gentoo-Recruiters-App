@@ -12,17 +12,22 @@ class SeedHelper
   # in each item replace values of fields given in replace_with_objects with objects
   # and create!
   def read_yaml(file, klass, replace_with_objects, &block)
-    for item_array in  YAML::load_file(file)
+    domain  = APP_CONFIG['seed']['users_domain']
+    erb     = ERB.new(File.read(file)).result(binding)
+    for item_array in  YAML::load(erb)
       name = item_array[0]
       hash = item_array[1]
+
       for field in replace_with_objects
         hash[field] = @objects[hash[field]]
       end
+
       if block.nil?
         @objects[name] = klass.create! hash
       else
         yield(name, hash, @objects, klass)
       end
+
     end
   end
 

@@ -1,0 +1,11 @@
+defaults: &defaults
+  seed:
+    users_domain:               example.com
+development:
+  <<: *defaults
+production:
+  <<: *defaults
+test:
+  <<: *defaults
+cucumber:
+  <<: *defaults

@@ -67,3 +67,15 @@ To start testing application you should:
   ruby script/server
 
 it will be listening for connections on port 3000.
+
+Configuration
+
+In config/config.yml you can set:
+  seed:
+    users_domain                - Domain for emails of users from default seed
+
+There is example of this file in doc/config/config.yml. Remember to disable checks in cucumber and test environments or tests will fail.
+
+Seed
+
+If you want to edit seed remember you can use erb in db/fixtures/*.yml files.
