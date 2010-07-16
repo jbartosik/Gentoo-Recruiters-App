@@ -25,11 +25,11 @@ ebuild_q4:
   documentation:      GLEPs
   question_category:  ebuild
   question_group:     ebuild_group1
-  content:            "src_install () {
-                        dobin uvconvert/${PN}
-                        doman uvconv.1
-                        dodoc readme.txt AUTHORS CREDITS changes.txt
-                      }"
+  content:            "\n    src_install () {
+                        \n      dobin uvconvert/${PN}
+                        \n      doman uvconv.1
+                        \n      dodoc readme.txt AUTHORS CREDITS changes.txt
+                        \n    }"
 
 
 ebuild_q5:
@@ -37,11 +37,11 @@ ebuild_q5:
   documentation:      devmanual
   question_category:  ebuild
   question_group:     ebuild_group1
-  content:            "src_install() {
-                        dobin utrac
-                        doman utrac.1
-                        dodoc README CHANGES CREDITS
-                      }"
+  content:            "\n    src_install() {
+                        \n       dobin utrac
+                        \n       doman utrac.1
+                        \n      dodoc README CHANGES CREDITS
+                        \n    }"
 
 
 ebuild_q6:
@@ -49,11 +49,11 @@ ebuild_q6:
   documentation:      handbook
   question_category:  ebuild
   question_group:     ebuild_group1
-  content:            "src_install() {
-                        dobin tree
-                        doman man/tree.1
-                        dodoc CHANGES README*
-                      }"
+  content:            "\n    src_install() {
+                        \n      dobin tree
+                        \n      doman man/tree.1
+                        \n      dodoc CHANGES README*
+                        \n    }"
 
 mentor_q1:
   title:              Scopes in ebuild
@@ -67,19 +67,19 @@ mentor_q2:
   question_category:  mentoring
   content: 'You have a patch for foomatic which enables SSL support that is
     optional at build time. Assuming that foomatic uses an autotools based
-    build system provide most probable changes required in an EAPI="0" ebuild.
-    What should be done for the ebuild in case it uses EAPI="2"?'
+    build system provide most probable changes required in an `EAPI="0"` ebuild.
+    What should be done for the ebuild in case it uses `EAPI="2"`?'
 
 mentor_q3:
   title:              Improve maintainability of ebuild
   documentation:      devmanual
   question_category:  mentoring
-  content: You are writing an ebuild for the foomatic package. Upstream calls
-    the current version "1.3-7b" (but this is _not_ a beta release). How would the
+  content: "You are writing an ebuild for the foomatic package. Upstream calls
+    the current version \"1.3-7b\" (but this is _not_ a beta release). How would the
     ebuild be named? What's wrong with the ebuild snippet below and how should this
-    be written to aid maintainability?<br/><br/>
-    SRC_URI="http://foomatic.example.com/download/foomatic-1.3-7b.tar.bz2"
-    S=${WORKDIR}/foomatic-1.3-7b'
+    be written to aid maintainability?
+    \n\n    SRC_URI=\"http://foomatic.example.com/download/foomatic-1.3-7b.tar.bz2\"
+    \n    S=${WORKDIR}/foomatic-1.3-7b"
 
 non_q1:
   title:              Gentoo Foundation
