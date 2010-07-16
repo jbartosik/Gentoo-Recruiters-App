@@ -1,0 +1,10 @@
+development:
+  adapter: postgresql
+  username:
+  database:
+test: &test
+  adapter:  postgresql
+  username:
+  database:
+cucumber:
+  <<: *test
