@@ -38,3 +38,23 @@ Feature: gentoo-dev-announce
     Given recruit that should answer gentoo-dev-announce posting question
     When I am on show "gentoo-dev-announce posting" question page
     Then I should not see "Your answer should have subject (without quotes)"
+
+  Scenario: Create and edit email question
+    Given I am logged in as administrator
+    When I follow "Suggestion questions"
+    And I follow "New question"
+    And I fill in "some question" for "question[title]"
+    And I press "Create Question"
+    Then I should see "The question was created successfully" within ".flash.notice"
+
+    When I follow "Add email content"
+    And I fill in "some question" for "question_content_email[description]"
+    And I fill in "To : me" for "question_content_email[req_text]"
+    And press "Create Question Content Email"
+    Then I should see "The question content email was created successfully" within ".flash.notice"
+
+    When I am on show "some question" question page
+    And I follow "content"
+    And I fill in "Some question." for "question_content_email[description]"
+    And press "Save"
+    Then I should see "Changes to the question content email were saved" within ".flash.notice"

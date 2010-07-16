@@ -14,3 +14,22 @@ Feature: Answering text question
 
     When I press "Create Answer"
     Then I should see "The answer was created successfully" within ".flash.notice"
+
+  Scenario: Create and edit text question
+    Given I am logged in as administrator
+    When I follow "Suggestion questions"
+    And I follow "New question"
+    And I fill in "some question" for "question[title]"
+    And I press "Create Question"
+    Then I should see "The question was created successfully" within ".flash.notice"
+
+    When I follow "Add text content"
+    And I fill in "some question" for "question_content_text[content]"
+    And press "Create Question Content Text"
+    Then I should see "The question content text was created successfully" within ".flash.notice"
+
+    When I am on show "some question" question page
+    And I follow "content"
+    And I fill in "Some question." for "question_content_text[content]"
+    And press "Save"
+    Then I should see "Changes to the question content text were saved" within ".flash.notice"

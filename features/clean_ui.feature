@@ -51,7 +51,7 @@ Feature: Clean UI
     And I fill in "doc" for "question[documentation]"
     And I press "Create Question"
     Then I should see following:
-      |Add text content|Add multiple choice content|
+      |Add text content|Add multiple choice content|Add email content|
 
   Scenario: Don't show questions with no content
     Given a question "question" in category "category"
