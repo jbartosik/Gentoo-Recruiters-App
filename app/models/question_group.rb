@@ -4,7 +4,7 @@ class QuestionGroup < ActiveRecord::Base
 
   fields do
     name        :string, :null => false
-    description :text, :null => false
+    description HoboFields::MarkdownString, :null => false
     timestamps
   end
 

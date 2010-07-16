@@ -4,7 +4,7 @@ class QuestionContentMultipleChoice < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content   :text
+    content   HoboFields::MarkdownString
     timestamps
   end
 

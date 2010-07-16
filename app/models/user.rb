@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     administrator :boolean, :default => false
     role          Role, :default => 'recruit'
     nick          :string
-    contributions :text
+    contributions HoboFields::MarkdownString
     timestamps
   end
 

@@ -5,7 +5,7 @@ class Answer < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content   :text
+    content   HoboFields::MarkdownString
     approved  :boolean, :default => false
     reference :boolean, :default => false
     timestamps
