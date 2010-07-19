@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100727202103) do
+ActiveRecord::Schema.define(:version => 20100727204158) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20100727202103) do
   add_index "options", ["option_owner_type", "option_owner_id"], :name => "index_options_on_option_owner_type_and_option_owner_id"
 
   create_table "project_acceptances", :force => true do |t|
-    t.string   "accepting_nick"
+    t.string   "accepting_nick",                    :null => false
     t.boolean  "accepted",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"

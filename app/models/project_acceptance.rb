@@ -4,7 +4,7 @@ class ProjectAcceptance < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    accepting_nick :string
+    accepting_nick :string, :null => false
     accepted       :boolean, :default => false
     timestamps
   end
@@ -14,6 +14,9 @@ class ProjectAcceptance < ActiveRecord::Base
 
   validates_presence_of   :user, :accepting_nick
   validates_uniqueness_of :accepting_nick, :scope => :user_id
+
+  named_scope :find_by_user_name_and_accepting_nick, lambda { |user_name, accepting_nick| {
+    :joins => :user, :conditions => ['users.name = ? AND accepting_nick = ?', user_name, accepting_nick] } }
 
   multi_permission :create, :update, :destroy, :edit do
     # Allow admins everything
@@ -34,13 +37,10 @@ class ProjectAcceptance < ActiveRecord::Base
 
   def view_permitted(field)
     # Allow user(relation), mentor of user and recruiters to view
-     user_is?(acting_user) ||
-      acting_user.try.role.try.is_recruiter? ||
-      user.mentor_is?(acting_user)
-  end
+     return true if user_is?(acting_user)
+     return true if acting_user.try.role.try.is_recruiter?
+     return true if user.mentor_is?(acting_user)
 
-  def self.find_by_user_name_and_accepting_nick(user_name, accepting_nick)
-    ProjectAcceptance.first :joins => :user, :conditions =>
-      ['users.name = ? AND accepting_nick = ?', user_name, accepting_nick]
+     false
   end
 end
