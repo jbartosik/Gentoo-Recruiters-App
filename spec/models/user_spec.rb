@@ -104,40 +104,6 @@ describe User do
     unanswered.should == unanswered.uniq
   end
 
-  it "should return proper recruits answers in category" do
-    n_categories = 5
-    r = recruit_with_answers_in_categories(nil, n_categories)
-    for i in 0..(n_categories-1)
-      cat = r.categories[i]
-      ans = r.answers_in_cat[i]
-
-      for answer in ans
-        r.mentor.my_recruits_answers_in_category(cat).include?(answer).should be_true
-      end
-
-      for answer in r.all_answers - ans
-        r.mentor.my_recruits_answers_in_category(cat).include?(answer).should be_false
-      end
-
-      r.mentor.my_recruits_answers_in_category(cat).should ==
-        r.mentor.my_recruits_answers_in_category(cat).uniq
-    end
-  end
-  it "should return proper my_recruits_anwers" do
-    mentor    = Factory(:mentor)
-    r1        = recruit_with_answers_in_categories(mentor)
-    r2        = recruit_with_answers_in_categories(mentor)
-    r3        = recruit_with_answers_in_categories
-
-    for ans in (r1.all_answers + r2.all_answers)
-      mentor.my_recruits_answers.include?(ans).should be_true
-    end
-
-    for ans in r3.all_answers
-      mentor.my_recruits_answers.include?(ans).should be_false
-    end
-  end
-
   it "should properly check if user answered all questions" do
     r = recruit_with_answered_and_unanswered_questions
     r.recruit.answered_all_questions?.should          be_false

@@ -17,6 +17,12 @@ class Answer < ActiveRecord::Base
   belongs_to    :question
   has_many      :comments
 
+  named_scope   :of_mentored_by, lambda { |mentor| {
+    :joins => :owner, :conditions => { 'users.mentor_id', mentor } } }
+
+  named_scope   :in_category, lambda { |category| {
+    :joins => :question, :conditions => { 'questions.question_category_id', category} } }
+
   validates_uniqueness_of :question_id, :scope => :reference, :if => :reference
   validates_uniqueness_of :question_id, :scope => :owner_id, :unless => :reference
 

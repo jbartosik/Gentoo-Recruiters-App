@@ -167,4 +167,39 @@ describe Answer do
     answer.should_not be_editable_by(answer.owner, :approved)
     answer.should_not be_editable_by(answer.owner, :reference)
   end
+
+  it "should return proper answers_of_mentored_by" do
+    mentor    = Factory(:mentor)
+    r1        = recruit_with_answers_in_categories(mentor)
+    r2        = recruit_with_answers_in_categories(mentor)
+    r3        = recruit_with_answers_in_categories
+
+    for ans in (r1.all_answers + r2.all_answers)
+      Answer.of_mentored_by(mentor).include?(ans).should be_true
+    end
+
+    for ans in r3.all_answers
+      Answer.of_mentored_by(mentor).include?(ans).should be_false
+    end
+  end
+
+  it "should return in_category" do
+    n_categories = 5
+    r = recruit_with_answers_in_categories(nil, n_categories)
+    for i in 0..(n_categories-1)
+      cat = r.categories[i]
+      ans = r.answers_in_cat[i]
+
+      for answer in ans
+        Answer.in_category(cat).include?(answer).should be_true
+      end
+
+      for answer in r.all_answers - ans
+        Answer.in_category(cat).include?(answer).should be_false
+      end
+
+      Answer.in_category(cat).should ==
+        Answer.in_category(cat).uniq
+    end
+  end
 end

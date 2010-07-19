@@ -102,14 +102,6 @@ class User < ActiveRecord::Base
     Question.unanswered_grouped(id) + Question.unanswered_ungrouped(id)
   end
 
-  def my_recruits_answers
-    Answer.all :joins => :owner, :conditions => ['users.mentor_id = ?', id]
-  end
-
-  def my_recruits_answers_in_category(cat)
-    Answer.all :joins => [:question, :owner], :conditions => ['questions.question_category_id = ? AND users.mentor_id = ?', cat, id]
-  end
-
   def answered_all_questions?
     Question.unanswered_grouped(id).count.zero? && Question.unanswered_ungrouped(id).count.zero?
   end

@@ -1,6 +1,6 @@
 <index-page>
   <content:>
-    <repeat with="&current_user.my_recruits_answers_in_category(params[:id])">
+    <repeat with="&Answer.of_mentored_by(current_user).in_category(params[:id])">
       <card/>
     </repeat>
   </content:>
