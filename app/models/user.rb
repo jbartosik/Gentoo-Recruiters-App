@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
      WHERE user_question_groups.user_id = users.id AND answers.id IS NULL)"
 
   # --- Signup lifecycle --- #
-
   lifecycle do
 
     state :active, :default => true
@@ -59,6 +58,7 @@ class User < ActiveRecord::Base
   validate                :mentors_and_recruiters_must_have_nick
   validate                :mentor_is_gentoo_dev_long_enough
   validates_uniqueness_of :nick, :if => :nick
+
   # --- Permissions --- #
 
   def create_permitted?
@@ -72,10 +72,10 @@ class User < ActiveRecord::Base
       # Acting user is recruiter and changes only what [s]he is allowed to
       # Acting user was mentor of edited user and resigned
       # Acting user became mentor of edited recruit and edited user had no mentor
-    acting_user.administrator? ||
-      (acting_user == self && changes_allowed_to_self?)||
-      (acting_user.try.role.try.is_recruiter? && changes_allowed_for_recruiter?)||
-      (role.is_recruit? && acting_user.try.role.try.is_mentor? && mentor_picked_up_or_resigned?)
+    return true if acting_user.administrator?
+    return true if acting_user == self && changes_allowed_to_self?
+    return true if acting_user.try.role.try.is_recruiter? && changes_allowed_for_recruiter?
+    return true if role.is_recruit? && acting_user.try.role.try.is_mentor? && mentor_picked_up_or_resigned?
   end
 
   def role_edit_permitted?
@@ -166,10 +166,16 @@ class User < ActiveRecord::Base
     end
 
     def changes_allowed_for_recruiter?
-      only_allowed_changed  = only_changed?(:question_categories, :role, :nick)
-      promoted_to_mentor    = role.is_mentor? && Role.new(role_was).is_recruit?
-      demoted_mentor        = role.is_recruit? && Role.new(role_was).is_mentor?
-      only_allowed_changed && (!role_changed? || promoted_to_mentor || demoted_mentor)
+      # make sure recruiters change only what they are allowed to
+      return false unless only_changed?(:question_categories, :role, :nick)
+
+      # and make sure change to role wasn't changed or was promotion of recruit
+      # to mentor or demotion of mentor to recruit
+      return true unless role_changed?
+      return true if role.is_mentor? && Role.new(role_was).is_recruit?
+      return true if role.is_recruit? && Role.new(role_was).is_mentor?
+
+      false
     end
 
     def changes_allowed_to_self?
@@ -182,11 +188,13 @@ class User < ActiveRecord::Base
     def mentor_picked_up_or_resigned?
       # Mentor picked up or resigned if
       #   only mentor attribute was changed
-      #   and mentor was nil or acting user
-      #   and mentor is nil or current user
-      only_changed?(:mentor) &&
-      (mentor_id_was.nil? || (mentor_id_was == acting_user.try.id)) &&
-      (mentor_id.nil? || (mentor_id == acting_user.try.id))
+      #   and mentor changed from nil to acting user
+      #   or mentor changed from nil to current user
+      return false unless only_changed?(:mentor)
+      return false unless (mentor_id_was.nil? || (mentor_id_was == acting_user.try.id))
+      return false unless (mentor_id.nil? || (mentor_id == acting_user.try.id))
+
+      true
     end
 
     def mentor_is_gentoo_dev_long_enough

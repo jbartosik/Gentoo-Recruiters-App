@@ -6,6 +6,7 @@ class Comment < ActiveRecord::Base
     content HoboFields::MarkdownString
     timestamps
   end
+
   belongs_to    :answer
 
   validates_presence_of :content
@@ -13,6 +14,7 @@ class Comment < ActiveRecord::Base
   after_create :notify_new_comment
 
   owned_model "User"
+
   def create_permitted?
     answer.owner.mentor_is?(acting_user) && owned_soft?
   end
@@ -20,8 +22,11 @@ class Comment < ActiveRecord::Base
   def view_permitted?(field)
     # only recruiters, mentor who created comment
     # and recruit who owns answer can view
-    owner_is?(acting_user) || answer.owner_is?(acting_user) ||
-      acting_user.try.role.try.is_recruiter?
+    return true if owner_is?(acting_user)
+    return true if answer.owner_is?(acting_user)
+    return true if acting_user.try.role.try.is_recruiter?
+
+    false
   end
 
   protected

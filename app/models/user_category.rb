@@ -13,13 +13,18 @@ class UserCategory < ActiveRecord::Base
   validates_uniqueness_of :user_id, :scope => :question_category_id
 
   multi_permission :create, :update, :destroy do
-    acting_user.try.role.try.is_recruiter? || user_is?(acting_user)
+    return true if acting_user.try.role.try.is_recruiter?
+    return true if user_is?(acting_user)
+
+    false
   end
 
   def view_permitted?(field)
-    acting_user.try.role.try.is_recruiter? ||
-      user_is?(acting_user)||
-      user.mentor_is?(acting_user)
+    return true if acting_user.try.role.try.is_recruiter?
+    return true if user_is?(acting_user)
+    return true if user.mentor_is?(acting_user)
+
+    false
   end
 
   def before_create
