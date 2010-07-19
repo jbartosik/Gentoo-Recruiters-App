@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100727204158) do
+ActiveRecord::Schema.define(:version => 20100727204251) do
 
   create_table "answers", :force => true do |t|
     t.text     "content"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20100727204158) do
   end
 
   create_table "question_content_multiple_choices", :force => true do |t|
-    t.text     "content"
+    t.text     "content",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "question_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(:version => 20100727204158) do
   add_index "question_content_multiple_choices", ["question_id"], :name => "index_question_content_multiple_choices_on_question_id"
 
   create_table "question_content_texts", :force => true do |t|
-    t.text     "content"
+    t.text     "content",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "question_id"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20100727204158) do
   end
 
   create_table "questions", :force => true do |t|
-    t.string   "title"
+    t.string   "title",                                   :null => false
     t.string   "documentation"
     t.boolean  "approved",             :default => false
     t.datetime "created_at"

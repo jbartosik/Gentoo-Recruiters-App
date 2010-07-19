@@ -13,6 +13,7 @@ class Answer < ActiveRecord::Base
                   :default => ''
     timestamps
   end
+
   attr_readonly :reference
   belongs_to    :question
   has_many      :comments

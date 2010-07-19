@@ -4,13 +4,14 @@ class QuestionContentMultipleChoice < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content   HoboFields::MarkdownString
+    content   HoboFields::MarkdownString, :null => false
     timestamps
   end
 
-  belongs_to      :question
-  attr_readonly   :question
-  has_many        :options, :as => :option_owner, :accessible => true, :uniq => true
+  belongs_to            :question
+  attr_readonly         :question
+  has_many              :options, :as => :option_owner, :accessible => true, :uniq => true
+  validates_length_of   :content, :minimum => 2
 
   inherit_permissions(:question)
 

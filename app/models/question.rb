@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    title         :string
+    title         :string, :null => false
     documentation :string
     approved      :boolean, :default => false
     timestamps
@@ -11,6 +11,7 @@ class Question < ActiveRecord::Base
 
   attr_readonly         :user
   validates_presence_of :title
+  validates_length_of   :title, :minimum => 2
   #allow empty documentation and no category
   #maybe add a page for not complete questions
 
