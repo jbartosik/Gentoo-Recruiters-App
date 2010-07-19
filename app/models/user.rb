@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
       # Acting user became mentor of edited recruit and edited user had no mentor
     acting_user.administrator? ||
       (acting_user == self && changes_allowed_to_self?)||
-      (User.user_is_recruiter?(acting_user) && changes_allowed_for_recruiter?)||
+      (acting_user.try.role.try.is_recruiter? && changes_allowed_for_recruiter?)||
       (role.is_recruit? && acting_user.try.role.try.is_mentor? && mentor_picked_up_or_resigned?)
   end
 
@@ -92,14 +92,6 @@ class User < ActiveRecord::Base
 
   def view_permitted?(field)
     true
-  end
-
-  def self.user_is_recruiter?(user)
-    user.signed_up? && user.role.is_recruiter?
-  end
-
-  def self.user_is_mentor_of?(user, recruit)
-    user.signed_up? && recruit.mentor_is?(user)
   end
 
   def all_questions

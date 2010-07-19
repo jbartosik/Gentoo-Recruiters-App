@@ -64,8 +64,8 @@ class Answer < ActiveRecord::Base
 
   def view_permitted?(field)
     owned_soft? ||
-      User.user_is_recruiter?(acting_user)||
-      User.user_is_mentor_of?(acting_user, owner)
+      acting_user.try.role.try.is_recruiter? ||
+      owner.mentor_is?(acting_user)
   end
 
   def self.update_from(params)
