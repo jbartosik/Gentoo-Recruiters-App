@@ -125,7 +125,7 @@ class Question < ActiveRecord::Base
   end
 
   before_create{ |question|
-    if question.user.try.role.try.is_recruiter || question.user_id.nil?
+    if question.user._?.administrator? || question.user_id.nil?
       question.approved = true
     end
   }

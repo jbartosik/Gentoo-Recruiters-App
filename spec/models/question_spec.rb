@@ -177,4 +177,9 @@ describe Question do
 
     question.should_not be_editable_by(admin, :user)
   end
+
+  it "should be approved if was created by administrator or unspecified user" do
+    Factory(:question, :user => Factory(:administrator)).approved.should be_true
+    Factory(:question, :user => nil).approved.should be_true
+  end
 end
