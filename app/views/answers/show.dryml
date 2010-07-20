@@ -12,12 +12,6 @@
         </body:>
       </card>
     </with>
-    <collection:comments>
-      <card>
-        <body>
-          <view:content/>
-        </body>
-      </card>
-    </collection:comments>
+    <collection:comments/>
   </content>
 </show-page>

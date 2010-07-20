@@ -25,4 +25,5 @@ Feature: Mentor comments for recruit answers
     Given a comment "example comment" of "mentor" for answer of "recruit" for question "example question"
     And I am logged in as "recruit"
     And I am on answer of "recruit" for question "example question" page
-    Then I should see "example comment"
+    Then I should see "mentor:"
+    And I should see "example comment"

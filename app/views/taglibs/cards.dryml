@@ -35,3 +35,14 @@
     </a>
   </card>
 </def>
+
+<def tag="card" for="Comment">
+  <card class="comment" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a:owner><name/></a>:</h4>
+    </header:>
+    <body: param>
+      <view:content/>
+    </body:>
+  </card>
+</def>
