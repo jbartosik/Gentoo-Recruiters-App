@@ -6,7 +6,7 @@ Feature: Clean UI
   Scenario: Don't show project acceptances edit to recruit editing own profile
     Given I am logged in as "recruit"
     When I am on the homepage
-    And I follow "See your profile"
+    And I follow "view your profile"
     And I follow "Edit User"
     Then I should not see "Project Acceptances"
 
