@@ -16,5 +16,6 @@
 </def>
 
 <def tag="view" for="RichTypes::CheckList">
+  <%raise HoboError, "view of non-viewable field '#{this_field}' of #{this_parent.typed_id rescue this_parent}" unless can_view?%>
   <input disabled/>
 </def>
