@@ -12,22 +12,25 @@
 </def>
 
 <def tag="detailed" for="Answer">
-  <h2>
-    Answer of
-      <with:owner><name/></with>
-    for question
-    "<with:question><name/></with>
-    <a action="edit" if="&can_edit?">(Edit)</a>
+  <h2 param="title">
+    Answer of <name:owner/> for question "<name:question/>"
+    <a href="&edit_answer_path(this)" if="&can_edit?">(Edit)</a>
   </h2>
-  <h5>Question:</h5>
-  <with:question><view:content/></with>
 
-  <h5>Answer:</h5>
-  <if:approved>Approved</if>
-  <else>Not approved</else>
-  <view:content/>
+  <div param="question">
+    <h5>Question:</h5>
+    <view:question.content/>
+  </div>
 
-  <with with="&this.question.reference_answer">
+  <div param="answer">
+    <h5>Answer:</h5>
+    <if:approved>Approved</if>
+    <else>Not approved</else>
+
+    <view:content/>
+  </div>
+
+  <with:question.reference_answer param="reference-answer">
     <card if="&can_view?">
       <header:>
         <h5>Reference answer:</h5>
@@ -40,16 +43,10 @@
 </def>
 
 <def tag="detailed" for="MultipleChoiceAnswer">
-  <h2>
-    Answer of
-      <with:owner><name/></with>
-    for question
-    "<with:question><name/></with>
-    <a href="&edit_answer_path(this)" if="&can_edit?">(Edit)</a>
-  </h2>
-  <h5>Question:</h5>
-  <with:question><view:content/></with>
-
-  <h5>Answer:</h5>
-  <view:options/>
+  <detailed for-type="Answer">
+    <answer:>
+      <h5>Answer:</h5>
+      <view:options/>
+    </answer:>
+  </detailed>
 </def>
