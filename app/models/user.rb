@@ -140,6 +140,22 @@ class User < ActiveRecord::Base
       Question.multiple_choice.grouped_questions_of_user(id).unanswered(id).count == 0
   end
 
+  def required_questions_count
+    Question.ungrouped_questions_of_user(id).count + Question.grouped_questions_of_user(id).count
+  end
+
+  def required_unanswered_count
+    Question.unanswered_grouped(id).count + Question.unanswered_ungrouped(id).count
+  end
+
+  def required_answered_count
+    self.required_questions_count - self.required_unanswered_count
+  end
+
+  def progress
+    "Answered #{self.required_answered_count} of #{self.required_questions_count} questions."
+  end
+
   protected
 
     def only_recruiter_can_be_administrator

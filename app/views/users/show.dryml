@@ -1,0 +1,3 @@
+<show-page>
+  <field-list: fields="email_address, role, nick, contributions, state, mentor, progress"/>
+</show-page>
