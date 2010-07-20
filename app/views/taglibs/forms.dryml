@@ -30,8 +30,7 @@
     <table>
     <input:question type="hidden"/>
     <input:owner    type="hidden"/>
-    <input:options/>
-    <field-list fields="reference, approved, feedback"/>
+    <field-list fields="reference, approved, feedback, options"/>
     </table>
     <div param="actions">
       <submit label="#{ht 'answers.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>

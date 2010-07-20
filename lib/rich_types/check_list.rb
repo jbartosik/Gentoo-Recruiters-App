@@ -25,9 +25,10 @@ module RichTypes
         @opt_list = what
 
       elsif klass == Array
-          for i in @opt_list.keys
-            @opt_list[i][:checked] = what.include?(i)
-          end
+        what = what.collect{ |x| x.to_i }
+        for i in @opt_list.keys
+          @opt_list[i][:checked] = what.include?(i)
+        end
 
       elsif klass == String
         # Convert to Array and use = for Arrays

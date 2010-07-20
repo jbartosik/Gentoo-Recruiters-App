@@ -76,36 +76,19 @@ class Answer < ActiveRecord::Base
   end
 
   def self.update_from(params)
-   ans = Answer.find(params['id'])
+    ans     = Answer.find(params['id'])
+    result  = ans.attributes
 
-  if ans.class == Answer
-    update = params["answer"] || []
-  elsif ans.class == MultipleChoiceAnswer
-    params["multiple_choice_answer"] = {} unless params["multiple_choice_answer"]
-    params["multiple_choice_answer"]["options"] = params["options"].inject(Array.new){ |a, cur| a.push cur.to_i }
-    update = params["multiple_choice_answer"]
-  end
+    params[ans.class.to_s.underscore].try.each{ |u| result[u[0]] = u[1] }
 
-   result = ans.attributes
-
-   for u in update
-    result[u[0]] = u[1]
-   end
-
-   result
+    result
   end
 
   def self.new_from(params)
-
-    if params.include? "answer"
-      Answer.new params["answer"]
-    elsif params.include? "multiple_choice_answer"
-      ans_hash            = params["multiple_choice_answer"]
-      new_ans             = MultipleChoiceAnswer.new  ans_hash
-      new_ans.options     = params["options"].try.inject(Array.new){ |a, cur| a.push cur.to_i } || []
-      return new_ans
+    for klass in [Answer, MultipleChoiceAnswer]
+      name = klass.to_s.underscore
+      return klass.new(params[name]) if params.include? name
     end
-
   end
 
   def self.wrong_answers_of(uid)
