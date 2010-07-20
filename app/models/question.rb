@@ -113,7 +113,7 @@ class Question < ActiveRecord::Base
   named_scope   :multiple_choice, :joins => :question_content_multiple_choice
 
   def answered?(user)
-    user.signed_up? && user.answered_questions.include?(self)
+    answers.owner_is(user).not_reference.count > 0 if user.signed_up?
   end
 
   def answer_of(user)
