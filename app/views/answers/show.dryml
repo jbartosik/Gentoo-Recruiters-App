@@ -1,17 +1,7 @@
 <show-page>
   <content:>
     <detailed/>
-    <a href="&new_comment_for_answer_path(this.id)" if="&this.owner.mentor_is?(current_user)">Comment this answer</a>
-    <with with="&this.question.reference_answer">
-      <card if="&this.try.viewable_by? current_user">
-        <header:>
-          <h5>Reference answer:</h5>
-        </header:>
-        <body:>
-          <view:content/>
-        </body:>
-      </card>
-    </with>
     <collection:comments/>
+    <a href="&new_comment_for_answer_path(this.id)" if="&this.owner.mentor_is?(current_user)">Comment this answer</a>
   </content>
 </show-page>

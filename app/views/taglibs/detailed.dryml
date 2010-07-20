@@ -24,8 +24,19 @@
 
   <h5>Answer:</h5>
   <if:approved>Approved</if>
-  <else:approved>Not approved</else>
+  <else>Not approved</else>
   <view:content/>
+
+  <with with="&this.question.reference_answer">
+    <card if="&can_view?">
+      <header:>
+        <h5>Reference answer:</h5>
+      </header:>
+      <body:>
+        <view:content/>
+      </body:>
+    </card>
+  </with>
 </def>
 
 <def tag="detailed" for="MultipleChoiceAnswer">
