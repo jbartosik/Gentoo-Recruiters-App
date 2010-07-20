@@ -1,3 +1,13 @@
 <show-page>
-  <field-list: fields="email_address, role, nick, contributions, state, mentor, progress"/>
+  <content-body:>
+    <field-list fields="email_address, role, nick, contributions, state, mentor, progress"/>
+    <h3>
+      <ht key="users.collection.heading.your" >
+        <Your/>Answers
+      </ht>
+    </h3>
+    <a href="&user_questions_path(this)">Questions user should answer</a>.
+
+    <collection:answers/>
+  </content-body:>
 </show-page>

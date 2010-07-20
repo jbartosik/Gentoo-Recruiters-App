@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   hobo_model_controller
 
   auto_actions :all, :except => :index
-  index_action :answered_questions, :unanswered_questions, :my_questions, :suggest_questions, :approve_questions
+  index_action :answered_questions, :unanswered_questions, :suggest_questions, :approve_questions
 
   def answered_questions
     hobo_index (current_user.signed_up? && current_user.answered_questions)

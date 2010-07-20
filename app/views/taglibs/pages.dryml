@@ -19,7 +19,7 @@
       <ul>
         <li><a with="&Question" action="answered_questions">You answered.</a></li>
         <li><a with="&Question" action="unanswered_questions">You didn't answer yet but you should.</a></li>
-        <li><a with="&Question" action="my_questions">All questions you should answer(including answered).</a></li>
+        <li><a href="&user_questions_path(current_user)">All questions you should answer(including answered).</a></li>
       </ul>
     </if>
     <if with="&!this.recruits.empty?">

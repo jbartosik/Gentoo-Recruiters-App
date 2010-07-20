@@ -1,8 +1,8 @@
-<def tag="card" for="Question">
+<def tag="card" for="Question" attrs="user">
   <card class="question" param="default" merge>
     <header: param>
       <h4 param="heading"><a><name/></a></h4>
-      <if with="&this.answered?(current_user)">
+      <if with="&this.answered?(user || current_user)">
         answered
       </if>
     </header:>

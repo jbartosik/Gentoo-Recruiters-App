@@ -5,7 +5,8 @@ Feature: Viewing question listings
 
   Scenario: View listing of all questions I should answer
     Given I am logged in as recruit with some answered and unanswered questions
-    When I am on all my questions page
+    When I am on the homepage
+    And I follow "All questions you should answer(including answered)."
     Then I should see following:
     |q1|q3|q4|
     And I should not see "q2"
