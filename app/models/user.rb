@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
     role          Role, :default => 'recruit'
     nick          :string
     contributions HoboFields::MarkdownString
+    project_lead  :boolean, :default => false
     timestamps
   end
 
@@ -59,6 +60,7 @@ class User < ActiveRecord::Base
   validate                :mentor_is_gentoo_dev_long_enough
   validates_uniqueness_of :nick, :if => :nick
 
+  never_show              :project_lead
   # --- Permissions --- #
 
   def create_permitted?
