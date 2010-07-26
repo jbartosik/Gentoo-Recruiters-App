@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
     administrator :boolean, :default => false
     role          Role, :default => 'recruit'
     nick          :string
+    openid        :string
     contributions HoboFields::MarkdownString
     project_lead  :boolean, :default => false
     token         :string
@@ -192,7 +193,7 @@ class User < ActiveRecord::Base
 
     def changes_allowed_to_self?
       only_changed?(:email_address, :crypted_password, :current_password,
-        :password, :password_confirmation, :nick, :contributions)
+        :password, :password_confirmation, :nick, :contributions, :name)
         # Note: crypted_password has attr_protected so although it is permitted to change, it cannot be changed
         # directly from a form submission.
     end

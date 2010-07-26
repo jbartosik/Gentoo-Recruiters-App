@@ -1,0 +1,19 @@
+<login-page>
+  <form:>
+    <labelled-item-list>
+      <labelled-item>
+        <item-label>OpenID</item-label>
+        <item-value><input type="text" name="login" id="login" class="string"/></item-value>
+      </labelled-item>
+
+      <labelled-item if="&Hobo::User.default_user_model.column_names.include?('remember_token')">
+        <item-label class="field-label">Remember me:</item-label>
+        <item-value><input type="checkbox" name="remember_me" id="remember-me"/></item-value>
+      </labelled-item>
+    </labelled-item-list>
+    <set user="&Hobo::User.default_user_model"/>
+    <div class="actions">
+      <submit label='Log in'/>
+    </div>
+  </form:>
+</login-page>

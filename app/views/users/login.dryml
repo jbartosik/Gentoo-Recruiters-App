@@ -1,0 +1,5 @@
+<login-page>
+  <append-body:>
+    Or <a href="&openid_login_users_path">log in using OpenID</a>.
+  </append-body:>
+</login-page>

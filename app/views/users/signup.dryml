@@ -1,0 +1,5 @@
+<signup-page>
+  <append-body:>
+    Or <a href="&openid_login_users_path">sign up using OpenID</a>.
+  </append-body:>
+</signup-page>

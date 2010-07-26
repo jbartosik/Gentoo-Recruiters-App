@@ -3,6 +3,9 @@ ActionController::Routing::Routes.draw do |map|
   map.site_search  'search', :controller => 'front', :action => 'search'
   map.root :controller => 'front', :action => 'index'
 
+  map.openid_login_users 'users/openid_login', :controller => 'users', :action => 'openid_login', :conditions => {:method => :get}
+  map.complete_openid_users 'users/complete_openid', :controller => 'users', :action => 'complete_openid', :conditions => {:method => :get}
+
   Hobo.add_routes(map)
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -23,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments

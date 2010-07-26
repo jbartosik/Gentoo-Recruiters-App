@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100809160102) do
+ActiveRecord::Schema.define(:version => 20100811164808) do
 
   create_table "answers", :force => true do |t|
     t.text     "content",     :default => "",    :null => false
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(:version => 20100809160102) do
     t.datetime "key_timestamp"
     t.boolean  "project_lead",                            :default => false
     t.string   "token"
+    t.string   "openid"
   end
 
   add_index "users", ["mentor_id"], :name => "index_users_on_mentor_id"
