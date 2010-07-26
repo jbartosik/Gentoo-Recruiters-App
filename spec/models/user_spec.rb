@@ -206,4 +206,34 @@ describe User do
       u.token.should_not be_nil
     end
   end
+
+  it "should make mentors users that register with OpenID https://dev.gentoo.org/~nick, deducing nick from OpenID" do
+    user = User.new :email_address => "example@example.com", :name => "Example",
+                    :openid => "https://dev.gentoo.org/~example"
+    user.save!
+    user.nick.should == "example"
+    user.role.is_mentor?.should be_true
+  end
+
+  it "should not make mentors users that set their OpenID after registration" do
+    user = Factory(:recruit)
+    user.openid = "https://dev.gentoo.org/~example"
+    user.save!
+    user.nick.should be_nil
+    user.role.is_mentor?.should be_false
+  end
+
+  it "should not make mentors users who use faked dev.gentoo.org OpenID" do
+    user = User.new :email_address => "example@example.com", :name => "Example",
+                    :openid => "https://fake.com/dev.gentoo.org/~example"
+    user.save!
+    user.nick.should be_nil
+    user.role.is_mentor?.should be_false
+
+    user = User.new :email_address => "example@fake.com", :name => "Fake",
+                    :openid => "https://fake.com/https://dev.gentoo.org/~example"
+    user.save!
+    user.nick.should be_nil
+    user.role.is_mentor?.should be_false
+  end
 end

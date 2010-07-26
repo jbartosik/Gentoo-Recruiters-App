@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   validate                :mentors_and_recruiters_must_have_nick
   validate                :mentor_is_gentoo_dev_long_enough
   validates_uniqueness_of :nick, :if => :nick
+  validates_uniqueness_of :openid, :if => :openid
 
   never_show              :project_lead
 
@@ -160,6 +161,17 @@ class User < ActiveRecord::Base
 
   def progress
     "Answered #{self.required_answered_count} of #{self.required_questions_count} questions."
+  end
+
+  before_create do |u|
+    # Users using OpenID from dev.gentoo.org are mentors
+    # Note that this doesn't make sure user can authenticate with
+    # specified OpenID.
+    match = /^https:\/\/dev.gentoo.org\/~(\w+)$/i.match(u.openid)
+    if match
+      u.role = :mentor
+      u.nick = match.captures.first
+    end
   end
 
   protected
