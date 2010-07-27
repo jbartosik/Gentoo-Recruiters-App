@@ -18,7 +18,15 @@ class ProjectAcceptance < ActiveRecord::Base
   named_scope :find_by_user_name_and_accepting_nick, lambda { |user_name, accepting_nick| {
     :joins => :user, :conditions => ['users.name = ? AND accepting_nick = ?', user_name, accepting_nick] } }
 
-  multi_permission :create, :update, :destroy, :edit do
+  def create_permitted?
+    # Recruiters can create project_acceptances
+    # Project leads can create project_acceptances they should approve
+    return true if acting_user.try.role.try.is_recruiter?
+    return true if acting_user.try.project_lead && accepting_nick == acting_user.try.nick
+    false
+  end
+
+  multi_permission :update, :destroy, :edit do
     # Allow admins everything
     return true if acting_user.try.administrator?
 
@@ -32,6 +40,10 @@ class ProjectAcceptance < ActiveRecord::Base
     # Allow user with nick accepting_nick to change :accepted
     return true if (acting_user.try.nick ==  accepting_nick) && only_changed?(:accepted)
 
+    # Allow CRU new records to recruiters and project leads
+    return true if new_record? && acting_user.try.role.try.is_recruiter?
+    return true if new_record? && acting_user.try.project_lead
+
     false
   end
 
@@ -42,5 +54,14 @@ class ProjectAcceptance < ActiveRecord::Base
      return true if user.mentor_is?(acting_user)
 
      false
+  end
+
+  # Returns new project acceptance with user = recruit, accepting_nick = lead.nick
+  # if lead is marked as project_lead AND there isn't such a project acceptance yet
+  def self.new_for_users(recruit, lead)
+    return nil unless lead.try.project_lead
+    return nil unless recruit.signed_up?
+    return nil unless ProjectAcceptance.first(:conditions => { :accepting_nick => lead.nick, :user_id => recruit.id}).nil?
+    ProjectAcceptance.new :accepting_nick => lead.nick, :user => recruit
   end
 end

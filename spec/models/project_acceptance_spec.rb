@@ -4,13 +4,13 @@ describe ProjectAcceptance do
 
   include Permissions::TestPermissions
 
-  it 'should allow any mentor of user and recruiters to edit and CRUD (if not accepted)' do
+  it 'should allow any mentor of user and recruiters to edit and RUD (if not accepted)' do
     for user in fabricate_all_roles
       acceptance = Factory(:project_acceptance, :user => user)
       users = [Factory(:recruiter)]
       users += [user.mentor] if user.mentor
 
-      cud_allowed(users, acceptance)
+      ud_allowed(users, acceptance)
       view_allowed(users, acceptance)
       edit_allowed(users, acceptance)
     end
@@ -29,7 +29,7 @@ describe ProjectAcceptance do
     acceptance.accepted = true
     user                = [User.find_by_nick(acceptance.accepting_nick)]
 
-    cud_allowed(user, acceptance)
+    ud_allowed(user, acceptance)
     view_allowed(user, acceptance)
     edit_allowed(user, acceptance)
   end
@@ -54,5 +54,21 @@ describe ProjectAcceptance do
 
     users       = [acceptance.user, acceptance.user.mentor, Factory(:recruiter)]
     view_allowed(users, acceptance)
+  end
+
+  it 'should allow creation only to recruiters and project leads that create for themselfs' do
+    acceptance = ProjectAcceptance.new :accepting_nick => 'a'
+    lead = Factory(:mentor, :nick => "a", :project_lead => true)
+
+    acceptance.should be_creatable_by(Factory(:recruiter))
+    acceptance.should be_creatable_by(lead)
+
+    acceptance.should be_editable_by(Factory(:recruiter))
+    acceptance.should be_editable_by(lead)
+
+    acceptance.should_not be_creatable_by(Factory(:recruit))
+    acceptance.should_not be_creatable_by(Factory(:mentor))
+    acceptance.should_not be_creatable_by(Factory(:mentor, :project_lead => true))
+    acceptance.should_not be_creatable_by(Guest.new)
   end
 end

@@ -7,7 +7,12 @@
       </ht>
     </h3>
     <a href="&user_questions_path(this)">Questions user should answer</a>.
-
     <collection:answers/>
   </content-body:>
+  <append-aside:>
+    <form with="&ProjectAcceptance.new_for_users(this, current_user)">
+      <field-list: skip="user, accepting_nick, accepted"/>
+      <actions:><submit label="This recruit needs your acceptance"/></actions:>
+    </form>
+  </append-aside:>
 </show-page>

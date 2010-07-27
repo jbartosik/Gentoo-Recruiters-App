@@ -67,3 +67,14 @@ Feature: Project Lead Approval
     And I follow "recruit"
     Then I should see "Waiting for acceptance by some project lead"
     And I should see "Accepted by other project lead"
+
+  Scenario: Project lead add project acceptance to recruit
+    Given project lead "lead"
+    And I am logged in as "lead"
+    And user "recruit"
+    When I am on show "recruit" user page
+    And I press "This recruit needs your acceptance"
+    Then I should see "The project acceptance was created successfully" within ".flash.notice"
+
+    When I am on show "recruit" user page
+    Then I should see "Waiting for acceptance by lead"

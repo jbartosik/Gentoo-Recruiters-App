@@ -190,4 +190,14 @@ describe User do
 
     silence_warnings { APP_CONFIG = JSON.load(old_config) } # restore config
   end
+
+  it "should allow only recruiters to edit project acceptances" do
+    user = Factory(:recruit)
+    user.should be_editable_by(Factory(:recruiter), :project_acceptances)
+
+    user.should_not be_editable_by(Factory(:mentor, :project_lead => true), :project_acceptances)
+    user.should_not be_editable_by(Factory(:mentor), :project_acceptances)
+    user.should_not be_editable_by(Factory(:recruit), :project_acceptances)
+    user.should_not be_editable_by(Guest.new, :project_acceptances)
+  end
 end
