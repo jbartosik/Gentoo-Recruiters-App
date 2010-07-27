@@ -8,6 +8,9 @@ class Answer < ActiveRecord::Base
     content   HoboFields::MarkdownString
     approved  :boolean, :default => false
     reference :boolean, :default => false
+    feedback  HoboFields::EnumString.for('', 'Documentation ok',
+                  'Could not find documentation', 'Documentation insufficient'),
+                  :default => ''
     timestamps
   end
   attr_readonly :reference
@@ -92,7 +95,7 @@ class Answer < ActiveRecord::Base
     elsif params.include? "multiple_choice_answer"
       ans_hash            = params["multiple_choice_answer"]
       new_ans             = MultipleChoiceAnswer.new  ans_hash
-      new_ans.options     = params["options"].inject(Array.new){ |a, cur| a.push cur.to_i }
+      new_ans.options     = params["options"].try.inject(Array.new){ |a, cur| a.push cur.to_i } || []
       return new_ans
     end
 
