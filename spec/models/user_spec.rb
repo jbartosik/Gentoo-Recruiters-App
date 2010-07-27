@@ -201,7 +201,9 @@ describe User do
     user            = Factory(:recruit)
 
     # Configure to check using test data
-    old_config                              =  APP_CONFIG # to restore it after his test
+    old_config                              =  APP_CONFIG.to_json # to restore it after his test
+                                                                  # it behaves like reference if
+                                                                  # I copy a hash
     APP_CONFIG['developer_data']['check']   = true
     APP_CONFIG['developer_data']['min_months_mentor_is_dev']  = '6'
     APP_CONFIG['developer_data']['data']    = %{{"developers": [
@@ -220,6 +222,6 @@ describe User do
     user.nick       = "short"
     user.should_not be_valid
 
-    silence_warnings { APP_CONFIG = old_config } # restore config
+    silence_warnings { APP_CONFIG = JSON.load(old_config) } # restore config
   end
 end
