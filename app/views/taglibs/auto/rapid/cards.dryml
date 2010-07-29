@@ -1,0 +1,142 @@
+<!-- AUTOMATICALLY GENERATED FILE - DO NOT EDIT -->
+
+<def tag="card" for="Answer">
+  <card class="answer" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <a:owner param="creator-link"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="Comment">
+  <card class="comment" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <a:owner param="creator-link"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="Option">
+  <card class="option" param="default" merge>
+    <body: param>
+      <view:content param="description"/>
+      <view:option_owner param="creator"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="ProjectAcceptance">
+  <card class="project-acceptance" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+  </card>
+</def>
+
+<def tag="card" for="Question">
+  <card class="question" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <a:user param="creator-link"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionCategory">
+  <card class="question-category" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionContentEmail">
+  <card class="question-content-email" param="default" merge>
+    <header: param>
+      <div param="actions">
+        <a action="edit" if="&can_edit?" param="edit-link">
+          <ht key="question_content_emails.actions.edit">Edit</ht>
+        </a>
+      </div>
+    </header:>
+    <body: param>
+      <view:description param="description"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionContentMultipleChoice">
+  <card class="question-content-multiple-choice" param="default" merge>
+    <header: param>
+      <div param="actions">
+        <a action="edit" if="&can_edit?" param="edit-link">
+          <ht key="question_content_multiple_choices.actions.edit">Edit</ht>
+        </a>
+      </div>
+    </header:>
+    <body: param>
+      <view:content param="description"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionContentText">
+  <card class="question-content-text" param="default" merge>
+    <header: param>
+      <div param="actions">
+        <a action="edit" if="&can_edit?" param="edit-link">
+          <ht key="question_content_texts.actions.edit">Edit</ht>
+        </a>
+      </div>
+    </header:>
+    <body: param>
+      <view:content param="description"/>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="QuestionGroup">
+  <card class="question-group" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+  </card>
+</def>
+
+<def tag="card" for="User">
+  <card class="user" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><name/></a></h4>
+    </header:>
+    <body: param>
+      <ht key="answers.collection.count" count="&this.answers.size">
+         <count:answers param/>
+      </ht>
+    </body:>
+  </card>
+</def>
+
+<def tag="card" for="UserCategory">
+  <card class="user-category" param="default" merge>
+    <header: param>
+      <h4 param="heading"><name/></h4>
+    </header:>
+  </card>
+</def>
+
+<def tag="card" for="UserQuestionGroup">
+  <card class="user-question-group" param="default" merge>
+    <header: param>
+      <h4 param="heading"><name/></h4>
+    </header:>
+  </card>
+</def>
+
