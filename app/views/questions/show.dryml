@@ -1,15 +1,6 @@
 <show-page>
   <content:>
     <detailed show-title/>
-    <if with="&this.answer_of(current_user)">
-      <a>View you answer</a>'
-    </if>
-    <else>
-      <if test="& current_user.signed_up? && this.content.try.new_answer_of(current_user)">
-        <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>
-      </if>
-    </else>
-
     <if test="&this.content.nil?">
       <h2><name/><a action="edit" if="&can_edit?">(Edit)</a></h2>
       This question doesn't have content yet.
@@ -21,7 +12,14 @@
       </if>
     </if>
     <else>
-      <a href="&new_answer_for_question_path(this.id)" >Answer it!</a>
+      <if with="&this.answer_of(current_user)">
+        <a>View you answer</a>'
+      </if>
+      <else>
+        <if test="& current_user.signed_up? && this.content.try.new_answer_of(current_user)">
+          <a href="&new_answer_for_question_path(this.id)">Answer it!</a>
+        </if>
+      </else>
     </else>
     <if test="&this.reference_answer.try.viewable_by? current_user">
       <br/>

@@ -59,3 +59,22 @@ Feature: Clean UI
     And I follow "Question Categories"
     And I follow "category"
     Then I should see "No questions to display"
+
+  Scenario: I should not see double Answer it
+    Given a question "question"
+    When I am logged in as "recruit"
+    And I am on show "question" question page
+    Then I should see "Answer it"
+    And I should not see /Answer it(?m:.*)Answer it/
+
+  Scenario: I should not see Answer it as Guest
+    Given a question "question"
+    When I am on show "question" question page
+    Then I should not see "Answer it"
+
+  Scenario: I should not see Answer it when I answered question
+    Given a question "question"
+    And "recruit" answered question "question"
+    When I am logged in as "recruit"
+    When I am on show "question" question page
+    Then I should not see "Answer it"
