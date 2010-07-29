@@ -67,6 +67,8 @@
         <if test="&User.recruits_answered_all.count > 0">
           <a with="&User" action="ready_recruits">Recruits that answered all questions</a>.<br/>
         </if>
+
+        <a if="&this.administrator?" href="&new_question_path">New Question</a>
     </section>
 
   </section>

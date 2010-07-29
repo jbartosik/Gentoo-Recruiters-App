@@ -40,8 +40,9 @@ Feature: Clean UI
 
   Scenario: Administrator creating new question
     Given I am logged in as administrator
-    When I follow "Suggestion Questions"
-    And I follow "New Question"
+    Then I should not see "Suggestion Questions"
+
+    When I follow "New Question"
     Then I should not see "Approved" within ".section.content-body"
     And I should not see "User" within ".section.content-body"
     And I should see "You will add content in next step"
