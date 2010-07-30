@@ -25,7 +25,7 @@ Feature: Reference answers
 
   Scenario: Record reference answer for multiple choice question and edit it as different recruiter
     Given I am logged in as "recruiter1" who is "recruiter"
-    And a multiple choice content "Chose some" for "question"
+    And a multiple choice content "question" for "question"
     And following options for "question":
       |Opt 1|Opt 2|Opt 3|
     When I am on show "question" question page

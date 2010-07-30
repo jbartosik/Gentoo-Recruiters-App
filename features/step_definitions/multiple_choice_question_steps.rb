@@ -6,12 +6,14 @@ Given /^a multiple choice content "([^\"]*)"$/ do |content|
 end
 
 Given /^a multiple choice content "([^\"]*)" for "([^\"]*)"$/ do |content, question|
-  Given "a multiple choice content \"#{content}\""
   Given "a question \"#{question}\""
-  @question.content.destroy unless @question.content.is_a?(QuestionContentMultipleChoice) || @question.content.nil?
-  @question.reload
-  @content.question = @question
-  @content.save!
+  unless @question.content.is_a?(QuestionContentMultipleChoice) || @question.content.nil?
+    @question.content.destroy
+    Given "a multiple choice content \"#{content}\""
+    @content.question = @question
+    @content.save!
+    @question.reload
+  end
 end
 
 Given /^(?:|an )option "([^\"]*)" for "([^\"]*)"$/ do |opt, content|

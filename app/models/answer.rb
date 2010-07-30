@@ -93,8 +93,8 @@ class Answer < ActiveRecord::Base
 
   def self.wrong_answers_of(uid)
     Answer.find_by_sql ["SELECT ans.* FROM answers ans, answers ref WHERE
-      ref.reference = 't' AND ans.question_id = ref.question_id AND
-      ans.content != ref.content AND ans.owner_id = ?", uid]
+      ref.reference = ? AND ans.question_id = ref.question_id AND
+      ans.content != ref.content AND ans.owner_id = ?", true, uid]
   end
 
   protected

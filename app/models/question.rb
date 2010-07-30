@@ -108,7 +108,7 @@ class Question < ActiveRecord::Base
   named_scope   :with_content, :include => [:question_content_text,
     :question_content_multiple_choice, :question_content_email], :conditions =>
     'question_content_texts.id IS NOT NULL OR question_content_multiple_choices.id
-    IS NOT NULL OR question_content_emails IS NOT NULL'
+    IS NOT NULL OR question_content_emails.id IS NOT NULL'
 
   named_scope :questions_to_approve, :conditions => { :approved => false }
 

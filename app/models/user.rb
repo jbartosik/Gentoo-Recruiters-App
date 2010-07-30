@@ -29,13 +29,13 @@ class User < ActiveRecord::Base
   named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS
     (SELECT questions.id FROM questions
     INNER JOIN question_categories cat ON questions.question_category_id = cat.id INNER JOIN
-    user_categories ON user_categories.question_category_id = cat.id LEFT OUTER JOIN
-    answers ON answers.question_id = questions.id AND answers.owner_id = users.id WHERE
-    user_categories.user_id = users.id AND answers.id IS NULL AND questions.question_group_id IS NULL)
+    user_categories ON user_categories.question_category_id = cat.id  WHERE
+    user_categories.user_id = users.id AND questions.question_group_id IS NULL AND NOT EXISTS (
+    SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))
     AND NOT EXISTS
     (SELECT questions.id FROM questions INNER JOIN user_question_groups ON questions.id = user_question_groups.question_id
-    LEFT OUTER JOIN answers ON answers.question_id = questions.id AND answers.owner_id = users.id
-     WHERE user_question_groups.user_id = users.id AND answers.id IS NULL)"
+     WHERE user_question_groups.user_id = users.id AND NOT EXISTS (
+     SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))"
 
   # --- Signup lifecycle --- #
   lifecycle do
