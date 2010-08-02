@@ -1,3 +1,7 @@
+<%  # whole <content:> must be replaced here, not just <content-body:>,
+    # because this is User (or Guest) and some parts of <content-body:>
+    # expect this to be collection
+%>
 <index-page>
   <content:>
     <repeat with="&this.all_questions">

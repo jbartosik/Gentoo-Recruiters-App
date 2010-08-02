@@ -1,5 +1,5 @@
 <index-page>
-  <content:>
+  <content-body:>
     <form action="/question_groups/category">
       <%=
         select("id", nil, QuestionCategory.as_select_opts, {:include_blank => false, :selected =>  params['id']._?[0].to_i})
@@ -7,5 +7,5 @@
       <submit label="view in this category"/>
     </form>
     <collection/>
-  </content:>
+  </content-body:>
 </index-page>

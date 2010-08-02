@@ -1,10 +1,10 @@
 <edit-page>
-  <content:>
+  <content-body:>
     <%
       # This form is used to edit various types inheriting Answer
       # but result is always posted to AnswersController#update
       # so action must be specified explicitly
     %>
     <form action="&update_answer_path(this.id)" method="PUT"/>
-  </content:>
+  </content-body:>
 </edit-page>

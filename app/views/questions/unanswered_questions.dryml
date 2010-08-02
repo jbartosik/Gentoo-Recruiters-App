@@ -1,7 +1,7 @@
 <index-page>
-  <content:>
+  <content-body:>
     <repeat with="&current_user.unanswered_questions">
       <card/>
     </repeat>
-  </content:>
+  </content-body:>
 </index-page>
