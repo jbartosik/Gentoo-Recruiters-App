@@ -5,9 +5,6 @@ defaults: &defaults
     min_months_mentor_is_dev: 6
   seed:
     users_domain:               example.com
-  answers_address:
-    local_part:               answers
-    domain:                   localhost
 development:
   <<: *defaults
 production:
