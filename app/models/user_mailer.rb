@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def question_title(answer)
-    answer.question.try.title || "none"
+    answer.question._?.title || "none"
   end
 
   def forgot_password(user, key)

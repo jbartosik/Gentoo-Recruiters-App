@@ -28,7 +28,7 @@ class UserQuestionGroup < ActiveRecord::Base
     # as users can never edit questions on their own if one of those isn't met
     # it'll be because of some problem in application
     def question_has_category
-      errors.add(:question, 'must be grouped!') if question.try.question_group.nil?
+      errors.add(:question, 'must be grouped!') if question._?.question_group.nil?
     end
 
     def user_does_not_have_other_question_from_the_same_category

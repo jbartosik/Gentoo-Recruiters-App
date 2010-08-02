@@ -22,7 +22,7 @@
         </if>
       </else>
     </else>
-    <if test="&this.reference_answer.try.viewable_by? current_user">
+    <if test="&this.reference_answer._?.viewable_by? current_user">
       <br/>
       <a href="&answer_path(this.reference_answer)">View reference answer</a>.
     </if>

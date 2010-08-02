@@ -79,7 +79,7 @@ class Answer < ActiveRecord::Base
     ans     = Answer.find(params['id'])
     result  = ans.attributes
 
-    params[ans.class.to_s.underscore].try.each{ |u| result[u[0]] = u[1] }
+    params[ans.class.to_s.underscore]._?.each{ |u| result[u[0]] = u[1] }
 
     result
   end
@@ -99,11 +99,11 @@ class Answer < ActiveRecord::Base
 
   protected
     def notify_new_answer
-      UserMailer.deliver_new_answer(owner.mentor, self) unless owner.try.mentor.nil?
+      UserMailer.deliver_new_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end
 
     def notify_changed_answer
-      UserMailer.deliver_changed_answer(owner.mentor, self) unless owner.try.mentor.nil?
+      UserMailer.deliver_changed_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end
 
 end

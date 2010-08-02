@@ -33,7 +33,7 @@ class ProjectAcceptance < ActiveRecord::Base
     # Allow users mentor and recruiters if not accepted and
     # accepted was not changed
     recruiter_user_or_mentor =  acting_user.role.is_recruiter? ||
-                                user.try.mentor_is?(acting_user)
+                                user._?.mentor_is?(acting_user)
 
     return true if recruiter_user_or_mentor && !accepted && !accepted_changed?
 
