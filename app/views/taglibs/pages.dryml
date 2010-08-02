@@ -16,7 +16,7 @@
       <a with="&current_user">view your profile</a>.<br/>
     </section>
 
-    <section class="users recruits" if="&this.try.role.try.is_recruit?">
+    <section class="users recruits" if="&this.role.is_recruit?">
 
       <if:question_categories>
         You are currently assigned to categories:
@@ -29,12 +29,12 @@
         </ul>
       </if>
 
-       <if test="&current_user.try.any_pending_project_acceptances?">
+       <if test="&current_user.any_pending_project_acceptances?">
         <a with="&ProjectAcceptance" action="pending_acceptances">Recruits waiting for your acceptance</a>.
       </if>
 
       <if test="&current_user.answered_all_multi_choice_questions?">
-        <if test="&Answer.wrong_answers_of(current_user.try.id).count > 0">
+        <if test="&Answer.wrong_answers_of(current_user.id).count > 0">
           You answered all multiple choice questions, but some of them wrong.<br/>
         </if>
         <else>
@@ -46,7 +46,7 @@
 
     </section>
 
-    <section class="users mentors" if="&current_user.try.role.try.is_mentor? || current_user.try.role.try.is_recruiter?">
+    <section class="users mentors" if="&current_user.role.is_mentor? || current_user.role.is_recruiter?">
 
       <a with="&User" action="mentorless_recruits" if="&User.mentorless_recruits.count > 0">See mentorless recruits</a><br/>
 
@@ -60,7 +60,7 @@
 
     </section>
 
-    <section class="users recruiters" if="&this.try.role.try.is_recruiter?">
+    <section class="users recruiters" if="&this.role.is_recruiter?">
         <h3>Registered users:</h3>
         <collection with="&User.all"/>
 

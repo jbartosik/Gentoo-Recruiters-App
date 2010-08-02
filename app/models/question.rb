@@ -47,7 +47,7 @@ class Question < ActiveRecord::Base
 
     # Unapproved questions can be seen only by recruiters and owner
     if !approved
-      return user_is?(acting_user) || acting_user.try.role.try.is_recruiter?
+      return user_is?(acting_user) || acting_user.role.is_recruiter?
     end
 
     # Allow viewing ungrouped questions to everybody

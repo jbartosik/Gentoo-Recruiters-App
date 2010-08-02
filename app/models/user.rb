@@ -94,8 +94,8 @@ class User < ActiveRecord::Base
       # Acting user became mentor of edited recruit and edited user had no mentor
     return true if acting_user.administrator?
     return true if acting_user == self && changes_allowed_to_self?
-    return true if acting_user.try.role.try.is_recruiter? && changes_allowed_for_recruiter?
-    return true if role.is_recruit? && acting_user.try.role.try.is_mentor? && mentor_picked_up_or_resigned?
+    return true if acting_user.role.is_recruiter? && changes_allowed_for_recruiter?
+    return true if role.is_recruit? && acting_user.role.is_mentor? && mentor_picked_up_or_resigned?
   end
 
   def role_edit_permitted?
@@ -203,8 +203,8 @@ class User < ActiveRecord::Base
       #   and mentor changed from nil to acting user
       #   or mentor changed from nil to current user
       return false unless only_changed?(:mentor)
-      return false unless (mentor_id_was.nil? || (mentor_id_was == acting_user.try.id))
-      return false unless (mentor_id.nil? || (mentor_id == acting_user.try.id))
+      return false unless (mentor_id_was.nil? || (mentor_id_was == acting_user.id))
+      return false unless (mentor_id.nil? || (mentor_id == acting_user.id))
 
       true
     end

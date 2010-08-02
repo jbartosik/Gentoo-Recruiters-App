@@ -16,7 +16,7 @@ class QuestionContentEmail < ActiveRecord::Base
   inherit_permissions(:question)
 
   def req_text_view_permitted?
-    return true if acting_user.try.role.try.is_recruiter?
+    return true if acting_user.role.is_recruiter?
     return true if question.owner_is?(acting_user) && !question.approved
   end
 

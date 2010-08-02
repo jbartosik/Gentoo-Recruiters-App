@@ -24,7 +24,7 @@ class Comment < ActiveRecord::Base
     # and recruit who owns answer can view
     return true if owner_is?(acting_user)
     return true if answer.owner_is?(acting_user)
-    return true if acting_user.try.role.try.is_recruiter?
+    return true if acting_user.role.is_recruiter?
 
     false
   end

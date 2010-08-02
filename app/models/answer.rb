@@ -66,12 +66,12 @@ class Answer < ActiveRecord::Base
   end
 
   def reference_edit_permitted?
-    acting_user.try.role.try.is_recruiter?
+    acting_user.role.is_recruiter?
   end
 
   def view_permitted?(field)
     owned_soft? ||
-      acting_user.try.role.try.is_recruiter? ||
+      acting_user.role.is_recruiter? ||
       owner.mentor_is?(acting_user)
   end
 

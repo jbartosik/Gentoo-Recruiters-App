@@ -6,6 +6,6 @@ class ProjectAcceptancesController < ApplicationController
   index_action :pending_acceptances
 
   def pending_acceptances
-    hobo_index ProjectAcceptance.accepting_nick_is(current_user.try.nick)
+    hobo_index ProjectAcceptance.accepting_nick_is(current_user.nick)
   end
 end

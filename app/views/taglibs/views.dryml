@@ -38,6 +38,6 @@
   %>
 
   <if test="&current_user.signed_up?">
-    Your answer should have subject (without quotes) "<%= "#{this.question.id}-#{current_user.try.token}" %>".
+    Your answer should have subject (without quotes) "<%= "#{this.question.id}-#{current_user.token}" %>".
   </if>
 </def>
