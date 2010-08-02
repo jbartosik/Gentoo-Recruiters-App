@@ -42,7 +42,7 @@
         </else>
       </if>
 
-      <if:try.project_acceptances> <collection/> </if>
+      <if:project_acceptances> <collection/> </if>
 
     </section>
 
@@ -50,7 +50,7 @@
 
       <a with="&User" action="mentorless_recruits" if="&User.mentorless_recruits.count > 0">See mentorless recruits</a><br/>
 
-      <unless test="&this.try.recruits.try.empty?">
+      <unless test="&this.recruits.empty?">
         Check <a with="&Answer" action="my_recruits">answers</a> of recruits you mentor.
         You also can view answers of the recruits you mentor in categories:
         <collection with="&QuestionCategory.all">
