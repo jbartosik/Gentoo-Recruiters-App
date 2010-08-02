@@ -7,7 +7,7 @@ task :prepare => ['prepare:config', 'db:schema:load'] + opt
 
 namespace :prepare do
 
-  desc "Prepare configuration files (you can pass db=[none|sqlite3|postgres])"
+  desc "Prepare configuration files (you can pass db=[none|sqlite3|postgres|mysql])"
   task :config do
 
     if !ENV.include?('db') || (ENV['db'] == 'none')
@@ -19,6 +19,11 @@ namespace :prepare do
     elsif ENV['db'] == 'postgres'
       File.copy('doc/config/database-postgres.yml', 'config/database.yml')
       puts "Now you have a template postgeres configuration in config/database.yml.
+            Remember to set user and database names matching you configuration."
+
+    elsif ENV['db'] == 'mysql'
+      File.copy('doc/config/database-mysql.yml', 'config/database.yml')
+      puts "Now you have a template mysql configuration in config/database.yml.
             Remember to set user and database names matching you configuration."
 
     else

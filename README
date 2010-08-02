@@ -24,7 +24,7 @@ or if you want to run tests
 
   rake prepare
 
-  You can pass db=sqlite3 or db=postgres if you want rake to prepare database configuration for you.
+  You can pass db=sqlite3, db=postgres or db=mysql if you want rake to prepare database configuration for you.
   You can pass seed= if you want rake to seed you database with example data.
 
 5. (Optional) You can run test I prepared by simply issuing

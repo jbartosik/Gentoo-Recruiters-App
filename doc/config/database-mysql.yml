@@ -1,0 +1,12 @@
+development:
+  adapter: mysql
+  username:
+  password:
+  database:
+test: &test
+  adapter:  mysql
+  username:
+  password:
+  database:
+cucumber:
+  <<: *test
