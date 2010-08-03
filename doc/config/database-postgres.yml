@@ -1,3 +1,7 @@
+production:
+  adapter: postgresql
+  username:
+  database:
 development:
   adapter: postgresql
   username:

@@ -1,3 +1,8 @@
+production:
+  adapter: mysql
+  username:
+  password:
+  database:
 development:
   adapter: mysql
   username:

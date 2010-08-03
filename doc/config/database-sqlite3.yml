@@ -3,7 +3,7 @@ development:
   database: db/development.sqlite3
   pool: 5
   timeout: 5000
-test:
+test: &test
   adapter: sqlite3
   database: db/test.sqlite3
   pool: 5
@@ -13,3 +13,5 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
+cucumber:
+  <<: *test
