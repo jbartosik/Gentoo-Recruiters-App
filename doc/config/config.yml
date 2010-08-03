@@ -9,11 +9,3 @@ development:
   <<: *defaults
 production:
   <<: *defaults
-test:
-  <<: *defaults
-  developer_data:
-    check:                    false
-cucumber:
-  <<: *defaults
-  developer_data:
-    check:                    false

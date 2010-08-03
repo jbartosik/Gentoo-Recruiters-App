@@ -49,7 +49,7 @@ In config/config.yml you can set:
   seed:
     users_domain                - Domain for emails of users from default seed
 
-There is example of this file in doc/config/config.yml. Remember to disable checks in cucumber and test environments or tests will fail.
+There is example of this file in doc/config/config.yml.
 
 Seed
 

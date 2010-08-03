@@ -1,5 +1,10 @@
 begin
-  APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
+  if Rails.env.test? || Rails.env.cucumber?
+    # Tests must be run in known environment
+    APP_CONFIG = { 'developer_data' => { 'check' => false } }
+  else
+    APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
+  end
 rescue
   APP_CONFIG = Hash.new
 end
