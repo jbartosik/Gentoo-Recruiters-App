@@ -40,7 +40,7 @@ Feature: Clean UI
 
   Scenario: Administrator creating new question
     Given I am logged in as administrator
-    Then I should not see "Suggestion Questions"
+    Then I should not see "Suggest Questions"
 
     When I follow "New Question"
     Then I should not see "Approved" within ".section.content-body"

@@ -6,7 +6,7 @@ Feature: Suggest Questions
   Scenario: Suggest Question
     Given I am logged in as "recruit"
     And I am on the home page
-    When I follow "Suggestion Questions" within ".navigation.main-nav"
+    When I follow "Suggest Questions" within ".navigation.main-nav"
     And I follow "New question"
     And I fill in "question[title]" with "Some question"
     And press "Create Question"
