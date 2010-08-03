@@ -61,6 +61,10 @@ class Answer < ActiveRecord::Base
     (reference && acting_user.signed_up? && acting_user.role.is_recruiter?)
   end
 
+  def feedback_edit_permitted?
+    owned_soft?
+  end
+
   def approved_edit_permitted?
     owner.mentor_is?(acting_user)
   end

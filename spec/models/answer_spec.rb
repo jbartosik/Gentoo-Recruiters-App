@@ -202,4 +202,17 @@ describe Answer do
         Answer.in_category(cat).uniq
     end
   end
+
+  it "should allow only owner to change feedback" do
+    ans     = Factory(:answer)
+    owner   = ans.owner
+    others  = fabricate_users(:administrator, :recruit, :mentor, :recruiter) + [Guest.new, ans.owner.mentor]
+
+    ans.should be_editable_by(owner, :feedback)
+    edit_denied(others, ans, :feedback)
+
+    ans.feedback = 'changed'
+    ans.should be_updatable_by(owner)
+    ud_denied(others, ans)
+  end
 end
