@@ -7,8 +7,8 @@ class UserCategory < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to :user
-  belongs_to :question_category
+  belongs_to :user, :null => false
+  belongs_to :question_category, :null => false
 
   validates_uniqueness_of :user_id, :scope => :question_category_id
 

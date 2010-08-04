@@ -9,15 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100729170624) do
+ActiveRecord::Schema.define(:version => 20100805164943) do
 
   create_table "answers", :force => true do |t|
-    t.text     "content"
+    t.text     "content",                        :null => false
     t.boolean  "approved",    :default => false
     t.boolean  "reference",   :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "question_id"
+    t.integer  "question_id",                    :null => false
     t.integer  "owner_id"
     t.string   "type"
     t.string   "feedback",    :default => ""
@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
   add_index "answers", ["type"], :name => "index_answers_on_type"
 
   create_table "comments", :force => true do |t|
-    t.text     "content"
+    t.text     "content",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "answer_id"
+    t.integer  "answer_id",  :null => false
     t.integer  "owner_id"
   end
 
@@ -40,11 +40,11 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
   add_index "comments", ["owner_id"], :name => "index_comments_on_owner_id"
 
   create_table "options", :force => true do |t|
-    t.string   "content"
+    t.string   "content",           :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "option_owner_id"
-    t.string   "option_owner_type"
+    t.integer  "option_owner_id",   :null => false
+    t.string   "option_owner_type", :null => false
   end
 
   add_index "options", ["option_owner_type", "option_owner_id"], :name => "index_options_on_option_owner_type_and_option_owner_id"
@@ -54,23 +54,23 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
     t.boolean  "accepted",       :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
+    t.integer  "user_id",                           :null => false
   end
 
   add_index "project_acceptances", ["user_id"], :name => "index_project_acceptances_on_user_id"
 
   create_table "question_categories", :force => true do |t|
-    t.string   "name"
+    t.string   "name",       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "question_content_emails", :force => true do |t|
-    t.text     "requirements", :default => ""
+    t.text     "requirements", :default => "", :null => false
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "question_id"
+    t.integer  "question_id",                  :null => false
   end
 
   add_index "question_content_emails", ["question_id"], :name => "index_question_content_emails_on_question_id"
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
     t.text     "content",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "question_id"
+    t.integer  "question_id", :null => false
   end
 
   add_index "question_content_multiple_choices", ["question_id"], :name => "index_question_content_multiple_choices_on_question_id"
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
     t.text     "content",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "question_id"
+    t.integer  "question_id", :null => false
   end
 
   add_index "question_content_texts", ["question_id"], :name => "index_question_content_texts_on_question_id"
@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
   create_table "user_categories", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "question_category_id"
+    t.integer  "user_id",              :null => false
+    t.integer  "question_category_id", :null => false
   end
 
   add_index "user_categories", ["question_category_id"], :name => "index_user_categories_on_question_category_id"
@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(:version => 20100729170624) do
   create_table "user_question_groups", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "question_id"
+    t.integer  "user_id",     :null => false
+    t.integer  "question_id", :null => false
   end
 
   add_index "user_question_groups", ["question_id"], :name => "index_user_question_groups_on_question_id"

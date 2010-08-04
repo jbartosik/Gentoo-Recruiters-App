@@ -5,7 +5,7 @@ class Answer < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content   HoboFields::MarkdownString
+    content   HoboFields::MarkdownString, :null => false
     approved  :boolean, :default => false
     reference :boolean, :default => false
     feedback  HoboFields::EnumString.for('', 'Documentation ok',
@@ -15,7 +15,7 @@ class Answer < ActiveRecord::Base
   end
 
   attr_readonly :reference
-  belongs_to    :question
+  belongs_to    :question, :null => false
   has_many      :comments
 
   named_scope   :of_mentored_by, lambda { |mentor| {

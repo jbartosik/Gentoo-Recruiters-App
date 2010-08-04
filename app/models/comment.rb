@@ -3,11 +3,11 @@ class Comment < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content HoboFields::MarkdownString
+    content HoboFields::MarkdownString, :null => false
     timestamps
   end
 
-  belongs_to    :answer
+  belongs_to    :answer, :null => false
 
   validates_presence_of :content
 

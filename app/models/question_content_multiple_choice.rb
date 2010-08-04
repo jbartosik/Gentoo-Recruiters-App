@@ -8,7 +8,7 @@ class QuestionContentMultipleChoice < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to            :question
+  belongs_to            :question, :null => false
   attr_readonly         :question
   has_many              :options, :as => :option_owner, :accessible => true, :uniq => true
   validates_length_of   :content, :minimum => 2

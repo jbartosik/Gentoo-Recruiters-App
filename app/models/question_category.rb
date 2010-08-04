@@ -3,7 +3,7 @@ class QuestionCategory < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    name :string
+    name :string, :null => false
     timestamps
   end
 

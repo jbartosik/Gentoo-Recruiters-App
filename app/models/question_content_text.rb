@@ -8,7 +8,7 @@ class QuestionContentText < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to    :question
+  belongs_to    :question, :null => false
   attr_readonly :question
 
   validates_length_of   :content, :minimum => 2

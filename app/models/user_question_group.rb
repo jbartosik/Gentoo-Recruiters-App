@@ -5,8 +5,8 @@ class UserQuestionGroup < ActiveRecord::Base
   fields do
     timestamps
   end
-  belongs_to :user
-  belongs_to :question
+  belongs_to :user, :null => false
+  belongs_to :question, :null => false
 
   validates_presence_of :question
   validate              :question_has_category

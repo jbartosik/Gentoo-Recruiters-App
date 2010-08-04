@@ -4,12 +4,12 @@ class ProjectAcceptance < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    accepting_nick :string, :null => false
+    accepting_nick :string, :null => false, :null => false
     accepted       :boolean, :default => false
     timestamps
   end
 
-  belongs_to :user
+  belongs_to :user, :null => false
   attr_readonly :user
 
   validates_presence_of   :user, :accepting_nick

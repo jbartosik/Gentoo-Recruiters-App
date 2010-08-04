@@ -4,12 +4,12 @@ class QuestionContentEmail < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    requirements :text, :nil => false, :default => ""
+    requirements :text, :null => false, :default => ""
     description  HoboFields::MarkdownString
     timestamps
   end
 
-  belongs_to            :question
+  belongs_to            :question, :null => false
   attr_readonly         :question
   never_show            :requirements
 
