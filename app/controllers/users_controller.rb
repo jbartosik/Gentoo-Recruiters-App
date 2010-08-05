@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   hobo_user_controller
   openid_login:openid_opts => { :model => User }
 
+  skip_before_filter :only_valid_users, :only => [:edit, :update]
   auto_actions :all, :except => [ :index, :new, :create ]
   index_action :ready_recruits
   index_action :mentorless_recruits

@@ -10,4 +10,5 @@ class Guest < Hobo::Guest
   def questions_to_approve; []; end
   def role; Role.new(:guest); end
   def token; nil; end
+  def valid?; true; end
 end

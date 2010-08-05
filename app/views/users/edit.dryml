@@ -1,0 +1,9 @@
+<edit-page if="&current_user.valid?" />
+<else>
+  <edit-page>
+    <body:>
+      <h1>Please set data for your account.</h1>
+      <form/>
+    </body:>
+  </edit-page>
+</else>

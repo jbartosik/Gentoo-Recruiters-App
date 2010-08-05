@@ -22,3 +22,15 @@ Feature: OpenID
     And I fill in "login" with "https://example.com/id"
     And I press "Log in"
     Then I should see "Welcome, Example name"
+
+  Scenario: User with invalid accounts can only edit their accounts
+    Given I am on the homepage
+    And openid is always succesfull
+    When I follow "Sign up"
+    And I follow "sign up using OpenID"
+    And I fill in "login" with "https://example.com/id"
+    And I press "Log in"
+
+    When I am on the homepage
+    Then I should be on edit "" user page
+    And I should see "Please set data for your account"
