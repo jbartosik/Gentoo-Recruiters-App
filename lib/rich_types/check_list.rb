@@ -32,7 +32,7 @@ module RichTypes
 
       elsif klass == String
         # Convert to Array and use = for Arrays
-        self.options = what.split(',').inject(Array.new){|r, c| r.push c.to_i}
+        self.options = YAML::load(what)
 
       elsif klass == NilClass
         for i in @opt_list.keys
@@ -42,11 +42,9 @@ module RichTypes
     end
 
     def to_s
-      result = ""
-      for i in @opt_list.keys
-        result += i.to_s + "," if @opt_list[i][:checked]
-      end
-      result.chop
+      selected = @opt_list.collect{ |x| x[0] if x[1][:checked] }
+      selected = selected.flatten.uniq.compact.sort
+      selected.to_yaml.strip
     end
 
     protected

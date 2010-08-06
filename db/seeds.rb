@@ -103,7 +103,7 @@ end
 
 ebuild_q  = ['ebuild_q1', 'ebuild_q2', 'ebuild_q3']
 mentor_q  = ['mentor_q1', 'mentor_q2', 'mentor_q3']
-non_q     = ['non_q1', 'non_q', 'non_q3']
+non_q     = ['non_q1', 'non_q2']
 
 # non-approved answers
 ans_hash = {:content => 'Some answer'}

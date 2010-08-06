@@ -5,7 +5,7 @@ class Answer < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    content   HoboFields::MarkdownString, :null => false
+    content   HoboFields::MarkdownString, :null => false, :default => ''
     approved  :boolean, :default => false
     reference :boolean, :default => false
     feedback  HoboFields::EnumString.for('', 'Documentation ok',

@@ -1,7 +1,7 @@
 Given /^a multiple choice content "([^\"]*)"$/ do |content|
   @content = QuestionContentMultipleChoice.find_by_content(content)
   if @content.nil?
-    @content = QuestionContentMultipleChoice.create! :content => content
+    @content = QuestionContentMultipleChoice.create! :content => content, :question_id => 1
   end
 end
 
