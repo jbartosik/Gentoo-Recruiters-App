@@ -1,0 +1,59 @@
+                                                                                                                                                                                                                                                               
+Return-Path: <jbartosik@gmail.com>
+Received: from [192.168.1.4] (aatc109.neoplus.adsl.tpnet.pl [83.5.240.109])
+        by mx.google.com with ESMTPS id s34sm4924693bkk.1.2010.09.13.11.27.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 13 Sep 2010 11:27:45 -0700 (PDT)
+Message-ID: <4C8E6DE6.8030700@gmail.com>
+Date: Mon, 13 Sep 2010 20:31:02 +0200
+From: Joachim Bartosik <jbartosik@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100912 Lightning/1.0b3pre Thunderbird/3.1.3
+MIME-Version: 1.0
+To: =?UTF-8?B?UGV0dGVyaSBSw6R0eQ==?= <betelgeuse@gentoo.org>
+CC: Alex Legler <a3li@gentoo.org>
+Subject: Gentoo Recruiters Application
+X-Enigmail-Version: 1.1.2
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig47B3F63504D3ABAB3C58C63F"
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig47B3F63504D3ABAB3C58C63F
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+I'm finally  resuming my work on Gentoo Recruiters Application so I
+thought I'd remind you that there are two branches waiting for push to
+official repository:
+* AGPL
+* feedback_stat
+
+Regards,
+Joachim
+
+
+--------------enig47B3F63504D3ABAB3C58C63F
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQIcBAEBAgAGBQJMjm3mAAoJEI0yxgiYdAoguvsQAIiK/1b2kryD24OCWtDqBLl+
+BKZtC9TZzokM/1WjSp+XTDs1GeDob+94LDUyCoK89+gvg57lbuGvZ/AtzU89uvPJ
+ckjPmgraxyVcJiUX20Qjc/DZv4rvVrjAjeKBknmBYq45G2AaZXFRFfdnKnTNZGIV
+Op9InqRBeoXCf8eFxmgvI6nX7pIeTLVC8m1JHldLm4M5R+7ifqvU0vWyRPFbLPsk
+CYFSGuMRexmaGrJ0u6e1R/QiynsjyXV9ygBe3R2B38tBvuK9lXYLiC/z+GVTsRtl
+UiIvxWjbIP0HV4kNOKSgnYOgB4WhFps4rPKchGKypDljk0xf6yKz5IlXh0NhPyhJ
+bqhYYMSJZ+ocpVjZ4aeof2eVrO+LQ1Y4IqJ0zYpUGlzpAKRzp4jKb5EvA7l2rEQJ
+iEi+5sudaen8j578Aq+ffDkm+VA8e7+7rHrr45yiw+n1zcipYuwdo4kn21jZWaHN
+bOtJB7ZyikrjDm5hT88DNqwbse6oj0p+s+iC9PXyGJB7N69RBjxWjCkVXlBVoHDM
+eO8DCwvIFGMJ7nrChkECtkAQkrVjp0kBCkBXQaevWjoL/GvdT779GlfWbROqFDob
+CRDEc6yiVmmuiYo3a0v6ASoVJuhvgKeJ7xxF2JQxC+fDz8qyFSTSmUVWkqdsxLNd
+G60Q5pImq8vsYiHvEg6J
+=AtMz
+-----END PGP SIGNATURE-----
+
+--------------enig47B3F63504D3ABAB3C58C63F--

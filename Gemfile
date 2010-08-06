@@ -1,6 +1,8 @@
 source :gemcutter
 
 gem 'rails', '2.3.5'
+gem 'mail'
+gem 'gpgme'
 gem 'hobo'
 gem 'hobo_openid', '>=0.4.2'
 gem 'bluecloth'

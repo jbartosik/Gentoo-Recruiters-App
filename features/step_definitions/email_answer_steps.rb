@@ -39,7 +39,7 @@ When /^I send wrong email announcement$/ do
   mail.from     = @user.email_address
   mail.to       = ['gentoo-dev-announce@localhost']
 
-  UserMailer.receive(mail.to_s)
+  Receiver.receive(mail.to_s)
 end
 
 When /^I send proper email announcement$/ do
@@ -51,7 +51,7 @@ When /^I send proper email announcement$/ do
   mail.to       = ['gentoo-dev-announce@localhost', 'gentoo-dev@localhost']
   mail.reply_to = 'gentoo-dev@localhost'
 
-  UserMailer.receive(mail.to_s)
+  Receiver.receive(mail.to_s)
 end
 
 When /^someone sends forged answer$/ do
@@ -65,7 +65,7 @@ When /^someone sends forged answer$/ do
   Given 'user "forger"'
   mail.subject  = "#{@question.id}-#{@user.token}"
 
-  UserMailer.receive(mail.to_s)
+  Receiver.receive(mail.to_s)
 end
 
 Then /^I should see subject for email "([^"]+)" should send to answer "([^"]+)"$/ do |user, question|

@@ -1,0 +1,57 @@
+Delivered-To: jbartosik@gmail.com
+Received: by 10.142.255.19 with SMTP id c19cs17522wfi;
+        Tue, 5 Oct 2010 15:57:19 -0700 (PDT)
+Received: by 10.114.38.11 with SMTP id l11mr14535633wal.61.1286319439385;
+        Tue, 05 Oct 2010 15:57:19 -0700 (PDT)
+Return-Path: <dberkholz@gentoo.org>
+Received: from smtp.gentoo.org (smtp.gentoo.org [140.211.166.183])
+        by mx.google.com with ESMTP id u9si220057wak.97.2010.10.05.15.57.19;
+        Tue, 05 Oct 2010 15:57:19 -0700 (PDT)
+Received-SPF: pass (google.com: domain of dberkholz@gentoo.org designates 140.211.166.183 as permitted sender) client-ip=140.211.166.183;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of dberkholz@gentoo.org designates 140.211.166.183 as permitted sender) smtp.mail=dberkholz@gentoo.org
+Received: from gentoo.org (mayo-nat4.mayo.edu [129.176.197.23])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 286B01B4037
+	for <jbartosik@gmail.com>; Tue,  5 Oct 2010 22:57:19 +0000 (UTC)
+Date: Tue, 5 Oct 2010 17:57:37 -0500
+From: Donnie Berkholz <dberkholz@gentoo.org>
+To: jbartosik@gmail.com
+Subject: Test signed email
+Message-ID: <20101005225737.GD14137@comet.mayo.edu>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="P+33d92oIH25kiaB"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+
+
+--P+33d92oIH25kiaB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Here yo go.
+
+
+--=20
+Thanks,
+Donnie
+
+Donnie Berkholz
+Sr. Developer, Gentoo Linux
+Blog: http://dberkholz.wordpress.com
+
+--P+33d92oIH25kiaB
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+
+iEYEABECAAYFAkyrrWEACgkQXVaO67S1rtsbzgCg2ULZnOjukYezLAGlVkVOL60F
+azAAoLRfMcSuCHzOczVlZq1Cnrp+0WmB
+=homo
+-----END PGP SIGNATURE-----
+
+--P+33d92oIH25kiaB--

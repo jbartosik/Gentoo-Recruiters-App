@@ -1,0 +1,71 @@
+Delivered-To: jbartosik@gmail.com
+Received: by 10.229.250.147 with SMTP id mo19cs11744qcb;
+        Wed, 6 Oct 2010 13:14:48 -0700 (PDT)
+Received: by 10.227.129.149 with SMTP id o21mr11043060wbs.176.1286396087327;
+        Wed, 06 Oct 2010 13:14:47 -0700 (PDT)
+Return-Path: <gentoo@floriancrouzat.net>
+Received: from relay4-v.mail.gandi.net (relay4-v.mail.gandi.net [217.70.178.78])
+        by mx.google.com with ESMTP id u71si1852350weq.44.2010.10.06.13.14.46;
+        Wed, 06 Oct 2010 13:14:47 -0700 (PDT)
+Received-SPF: neutral (google.com: 217.70.178.78 is neither permitted nor denied by best guess record for domain of gentoo@floriancrouzat.net) client-ip=217.70.178.78;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 217.70.178.78 is neither permitted nor denied by best guess record for domain of gentoo@floriancrouzat.net) smtp.mail=gentoo@floriancrouzat.net
+X-Originating-IP: 217.70.178.42
+Received: from mfilter2-d.gandi.net (mfilter2-d.gandi.net [217.70.178.42])
+	by relay4-v.mail.gandi.net (Postfix) with ESMTP id C9843BA74
+	for <jbartosik@gmail.com>; Wed,  6 Oct 2010 22:14:46 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mfilter2-d.gandi.net
+Received: from relay4-v.mail.gandi.net ([217.70.178.78])
+	by mfilter2-d.gandi.net (mfilter2-d.gandi.net [217.70.178.42]) (amavisd-new, port 10024)
+	with ESMTP id q+iis3HCV57D for <jbartosik@gmail.com>;
+	Wed,  6 Oct 2010 22:14:44 +0200 (CEST)
+X-Originating-IP: 88.173.156.163
+Received: from [192.168.1.2] (unknown [88.173.156.163])
+	(Authenticated sender: gentoo@floriancrouzat.net)
+	by relay4-v.mail.gandi.net (Postfix) with ESMTPSA id 2E297BA5F
+	for <jbartosik@gmail.com>; Wed,  6 Oct 2010 22:14:43 +0200 (CEST)
+From: Florian CROUZAT <gentoo@floriancrouzat.net>
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-18-998720552"
+Content-Transfer-Encoding: 7bit
+Subject: Regarding your blog post (gpg)
+Date: Wed, 6 Oct 2010 22:14:42 +0200
+Message-Id: <85C08C77-A10A-4FC5-9EC6-A3ED4A89A7B9@floriancrouzat.net>
+To: jbartosik@gmail.com
+Mime-Version: 1.0 (Apple Message framework v1081)
+X-Pgp-Agent: GPGMail 1.2.3
+X-Mailer: Apple Mail (2.1081)
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-18-998720552
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+
+This is a signed mail from my mac using Mail.app and the GPGMail plugin.
+Hope it helps.
+
+Cheers.
+
+-----
+Florian.
+/ For security reasons, all text in this mail 
+  is double-rot13 encrypted. /
+
+
+--Apple-Mail-18-998720552
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAgAGBQJMrNiyAAoJEI54KfPdrpQaoiAH/2SZ8FPr8Kt5KgTmslNDZDlI
+98xYlqTN4UeZlKBIsc9zl48lXX6o7RfXn38ociH5bPytZoBAUdjfdR+lsFawW8lW
+Xpx1Ieal+R1xPoxBgj6egU3n+bvnF2y4uuHn8QNOmJyzV98GdGZHlKnCig1sWuHs
+h5LqEyLe6Bhdj6ADgwQwl30rf+J7dSRk0mqu1ufsl2EjaTyxDDxa+dZ0rsBP2JGu
+CFLIbpgrYNhsmjtkF2CAoELJU5K6wqJ1j6Ajej21DaydFthmBtcXkBfBnwHlOckT
+1gHO/Phny6f2QO9Q8tnlIiqOmJTScrCG9yQq5gAeCJWrhCRsDVsLwkKecnlDoNg=
+=0fDv
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-18-998720552--

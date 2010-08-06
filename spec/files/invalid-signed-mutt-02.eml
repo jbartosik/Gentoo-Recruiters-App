@@ -1,0 +1,55 @@
+Delivered-To: jbartosik@gmail.com
+Received: by 10.229.250.147 with SMTP id mo19cs7485qcb;
+        Wed, 6 Oct 2010 20:12:13 -0700 (PDT)
+Received: by 10.100.198.4 with SMTP id v4mr271234anf.42.1286421132543;
+        Wed, 06 Oct 2010 20:12:12 -0700 (PDT)
+Return-Path: <jgeisler@cse.taylor.edu>
+Received: from smtp.cse.taylor.edu (smtp1.css.tayloru.edu [192.195.249.2])
+        by mx.google.com with ESMTP id i35si1444642anh.71.2010.10.06.20.12.12;
+        Wed, 06 Oct 2010 20:12:12 -0700 (PDT)
+Received-SPF: neutral (google.com: 192.195.249.2 is neither permitted nor denied by best guess record for domain of jgeisler@cse.taylor.edu) client-ip=192.195.249.2;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 192.195.249.2 is neither permitted nor denied by best guess record for domain of jgeisler@cse.taylor.edu) smtp.mail=jgeisler@cse.taylor.edu
+Received: from jgeisler.cse.taylor.edu (ppp-70-225-142-226.dsl.ipltin.ameritech.net [70.225.142.226])
+	by smtp.cse.taylor.edu (Postfix) with ESMTP id AA99D4FA32B
+	for <jbartosik@gmail.com>; Wed,  6 Oct 2010 23:12:11 -0400 (EDT)
+Received: by jgeisler.cse.taylor.edu (Postfix, from userid 2421)
+	id 640DA6698D; Wed,  6 Oct 2010 23:11:32 -0400 (EDT)
+Date: Wed, 6 Oct 2010 23:11:32 -0400
+From: Jonathan Geisler <jgeisler@cse.taylor.edu>
+To: jbartosik@gmail.com
+Subject: signed message from Mutt
+Message-ID: <20101007031132.GL7080@cse.taylor.edu>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="iKKZt69u2Wx/rspf"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96.3 at mary.cse.taylor.edu
+X-Virus-Status: Clean
+
+
+--iKKZt69u2Wx/rspf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Here is a signed message sent from a Matt client.
+
+						-- Jonathan Geisler --
+
+--iKKZt69u2Wx/rspf
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+
+iQEcBAEBCAAGBQJMrTpkAAoJEOwSkIyhEMwrKs0H/2ZWR3ZW+j8QQr1pxI+lkbpp
+CkOjNzGUPWUNnx504jxteCMmPfIHpllZ9Jl35IEF3oqy8jW0b5bj02v3PfI2MOpV
+zBGqr1dhsCmFg4nJygkCwJ9srsk0IkxplltCDLMfAXPBauOAOB16s/QmUdQmZeY4
+kuvfMUFdODMpENF3UAicsoMkQSlV7YnQnL7i1mM+Gpj1Z6D+DLTtPsYZl/c/148T
+MyDVk7ez8zK0o/XQTWTETYg7Tu6VhjS3XDtc4YtwEEalgaf6nXLgLm23KkWy8lnC
+UAKOC4Il9nM5wA/4KsVds56f988Fu2yGDas0AFinh/ICY0Dgz0C4Pbur/bLS8gk=
+=uxnH
+-----END PGP SIGNATURE-----
+
+--iKKZt69u2Wx/rspf--

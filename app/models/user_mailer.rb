@@ -70,10 +70,4 @@ class UserMailer < ActionMailer::Base
 
     @body = { :email => email, :app_name => @app_name, :fields => fields }
   end
-
-  def receive(email)
-    # For now email answers for questions are only emails app receives
-    # so try use any received email as answer.
-    EmailAnswer.answer_from_email(email)
-  end
 end

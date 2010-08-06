@@ -66,10 +66,4 @@ describe UserMailer do
     # don't test rest of the message
     notification.should have_text(/If you are answering question check if your message has proper subject./)
   end
-
-  it "should pass received emails to EmailAnswer#answer_from_email" do
-    mail = TMail::Mail.new
-    EmailAnswer.should_receive(:answer_from_email)
-    UserMailer.receive(mail.to_s)
-  end
 end

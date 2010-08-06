@@ -1,0 +1,24 @@
+Return-Path: <jbartosik@gmail.com>
+Received: from [192.168.1.3] (afgf33.neoplus.adsl.tpnet.pl [95.49.161.33])
+        by mx.google.com with ESMTPS id j14sm501525faa.23.2010.11.05.02.39.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 05 Nov 2010 02:39:59 -0700 (PDT)
+Message-ID: <4CD3D1D6.3040408@gmail.com>
+Date: Fri, 05 Nov 2010 10:43:50 +0100
+From: Joachim Filip Bartosik <jbartosik@gmail.com>
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101102 Lightning/1.0b3pre Thunderbird/3.1.6
+MIME-Version: 1.0
+To: Joachim Bartosik <jbartosik+error501@gmail.com>
+Subject: test
+X-Enigmail-Version: 1.1.2
+Content-Type: multipart/mixed;
+ boundary="------------020708070202070004090004"
+
+This is a multi-part message in MIME format.
+--------------020708070202070004090004
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+with attachment
+
+--------------020708070202070004090004--
