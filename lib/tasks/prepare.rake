@@ -82,4 +82,93 @@ namespace :prepare do
       end
     end
   end
+
+  desc "Put a lot of stuff in database"
+  task :fill_db => :environment do
+    require 'rubygems'
+    require 'lorem'
+
+    APP_CONFIG['developer_data']['check'] = false
+    def random_num(base_quantity)
+      var = (base_quantity * ENV['quantity_spread']).to_i
+      base_quantity - var + rand(2*var)
+    end
+
+    def random_repeat(base_quantity)
+      for i in 1..random_num(base_quantity)
+        yield(i)
+      end
+    end
+
+    ENV = { 'recruits' => 1000,
+                        'mentors' => 100,
+                        'recruiters' => 10,
+                        'categories' => 10,
+                        'ungrouped_per_cat' => 10,
+                        'groups_per_cat' => 20,
+                        'questions_per_group' => 10,
+                        'words_per_question' => 100,
+                        'words_per_answer' => 500,
+                        'quantity_spread' => 0.5,
+                        'text_chance' => 3,
+                        'multiple_choice_chance' => 1,
+                        }.merge(ENV)
+
+    random_repeat(ENV['recruits']) do |i|
+      User.create! :name => "Recruit #{i.to_s}",
+                    :email_address => "recruit_#{i.to_i}@recruits.org",
+                    :password => "secret",
+                    :password_confirmation => "secret"
+    end
+
+    random_repeat(ENV['mentors']) do |i|
+      User.create! :name => "Mentor #{i.to_s}",
+                    :email_address => "mentor_#{i.to_i}@mentors.org",
+                    :password => "secret",
+                    :password_confirmation => "secret",
+                    :role => :mentor,
+                    :nick => "mentor #{i}"
+    end
+
+    random_repeat(ENV['recruiters']) do |i|
+      User.create! :name => "Recruiter #{i.to_s}",
+                    :email_address => "recruiter_#{i.to_i}@recruiters.org",
+                    :password => "secret",
+                    :password_confirmation => "secret",
+                    :role => :recruiter,
+                    :nick => "recruiter #{i}"
+    end
+
+    random_repeat(ENV['categories']) do |i|
+      question_model = [QuestionContentText] * ENV['text_chance'] +
+                        [QuestionContentMultipleChoice] * ENV['multiple_choice_chance']
+
+      category = QuestionCategory.create! :name => "Question Category #{i}"
+
+      random_repeat(ENV['ungrouped_per_cat']) do |j|
+        question = Question.create! :title => "Question #{j} in #{i}",
+                                    :documentation => "Some doc",
+                                    :question_category => category
+        model = question_model[rand(question_model.count)]
+        model.create! :content => Lorem::Base.new('words', random_num(ENV['words_per_question'])).output,
+                      :question => question
+      end
+
+      random_repeat(ENV['groups_per_cat']) do |j|
+        group = QuestionGroup.create! :name => "Group #{j} in #{i}",
+                                      :description => "Some  questions groupped in #{i}"
+
+        random_repeat(ENV['questions_per_group']) do |k|
+          question = Question.create! :title => "Question #{j} in #{group.id}",
+                                      :documentation => "Some doc",
+                                      :question_category => category,
+                                      :question_group => group
+          model = question_model[rand(question_model.count)]
+          model.create! :content => Lorem::Base.new('words', random_num(ENV['words_per_question'])).output,
+                        :question => question
+        end
+      end
+
+    end
+  end
 end
