@@ -32,5 +32,5 @@ Feature: OpenID
     And I press "Log in"
 
     When I am on the homepage
-    Then I should be on edit "" user page
-    And I should see "Please set data for your account"
+    Then I should see "Please set data for your account"
+    And I should not see "Mentor"

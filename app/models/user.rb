@@ -105,7 +105,11 @@ class User < ActiveRecord::Base
   end
 
   def mentor_edit_permitted?
-    mentor.nil? || mentor_is?(acting_user)
+    return true if mentor_is?(acting_user)
+    return true if mentor.nil? && acting_user.role.is_mentor?
+    return true if mentor.nil? && acting_user.role.is_recruiter?
+    return true if acting_user.administrator?
+    false
   end
 
   def destroy_permitted?
