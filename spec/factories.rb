@@ -113,3 +113,6 @@
 
   Factory.define :question_content_multiple_choice do |q|
   end
+
+  Factory.define :question_content_email do |q|
+  end
