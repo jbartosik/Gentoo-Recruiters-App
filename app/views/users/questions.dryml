@@ -1,11 +1,7 @@
-<%  # whole <content:> must be replaced here, not just <content-body:>,
-    # because this is User (or Guest) and some parts of <content-body:>
-    # expect this to be collection
-%>
-<index-page>
-  <content:>
+<show-page>
+  <content-body:>
     <repeat with="&this.all_questions">
       <card user="&@user"/>
     </repeat>
-  </content:>
-</index-page>
+  </content-body:>
+</show-page>
