@@ -215,4 +215,107 @@ describe Answer do
     ans.should be_updatable_by(owner)
     ud_denied(others, ans)
   end
+
+  it "should allow editing of reference only to recruiters on new answers" do
+    answer = Answer.new(:reference => true)
+    answer.should     be_editable_by(Factory(:recruiter), :reference)
+    answer.should_not be_editable_by(Factory(:recruit), :reference)
+    answer.should_not be_editable_by(Factory(:mentor), :reference)
+    answer.should_not be_editable_by(Guest.new, :reference)
+  end
+
+  it "should produce proper answer from params" do
+    ans_hash = { 'reference' => false, 'owner_id' => Factory(:recruit).id,
+                  'approved' => false, 'content' => 'example' }
+    produced_ans  = Answer.new_from("answer" => ans_hash)
+
+    produced_ans.class.should == Answer
+    for i in ans_hash
+      if i[1]
+        produced_ans.attributes[i[0]].should == i[1]
+      else
+        (!produced_ans.attributes[i[0]]).should be_true # it can be nil or false
+      end
+    end
+
+    ans_hash = { 'reference' => false, 'owner_id' => Factory(:recruit).id,
+                  'approved' => false, 'content' => 'example' }
+    produced_ans  = Answer.new_from("multiple_choice_answer" => ans_hash)
+
+    produced_ans.class.should == MultipleChoiceAnswer
+    for i in ans_hash
+      if i[1]
+        produced_ans.attributes[i[0]].should == i[1]
+      else
+        (!produced_ans.attributes[i[0]]).should be_true # it can be nil or false
+      end
+    end
+
+  end
+
+  it "should produce proper updated answer from params" do
+    ans = Factory(:answer)
+    upd = Answer.update_from('id' => ans.id.to_s, 'answer' => { 'content' => 'changed' })
+    upd['id'].should == ans.id
+    upd['owner_id'].should == ans.owner_id
+    upd['content'].should == 'changed'
+
+    ans = Factory(:multiple_choice_answer)
+    upd = Answer.update_from('id' => ans.id.to_s, 'multiple_choice_answer' => { 'content' => 'changed' })
+    upd['id'].should == ans.id
+    upd['owner_id'].should == ans.owner_id
+    upd['content'].should == 'changed'
+  end
+
+  it "should properly return wrong answers of recruit" do
+    recruit = Factory(:recruit)
+    cat     = Factory(:question_category)
+    q1      = Factory(:question, :question_category => cat)
+    q2      = Factory(:question, :question_category => cat)
+    q3      = Factory(:question, :question_category => cat)
+    q4      = Factory(:question, :question_category => cat)
+
+              Factory(:question_content_text, :question => q4)
+
+    for i in [q1, q2, q3]
+      Factory(:question_content_multiple_choice, :question => i)
+      i.reload
+      ["1", "2", "3"].each{ |j| Factory(:option, :option_owner => i.content, :content => j) }
+      i.reload
+      Factory(:multiple_choice_answer, :question => i,
+              :options => [i.content.options.first.id], :reference => true)
+    end
+
+    wrong_ans = []
+    not_wrong_ans = []
+
+    wrong_ans.push Factory(:multiple_choice_answer, :question => q1,
+                            :options => [q1.content.options.second.id], :owner => recruit)
+
+    wrong_ans.push Factory(:multiple_choice_answer, :question => q2,
+                            :options => [q1.content.options.first.id, q1.content.options.second.id],
+                            :owner => recruit)
+
+    not_wrong_ans.push Factory(:multiple_choice_answer, :question => q3,
+                            :options => [q1.content.options.first.id])
+
+    not_wrong_ans.push Factory(:answer, :question => q4,
+                                :content => "wrong",
+                                :owner => recruit)
+
+    not_wrong_ans.push Factory(:answer, :question => q4,
+                                :content => "good",
+                                :reference => true)
+
+    for i in wrong_ans
+      Answer.wrong_answers_of(recruit).include?(i).should be_true
+    end
+
+    for i in not_wrong_ans
+      Answer.wrong_answers_of(recruit).include?(i).should be_false
+    end
+
+    Answer.wrong_answers_of(recruit).count.should == Answer.wrong_answers_of(recruit).uniq.count
+
+  end
 end

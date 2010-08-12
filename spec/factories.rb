@@ -72,6 +72,13 @@
     a.owner     { Factory(:recruit)}
   end
 
+  # It'll be answer of new recruit for a new question by default
+  Factory.define :multiple_choice_answer do |a|
+    a.content   { Factory.next(:answer) }
+    a.question  { Factory(:question)}
+    a.owner     { Factory(:recruit)}
+  end
+
   Factory.define :user_category do |q|
     q.user              { Factory(:recruit) }
     q.question_category { Factory(:question_category) }
@@ -112,8 +119,13 @@
   end
 
   Factory.define :question_content_multiple_choice do |q|
+    q.content "fake"
   end
 
   Factory.define :question_content_email do |q|
     q.question {Factory(:question)}
+  end
+
+  Factory.define :option do |o|
+    o.content "fake"
   end

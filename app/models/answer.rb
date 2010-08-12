@@ -76,7 +76,7 @@ class Answer < ActiveRecord::Base
   def view_permitted?(field)
     owned_soft? ||
       acting_user.role.is_recruiter? ||
-      owner.mentor_is?(acting_user)
+      owner._?.mentor_is?(acting_user)
   end
 
   def self.update_from(params)
@@ -96,7 +96,7 @@ class Answer < ActiveRecord::Base
   end
 
   def self.wrong_answers_of(uid)
-    Answer.find_by_sql ["SELECT ans.* FROM answers ans, answers ref WHERE
+    MultipleChoiceAnswer.find_by_sql ["SELECT ans.* FROM answers ans, answers ref WHERE
       ref.reference = ? AND ans.question_id = ref.question_id AND
       ans.content != ref.content AND ans.owner_id = ?", true, uid]
   end
