@@ -11,4 +11,5 @@ class Guest < Hobo::Guest
   def role; Role.new(:guest); end
   def token; nil; end
   def valid?; true; end
+  def save!; true; end
 end

@@ -129,3 +129,5 @@
   Factory.define :option do |o|
     o.content "fake"
   end
+
+  Factory.define :guest do |g|; end
