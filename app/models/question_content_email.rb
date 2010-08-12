@@ -15,11 +15,6 @@ class QuestionContentEmail < ActiveRecord::Base
 
   inherit_permissions(:question)
 
-  def req_text_view_permitted?
-    return true if acting_user.role.is_recruiter?
-    return true if question.owner_is?(acting_user) && !question.approved
-  end
-
   # Returns array.
   # Each item of array is array [field, expected value]
   def req_array
@@ -46,7 +41,7 @@ class QuestionContentEmail < ActiveRecord::Base
 
   # req_text escaped to display properly as HTML
   def req_html
-    h(req_text).sub("\n", "<br/>\n")
+    CGI.escapeHTML(req_text).sub("\n", "<br/>\n")
   end
 
   # Converts easy-human-readable string to JSON and saves in requirements

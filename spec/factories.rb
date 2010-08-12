@@ -115,4 +115,5 @@
   end
 
   Factory.define :question_content_email do |q|
+    q.question {Factory(:question)}
   end
