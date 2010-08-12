@@ -133,7 +133,7 @@ class User < ActiveRecord::Base
   end
 
   def any_pending_project_acceptances?
-    (ProjectAcceptance.count :conditions => { :accepting_nick => nick }) > 0
+    (ProjectAcceptance.count :conditions => { :accepting_nick => nick, :accepted => false}) > 0
   end
 
   # This returns named scope, so it's efficient to use
@@ -148,7 +148,7 @@ class User < ActiveRecord::Base
 
   def answered_all_multi_choice_questions?
     Question.multiple_choice.ungrouped_questions_of_user(id).unanswered(id).count == 0 &&
-      Question.multiple_choice.grouped_questions_of_user(id).unanswered(id).count == 0
+      Question.multiple_choice.grouped_questions_of_user(id).unanswered_grouped(id).count == 0
   end
 
   def required_questions_count
@@ -195,6 +195,8 @@ class User < ActiveRecord::Base
     end
 
     def changes_allowed_for_recruiter?
+      return mentor_picked_up_or_resigned? if mentor_changed?
+
       # make sure recruiters change only what they are allowed to
       return false unless only_changed?(:question_categories, :role, :nick)
 

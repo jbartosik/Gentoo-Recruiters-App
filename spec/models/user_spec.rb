@@ -31,6 +31,7 @@ describe User do
       user.role        =  new_role
       for updater in [Factory(:recruit), Factory(:mentor), Guest.new]
         user.should_not  be_updatable_by(updater)
+        user.should_not  be_editable_by(updater, :role)
       end
     end
   end
@@ -41,6 +42,7 @@ describe User do
         user  = Factory(other_user)
         user.role   = new_role
         user.should be_updatable_by(Factory(:administrator))
+        user.should be_editable_by(Factory(:administrator), :role)
       end
     end
   end
@@ -64,6 +66,7 @@ describe User do
     recruit.role  = :mentor
     for user in [Factory(:recruit), Factory(:mentor)]
       recruit.should_not be_updatable_by(user)
+      recruit.should_not be_editable_by(user, :role)
     end
   end
 
@@ -72,6 +75,7 @@ describe User do
     recruit.role  = :mentor
     for user in [Factory(:recruiter), Factory(:administrator)]
       recruit.should be_updatable_by(user)
+      recruit.should be_editable_by(user, :role)
     end
   end
 
@@ -154,6 +158,15 @@ describe User do
     recruit.should be_updatable_by(mentor)
   end
 
+  it "that is mentorless recruit should allow recruiter to pick up" do
+    recruit = Factory(:recruit, :mentor => nil)
+    mentor  = Factory(:recruiter)
+    recruit.should be_editable_by(mentor)
+    recruit.should be_editable_by(mentor, :mentor)
+    recruit.mentor = mentor
+    recruit.should be_updatable_by(mentor)
+  end
+
   it "should allow mentor to resign" do
     recruit = Factory(:recruit)
     mentor  = recruit.mentor
@@ -163,6 +176,11 @@ describe User do
     recruit.should be_updatable_by(mentor)
   end
 
+  it "should allow administartor to change mentor to resign" do
+    recruit = Factory(:recruit)
+    recruit.should be_editable_by(Factory(:administrator))
+    recruit.should be_editable_by(Factory(:administrator), :mentor)
+  end
   it "should check if mentors were Gentoo devs long enough if configured to" do
     user            = Factory(:recruit)
 
@@ -235,5 +253,73 @@ describe User do
     user.save!
     user.nick.should be_nil
     user.role.is_mentor?.should be_false
+  end
+
+  it "should not be creatable by anyone" do
+    user = User.new :name => "name", :email_address => "email@example.com"
+    for u in fabricate_all_roles + [Guest.new]
+      user.should_not be_creatable_by(u)
+    end
+  end
+
+  it "should allow only administrator to destory" do
+    user = Factory(:recruit)
+    for u in fabricate_users(:recruit, :mentor, :recruiter) + [Guest.new]
+      user.should_not be_destroyable_by(u)
+    end
+
+    user.should be_destroyable_by(Factory(:administrator))
+  end
+
+  it "should properly recognize if there are pending project acceptances" do
+    lead = Factory(:mentor)
+    lead.any_pending_project_acceptances?.should be_false
+
+    ProjectAcceptance.create! :accepting_nick => lead.nick, :user => Factory(:recruit)
+    lead.any_pending_project_acceptances?.should be_true
+
+    ProjectAcceptance.first.update_attribute(:accepted, true)
+    lead.any_pending_project_acceptances?.should be_false
+  end
+
+  it "should reurn proper questions to approve" do
+    for u in fabricate_users(:recruit, :mentor, :recruiter) + [Guest.new]
+      u.questions_to_approve.should == []
+    end
+
+    Factory(:administrator).questions_to_approve.should == []
+
+    q = Factory(:question, :approved => false, :user => Factory(:recruit))
+
+    Factory(:administrator).questions_to_approve.should == [q]
+  end
+
+  it "should properly recognie if user answera all multiple choice questions" do
+    recruit = Factory(:recruit)
+    recruit.answered_all_multi_choice_questions?.should be_true
+
+    q1      = Factory(:question)
+              Factory(:question_content_multiple_choice, :question => q1)
+              Factory(:user_category,
+                      :question_category => q1.question_category,
+                      :user => recruit)
+
+    recruit.answered_all_multi_choice_questions?.should be_false
+
+    Factory(:multiple_choice_answer, :question => q1, :owner => recruit)
+    recruit.answered_all_multi_choice_questions?.should be_true
+
+    q2      = Factory(:question, :question_group => Factory(:question_group))
+              Factory(:question_content_multiple_choice,
+                      :question => q2)
+    recruit.answered_all_multi_choice_questions?.should be_true
+
+    Factory(:user_question_group,
+            :user => recruit,
+            :question => q2)
+    recruit.answered_all_multi_choice_questions?.should be_false
+
+    Factory(:multiple_choice_answer, :question => q2, :owner => recruit)
+    recruit.answered_all_multi_choice_questions?.should be_true
   end
 end
