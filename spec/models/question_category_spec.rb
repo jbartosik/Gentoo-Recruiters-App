@@ -18,4 +18,14 @@ describe QuestionCategory do
   end
 
   it { should validate_presence_of :name }
+
+  it "should return proper as_select_opts" do
+    c1 = Factory(:question_category)
+    c2 = Factory(:question_category)
+    options = [['All Categories', nil], [c1.name, c1.id], [c2.name, c2.id]]
+
+    (options - QuestionCategory.as_select_opts).should be_empty
+    (QuestionCategory.as_select_opts - options).should be_empty
+    QuestionCategory.as_select_opts.count.should == QuestionCategory.as_select_opts.uniq.count
+  end
 end
