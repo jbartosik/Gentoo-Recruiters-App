@@ -8,7 +8,7 @@ end
 
 Given /^(?:|a )user "([^\"]*)" who is "([^\"]*)"$/ do |user, role|
   Given "user \"#{user}\""
-  @user.role = Role.new(role)
+  @user.role = RichTypes::Role.new(role)
   @user.save!
 end
 

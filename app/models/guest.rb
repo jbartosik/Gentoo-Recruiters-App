@@ -10,7 +10,7 @@ class Guest < Hobo::Guest
   def nick; nil; end
   def project_lead; false; end
   def questions_to_approve; []; end
-  def role; Role.new(:guest); end
+  def role; RichTypes::Role.new(:guest); end
   def token; nil; end
   def valid?; true; end
   def save!; true; end

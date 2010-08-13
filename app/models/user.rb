@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
     name          :string, :required, :unique
     email_address :email_address, :login => true
     administrator :boolean, :default => false
-    role          Role, :default => 'recruit'
+    role          RichTypes::Role, :default => 'recruit'
     nick          :string
     openid        :string
     contributions HoboFields::MarkdownString
@@ -215,8 +215,8 @@ class User < ActiveRecord::Base
       # and make sure change to role wasn't changed or was promotion of recruit
       # to mentor or demotion of mentor to recruit
       return true unless role_changed?
-      return true if role.is_mentor? && Role.new(role_was).is_recruit?
-      return true if role.is_recruit? && Role.new(role_was).is_mentor?
+      return true if role.is_mentor? && RichTypes::Role.new(role_was).is_recruit?
+      return true if role.is_recruit? && RichTypes::Role.new(role_was).is_mentor?
 
       false
     end
