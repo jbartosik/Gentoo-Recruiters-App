@@ -217,7 +217,7 @@ describe Answer do
   end
 
   it "should allow editing of reference only to recruiters on new answers" do
-    answer = Answer.new(:reference => true)
+    answer = Answer.new(:reference => true, :owner => Factory(:recruiter))
     answer.should     be_editable_by(Factory(:recruiter), :reference)
     answer.should_not be_editable_by(Factory(:recruit), :reference)
     answer.should_not be_editable_by(Factory(:mentor), :reference)
@@ -316,6 +316,20 @@ describe Answer do
     end
 
     Answer.wrong_answers_of(recruit).count.should == Answer.wrong_answers_of(recruit).uniq.count
+  end
 
+  it "should prohibit mentor of owner to destroy" do
+    a = Factory(:answer)
+    a.should_not be_destroyable_by(a.owner.mentor)
+  end
+
+  it "should allow editing of reference only to recruiters" do
+    for user in fabricate_users(:recruit, :mentor)
+      Answer.new(:owner => user).should_not be_editable_by(user, :reference)
+    end
+
+    for user in fabricate_users(:recruiter, :administrator)
+      Answer.new(:owner => user).should be_editable_by(user, :reference)
+    end
   end
 end

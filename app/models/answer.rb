@@ -45,29 +45,42 @@ class Answer < ActiveRecord::Base
   after_create :notify_new_answer
   after_update :notify_changed_answer
 
-  multi_permission :update, :destroy do
+  def update_permitted?
     # It's fine to change correct, because it's ignored in non-email answers
     # and email answers have separate permissions
-    (owned? && !reference && !approved) ||
-    (reference && acting_user.role.is_recruiter?) ||
-    (only_changed?(:approved, :correct) && owner.mentor_is?(acting_user))
+    return true if owned? && !reference && !approved
+    return true if reference && acting_user.role.is_recruiter?
+    return true if only_changed?(:approved, :correct) && owner.mentor_is?(acting_user)
+
+    false
+  end
+
+  def destroy_permitted?
+    return true if owned? && !reference
+    return true if reference && acting_user.role.is_recruiter?
+
+    false
   end
 
   def create_permitted?
-    (owned_soft? && !reference)||(reference && acting_user.role.is_recruiter?)
+    return true if owned_soft? && !reference && !approved
+    return true if reference && acting_user.role.is_recruiter?
+    false
   end
 
   # Proper edit permissions can't be deduced, because we need to access value
   # of some fields to set them
   def edit_permitted?(field)
-    owned_soft? ||
-    owner.mentor_is?(acting_user) ||
-    (reference && acting_user.signed_up? && acting_user.role.is_recruiter?)
+    return true if owned_soft?
+    return true if owner.mentor_is?(acting_user)
+    return true if reference && acting_user.signed_up? && acting_user.role.is_recruiter?
+    false
   end
 
   def content_edit_permitted?
-    owned_soft? ||
-    (reference && acting_user.signed_up? && acting_user.role.is_recruiter?)
+    return true if owned_soft?
+    return true if reference && acting_user.signed_up? && acting_user.role.is_recruiter?
+    false
   end
 
   def feedback_edit_permitted?
@@ -83,9 +96,10 @@ class Answer < ActiveRecord::Base
   end
 
   def view_permitted?(field)
-    owned_soft? ||
-      acting_user.role.is_recruiter? ||
-      owner._?.mentor_is?(acting_user)
+    return true if owned_soft?
+    return true if acting_user.role.is_recruiter?
+    return true if owner.mentor_is?(acting_user)
+    false
   end
 
   # Returns hash containing updated answer attributes.
