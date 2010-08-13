@@ -1,5 +1,14 @@
 require 'permissions/owned_model.rb'
 require 'permissions/set.rb'
+# Model storing answers for questions with text content.
+# Hooks:
+#  * After creation notification is sent to mentor of owner of the answer
+#  * After update notification is sent to mentor of owner of the answer
+#  * If content of answer was changed it becomes un-approved
+#
+# Validations:
+#  * There can be only one reference answer for each question
+#  * User can give only one non-reference answer for each question
 class Answer < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -79,6 +88,7 @@ class Answer < ActiveRecord::Base
       owner._?.mentor_is?(acting_user)
   end
 
+  # Returns hash containing updated answer attributes.
   def self.update_from(params)
     ans     = Answer.find(params['id'])
     result  = ans.attributes
@@ -88,6 +98,7 @@ class Answer < ActiveRecord::Base
     result
   end
 
+  # Returns new answer deducing type and attributes from params
   def self.new_from(params)
     for klass in [Answer, MultipleChoiceAnswer]
       name = klass.to_s.underscore
@@ -95,6 +106,7 @@ class Answer < ActiveRecord::Base
     end
   end
 
+  # Returns wrong answers of given user
   def self.wrong_answers_of(uid)
     MultipleChoiceAnswer.find_by_sql ["SELECT ans.* FROM answers ans, answers ref WHERE
       ref.reference = ? AND ans.question_id = ref.question_id AND
@@ -102,10 +114,12 @@ class Answer < ActiveRecord::Base
   end
 
   protected
+    # Sends email notification about new answer to mentor of owner
     def notify_new_answer
       UserMailer.deliver_new_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end
 
+    # Sends email notification about changed answer to mentor of owner
     def notify_changed_answer
       UserMailer.deliver_changed_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end

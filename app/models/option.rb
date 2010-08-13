@@ -1,3 +1,5 @@
+# Hobo model storing options for multiple choice questions.
+# Inherits permissions from option_owner.
 class Option < ActiveRecord::Base
 
   hobo_model # Don't put anything above this

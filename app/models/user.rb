@@ -1,3 +1,9 @@
+#TODO: merge before_creation hooks
+# Model representing signed up users.
+# Hooks:
+#  * before creation application gives user token
+#  * before creation application gives user mentor role and Gentoo nick if user
+#           used https://dev.gentoo.org/~nick openid
 class User < ActiveRecord::Base
 
   hobo_user_model # Don't put anything above this
@@ -120,10 +126,13 @@ class User < ActiveRecord::Base
     true
   end
 
+  # Returns all questions user should answer
+  # TODO: rewrite as SQL (?)
   def all_questions
     Question.ungrouped_questions_of_user(id) + Question.grouped_questions_of_user(id)
   end
 
+  # Returns questions user should answer but didn't answer yet.
   def unanswered_questions
     Question.unanswered_grouped(id) + Question.unanswered_ungrouped(id)
   end
@@ -132,6 +141,7 @@ class User < ActiveRecord::Base
     Question.unanswered_grouped(id).count.zero? && Question.unanswered_ungrouped(id).count.zero?
   end
 
+  # Returns true if there is at least one unapproved project acceptance for this user
   def any_pending_project_acceptances?
     (ProjectAcceptance.count :conditions => { :accepting_nick => nick, :accepted => false}) > 0
   end
@@ -163,6 +173,8 @@ class User < ActiveRecord::Base
     self.required_questions_count - self.required_unanswered_count
   end
 
+  # Returns string describing recruit progress. Includes information only about
+  # question recruit is required to answer.
   def progress
     "Answered #{self.required_answered_count} of #{self.required_questions_count} questions."
   end

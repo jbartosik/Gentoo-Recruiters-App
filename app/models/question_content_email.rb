@@ -1,4 +1,9 @@
 require 'permissions/inherit.rb'
+# TODO: all QuestionContents in one table(?)
+# TODO: use standard serialization, not custom one (?)
+# To answer question with QuestionContentEmail user should send to application
+# email meeting specified requirements (recruits can't see requirements), they
+# should learn them from question description and documentation.
 class QuestionContentEmail < ActiveRecord::Base
 
   hobo_model # Don't put anything above this

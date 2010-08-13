@@ -1,4 +1,10 @@
 require 'permissions/set.rb'
+# Associates users with question categories
+# Hooks:
+#  * Before creation looks through groups in category and associates user with
+#     one randomly chosen question from each group (unless user is already
+#     associated with some question from the group)
+#     TODO: wrap the whole thing in transaction (?)
 class UserCategory < ActiveRecord::Base
 
   hobo_model # Don't put anything above this

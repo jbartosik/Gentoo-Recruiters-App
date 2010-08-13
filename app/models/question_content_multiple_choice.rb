@@ -1,4 +1,5 @@
 require 'permissions/inherit.rb'
+# Multiple choice content for question.
 class QuestionContentMultipleChoice < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -15,6 +16,7 @@ class QuestionContentMultipleChoice < ActiveRecord::Base
 
   inherit_permissions(:question)
 
+  # Returns new answer (of proper class) of user for question (relation).
   def new_answer_of(user)
     MultipleChoiceAnswer.new :question_id => question_id, :owner => user
   end

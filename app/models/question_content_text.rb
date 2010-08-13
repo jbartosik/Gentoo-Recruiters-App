@@ -15,6 +15,7 @@ class QuestionContentText < ActiveRecord::Base
 
   inherit_permissions(:question)
 
+  # Returns new answer (of proper class) of user for question (relation).
   def new_answer_of(user)
     Answer.new :question_id => question_id, :owner => user
   end

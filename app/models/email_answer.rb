@@ -1,3 +1,5 @@
+# Model storing answers for questions with email content.
+# No user is allowed to do anything except viewing.
 class EmailAnswer < Answer
   fields do
     correct :boolean

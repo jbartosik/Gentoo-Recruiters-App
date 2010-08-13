@@ -1,3 +1,7 @@
+# Users should answer only one question from each group. The question recruit
+# should answer is randomly chosen from group by application. Unless user is
+# recruit [s]he can't view grouped questions [s]he is not supposed to answer.
+# Recruits can prepare to answer grouped questions by reading group description.
 class QuestionGroup < ActiveRecord::Base
 
   hobo_model # Don't put anything above this

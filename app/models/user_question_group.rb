@@ -1,3 +1,5 @@
+# Associates user with grouped question. No user can do anything to it -
+# application manages those internally.
 class UserQuestionGroup < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -27,10 +29,12 @@ class UserQuestionGroup < ActiveRecord::Base
   protected
     # as users can never edit questions on their own if one of those isn't met
     # it'll be because of some problem in application
+    # TODO: change name
     def question_has_category
       errors.add(:question, 'must be grouped!') if question._?.question_group.nil?
     end
 
+    # TODO: change name
     def user_does_not_have_other_question_from_the_same_category
       # if there are Questions from the same group associated with the same user
       # through user_question_groups report an error

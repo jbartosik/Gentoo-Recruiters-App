@@ -1,3 +1,12 @@
+# TODO: probably broken scope unanswered(user)
+# Model storing answers for questions with text content.
+# Hooks:
+#  * New question is approved if and only if user (relation) is nil or
+#     administrator
+#  * When new approved question is created all recruits that should answer it
+#     are notified
+#  * When question is marked as approved all recruits that should answer it
+#     are notified
 class Question < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -114,14 +123,19 @@ class Question < ActiveRecord::Base
 
   named_scope   :multiple_choice, :joins => :question_content_multiple_choice
 
+  # Returns true if user gave a non-reference answer for the question,
+  # otherwise returns false or nil.
   def answered?(user)
     answers.owner_is(user).not_reference.count > 0 if user.signed_up?
   end
 
+  # If user is signed up and answered question returns (a non-reference answer)
+  # returns the answer. Returns nil otherwise.
   def answer_of(user)
     answers.owner_is(user).not_reference.first if user.signed_up?
   end
 
+  # Returns content of question if there is one or nil if there isn't.
   def content
     question_content_text ||
       question_content_multiple_choice ||
@@ -137,6 +151,7 @@ class Question < ActiveRecord::Base
   after_update  :notify_approved_question
 
   protected
+    # Sends notification about new question (TODO: check for group).
     def notify_new_question
       # If question category isn't assigned don't try to access it
       if question_category && approved
@@ -146,6 +161,7 @@ class Question < ActiveRecord::Base
       end
     end
 
+    # Sends notification about new question (TODO: check for group).
     def notify_approved_question
       if question_category && !approved_was && approved
         notify_new_question

@@ -1,3 +1,4 @@
+# Model storing comments mentors made for answers.
 class Comment < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
@@ -30,6 +31,7 @@ class Comment < ActiveRecord::Base
   end
 
   protected
+    # Sends notification about new comment to owner of mentor
     def notify_new_comment
       UserMailer.deliver_new_comment(answer.owner, self)
     end

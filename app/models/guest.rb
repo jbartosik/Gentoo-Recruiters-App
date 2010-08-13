@@ -1,3 +1,5 @@
+# Model representing guest users.
+# It has methods that allow us to treat Guests as regular users.
 class Guest < Hobo::Guest
   def administrator?; false; end
   def answered_questions; []; end
