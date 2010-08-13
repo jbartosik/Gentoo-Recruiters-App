@@ -57,7 +57,7 @@ describe ProjectAcceptance do
   end
 
   it 'should allow creation only to recruiters and project leads that create for themselfs' do
-    acceptance = ProjectAcceptance.new :accepting_nick => 'a'
+    acceptance = Factory(:project_acceptance, :accepting_nick => 'a')
     lead = Factory(:mentor, :nick => "a", :project_lead => true)
 
     acceptance.should be_creatable_by(Factory(:recruiter))
@@ -70,5 +70,35 @@ describe ProjectAcceptance do
     acceptance.should_not be_creatable_by(Factory(:mentor))
     acceptance.should_not be_creatable_by(Factory(:mentor, :project_lead => true))
     acceptance.should_not be_creatable_by(Guest.new)
+  end
+
+  it "should be vieable only to user, mentor of user, accepting lead an drecruiters to view" do
+    acceptance = Factory(:project_acceptance)
+    acceptance.should be_viewable_by(acceptance.user)
+    acceptance.should be_viewable_by(acceptance.user.mentor)
+    acceptance.should be_viewable_by(User.find_by_nick(acceptance.accepting_nick))
+    acceptance.should be_viewable_by(Factory(:recruiter))
+    acceptance.should be_viewable_by(Factory(:administrator))
+
+    for u in fabricate_users(:recruit, :mentor, :guest)
+      acceptance.should_not be_viewable_by(u)
+    end
+  end
+
+  it "should return properly return new acceptance for users" do
+    ProjectAcceptance.new_for_users(Factory(:recruit), Factory(:mentor)).should be_nil
+    ProjectAcceptance.new_for_users(Factory(:guest), Factory(:mentor)).should be_nil
+    ProjectAcceptance.new_for_users(Factory(:guest), Factory(:mentor, :project_lead => true)).should be_nil
+
+    acceptance = ProjectAcceptance.new_for_users(Factory(:recruit), Factory(:mentor, :project_lead => true))
+    acceptance.save!
+    ProjectAcceptance.new_for_users(acceptance.user, User.find_by_nick(acceptance.accepting_nick)).should be_nil
+
+    recruit     = Factory(:recruit)
+    lead        = Factory(:mentor, :project_lead => true)
+    acceptance  = ProjectAcceptance.new_for_users(recruit, lead)
+    acceptance.is_a?(ProjectAcceptance).should be_true
+    acceptance.user_is?(recruit).should be_true
+    acceptance.accepting_nick.should == lead.nick
   end
 end

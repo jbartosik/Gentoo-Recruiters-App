@@ -70,9 +70,18 @@ describe User do
     end
   end
 
-  it "should allow recruiter to change user role" do
+  it "should allow recruiter to promote recruits to mentors" do
     recruit       = Factory(:recruit)
     recruit.role  = :mentor
+    for user in [Factory(:recruiter), Factory(:administrator)]
+      recruit.should be_updatable_by(user)
+      recruit.should be_editable_by(user, :role)
+    end
+  end
+
+  it "should allow recruiter to demote mentors to recruits" do
+    recruit       = Factory(:mentor)
+    recruit.role  = :recruit
     for user in [Factory(:recruiter), Factory(:administrator)]
       recruit.should be_updatable_by(user)
       recruit.should be_editable_by(user, :role)
@@ -203,7 +212,7 @@ describe User do
     user.nick       = "short"
     user.should_not be_valid
 
-    user.nick       = "short"
+    user.nick       = "invalid"
     user.should_not be_valid
 
     silence_warnings { APP_CONFIG = JSON.load(old_config) } # restore config
@@ -310,8 +319,7 @@ describe User do
     recruit.answered_all_multi_choice_questions?.should be_true
 
     q2      = Factory(:question, :question_group => Factory(:question_group))
-              Factory(:question_content_multiple_choice,
-                      :question => q2)
+    Factory(:question_content_multiple_choice, :question => q2)
     recruit.answered_all_multi_choice_questions?.should be_true
 
     Factory(:user_question_group,
@@ -321,5 +329,25 @@ describe User do
 
     Factory(:multiple_choice_answer, :question => q2, :owner => recruit)
     recruit.answered_all_multi_choice_questions?.should be_true
+  end
+
+  it "shold return proper progress" do
+    recruit = Factory(:recruit)
+    recruit.progress.should == "Answered 0 of 0 questions."
+
+    q1 = Factory(:question)
+    Factory(:user_category, :user => recruit,
+      :question_category => q1.question_category)
+    recruit.progress.should == "Answered 0 of 1 questions."
+
+    Factory(:answer, :owner => recruit, :question => q1)
+    recruit.progress.should == "Answered 1 of 1 questions."
+
+    q2 = Factory(:question, :question_group => Factory(:question_group))
+          Factory(:user_question_group, :question => q2, :user => recruit)
+    recruit.progress.should == "Answered 1 of 2 questions."
+
+    Factory(:answer, :owner => recruit, :question => q2)
+    recruit.progress.should == "Answered 2 of 2 questions."
   end
 end

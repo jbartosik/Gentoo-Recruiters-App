@@ -47,12 +47,12 @@ class ProjectAcceptance < ActiveRecord::Base
     false
   end
 
-  def view_permitted(field)
+  def view_permitted?(field)
     # Allow user(relation), mentor of user and recruiters to view
      return true if user_is?(acting_user)
      return true if acting_user.role.is_recruiter?
      return true if user.mentor_is?(acting_user)
-
+     return true if accepting_nick == acting_user.nick
      false
   end
 
