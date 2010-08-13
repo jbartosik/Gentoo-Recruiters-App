@@ -1,3 +1,4 @@
+# This module includes non-basic types used in models
 module RichTypes
   # Stores information on which options were selected.
   # Use options and options= methods to access & set information on which are selected.
