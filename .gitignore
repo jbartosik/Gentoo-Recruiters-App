@@ -8,3 +8,4 @@ app/views/taglibs/auto
 config/database.yml
 config/config.yml
 tmp
+doc/app
