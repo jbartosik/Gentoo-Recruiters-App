@@ -62,10 +62,6 @@ class Question < ActiveRecord::Base
     # Allow viewing ungrouped questions to everybody
     return true if question_group.nil?
 
-    # Deny viewing grouped qestions to guests, so we can assume that
-    # acting_user is valid User instance in next tests
-    return false unless acting_user.signed_up?
-
     # Allow viewing all questions to recruiters
     return true if acting_user.role.is_recruiter?
 
