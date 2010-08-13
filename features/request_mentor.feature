@@ -22,10 +22,15 @@ Feature: Request Mentor
     And I should see "recruit1" within ".collection.users"
     But I should not see "recruit3" within ".collection.users"
 
-  Scenario: Become mentor of mentorless recruit
+  Scenario: Become mentor of mentorless recruit then stop mentoring
     Given I am logged in as "mentor" who is "mentor"
     And user "recruit" who is "recruit"
-    And I am on edit "recruit" user page
-    When I select "mentor" from "user[mentor_id]"
-    And press "Save"
+    And I am on show "recruit" user page
+    When I press "Start mentoring this recruit"
     Then I should see "Changes to the user were saved" within ".flash.notice"
+    And I should see "Mentor mentor"
+
+    And I am on show "recruit" user page
+    When I press "Stop mentoring this recruit"
+    Then I should see "Changes to the user were saved" within ".flash.notice"
+    And I should see "Mentor (Not Available) "
