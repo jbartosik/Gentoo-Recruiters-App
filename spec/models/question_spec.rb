@@ -182,4 +182,14 @@ describe Question do
     Factory(:question, :user => Factory(:administrator)).approved.should be_true
     Factory(:question, :user => nil).approved.should be_true
   end
+
+  it "should properly recognize if it's answered" do
+    q = Factory(:question)
+    u = Factory(:recruit)
+    q.answered?(u).should be_false
+    Factory(:answer, :question => q)
+    q.answered?(u).should be_false
+    Factory(:answer, :question => q, :owner=> u)
+    q.answered?(u).should be_true
+  end
 end
