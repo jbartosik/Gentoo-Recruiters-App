@@ -30,12 +30,8 @@ class ProjectAcceptance < ActiveRecord::Base
     # Allow admins everything
     return true if acting_user.administrator?
 
-    # Allow users mentor and recruiters if not accepted and
-    # accepted was not changed
-    recruiter_user_or_mentor =  acting_user.role.is_recruiter? ||
-                                user._?.mentor_is?(acting_user)
-
-    return true if recruiter_user_or_mentor && !accepted && !accepted_changed?
+    # Allow recruiters changing pending acceptances
+    return true if acting_user.role.is_recruiter? && !accepted && !accepted_changed?
 
     # Allow user with nick accepting_nick to change :accepted
     return true if (acting_user.nick ==  accepting_nick) && only_changed?(:accepted)

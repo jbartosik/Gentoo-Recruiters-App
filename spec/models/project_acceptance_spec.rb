@@ -4,11 +4,10 @@ describe ProjectAcceptance do
 
   include Permissions::TestPermissions
 
-  it 'should allow any mentor of user and recruiters to edit and RUD (if not accepted)' do
+  it 'should allow recruiters to edit and RUD (if not accepted)' do
     for user in fabricate_all_roles
       acceptance = Factory(:project_acceptance, :user => user)
       users = [Factory(:recruiter)]
-      users += [user.mentor] if user.mentor
 
       ud_allowed(users, acceptance)
       view_allowed(users, acceptance)
@@ -100,5 +99,11 @@ describe ProjectAcceptance do
     acceptance.is_a?(ProjectAcceptance).should be_true
     acceptance.user_is?(recruit).should be_true
     acceptance.accepting_nick.should == lead.nick
+  end
+
+  it "should make sure leads create project acceptances only for themselves" do
+    user        = Factory(:mentor, :project_lead => true)
+    acceptance  = ProjectAcceptance.new(:accepting_nick => "other nick", :user => Factory(:recruit))
+    acceptance.should_not be_creatable_by(user)
   end
 end
