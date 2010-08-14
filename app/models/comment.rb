@@ -7,8 +7,8 @@ class Comment < ActiveRecord::Base
     content HoboFields::MarkdownString, :null => false
     timestamps
   end
-
   belongs_to    :answer, :null => false
+  attr_readonly :answer
 
   validates_presence_of :content
 
