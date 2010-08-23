@@ -9,3 +9,5 @@ config/database.yml
 config/config.yml
 tmp
 doc/app
+.bundle
+vendor
