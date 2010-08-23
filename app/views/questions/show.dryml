@@ -26,5 +26,8 @@
       <br/>
       <a href="&answer_path(this.reference_answer)">View reference answer</a>.
     </if>
+    <if test="&current_user.try.role.try.is_recruiter? && this.answers.with_some_feedback.count > 0">
+      <iframe src="<%= question_doc_feedback_chart_path(this.id) %>" width="600" height="600"/>
+    </if>
   </content-body:>
 </show-page>

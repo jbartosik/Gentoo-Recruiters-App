@@ -192,4 +192,16 @@ describe Question do
     Factory(:answer, :question => q, :owner=> u)
     q.answered?(u).should be_true
   end
+
+  it "should count feedback properly" do
+    q = Factory(:question)
+    Factory(:answer, :question => q, :feedback =>'Documentation ok')
+    Factory(:answer, :question => q, :feedback =>'Could not find documentation')
+    Factory(:answer, :question => q, :feedback =>'Could not find documentation')
+    Factory(:answer, :question => q, :feedback =>'Documentation insufficient')
+    Factory(:answer, :question => q, :feedback =>'Documentation insufficient')
+    Factory(:answer, :question => q, :feedback =>'Documentation insufficient')
+
+    q.feedback_chart_data[:values].should == '1.00001, 2.00001, 3.00001'
+  end
 end

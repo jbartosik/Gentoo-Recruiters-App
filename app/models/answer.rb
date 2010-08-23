@@ -47,6 +47,11 @@ class Answer < ActiveRecord::Base
   named_scope   :in_category, lambda { |category| {
     :joins => :question, :conditions => { 'questions.question_category_id', category} } }
 
+  named_scope   :with_feedback, lambda { |opt| {
+    :conditions => { :feedback => opt } } }
+
+  named_scope   :with_some_feedback, :conditions => "answers.feedback IS NOT NULL AND answers.feedback <> ''"
+
   validates_uniqueness_of :question_id, :scope => :reference, :if => :reference
   validates_uniqueness_of :question_id, :scope => :owner_id, :unless => :reference
 

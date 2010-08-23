@@ -30,4 +30,7 @@ class QuestionsController < ApplicationController
   def approve_questions
     hobo_index Question.questions_to_approve
   end
+
+  show_action :doc_feedback_chart
+
 end

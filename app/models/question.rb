@@ -160,6 +160,26 @@ class Question < ActiveRecord::Base
   after_create  :notify_new_question
   after_update  :notify_approved_question
 
+  # Returns hash with:
+  #  :values - string with coma-separated values
+  #  :labels - string with coma-separated, quoted labels for values
+  def feedback_chart_data
+    classes = Answer.new.feedback.class.values - ['']
+    delta   = 0.00001
+    result  = {}
+    counts  = classes.collect{ |opt| answers.with_feedback(opt).count }
+
+    result[:values] = counts.inject(nil) do |res, cur|
+      res.nil? ? (cur + delta).to_s : "#{res}, #{cur + delta}"
+    end
+
+    result[:labels] = classes.inject(nil) do |res, cur|
+      res.nil? ? "\"%%.%% - #{cur} (##)\"" : "#{res}, \"%%.%% - #{cur} (##)\""
+    end
+
+    result
+  end
+
   protected
     # Sends notification about new question (TODO: check for group).
     def notify_new_question

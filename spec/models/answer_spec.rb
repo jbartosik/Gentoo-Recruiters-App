@@ -332,4 +332,20 @@ describe Answer do
       Answer.new(:owner => user).should be_editable_by(user, :reference)
     end
   end
+
+  it "should properly return answers with feedback" do
+
+    with_feedback = (Answer.new.feedback.class.values - ['']).collect do |fb|
+      Factory(:answer, :feedback => fb)
+    end
+
+    without_feedback = ['', nil].collect do |fb|
+      Factory(:answer, :feedback => fb)
+    end
+
+    with_feedback.each{ |ans| Answer.with_some_feedback.include?(ans).should be_true }
+    without_feedback.each{ |ans| Answer.with_some_feedback.include?(ans).should be_false }
+
+    Answer.with_some_feedback.count.should == Answer.with_some_feedback.uniq.count
+  end
 end

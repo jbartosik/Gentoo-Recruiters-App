@@ -1,0 +1,16 @@
+<page>
+  <head:>
+    <javascript name='raphael'/>
+    <javascript name='g.raphael-min'/>
+    <javascript name='g.pie-min'/>
+  </head:>
+  <body:>
+    <script type="text/javascript" charset="utf-8">
+      var r = Raphael(0, 0, 600, 600);
+      <%=
+        dat = this.feedback_chart_data
+        "r.g.piechart(300, 300, 200, [#{dat[:values]}], {legend: [#{dat[:labels]}], legendpos: \"north\"});"
+        %>
+      </script>
+  </body:>
+</page>
