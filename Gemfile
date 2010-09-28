@@ -5,6 +5,7 @@ gem 'hobo'
 gem 'hobo_openid', '>=0.4.2'
 gem 'bluecloth'
 gem 'mysql'
+gem 'delayed_job'
 
 group :test do
   gem 'database_cleaner'

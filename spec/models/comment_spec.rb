@@ -49,7 +49,7 @@ describe Comment do
     answer  = Factory(:answer)
     comment = Comment.new(:owner => answer.owner.mentor, :answer => answer, :content => "some comment")
 
-    UserMailer.should_receive(:deliver_new_comment).with(answer.owner, comment)
+    UserMailer.should_receive(:send_later).with(:deliver_new_comment, answer.owner, comment)
 
     comment.save!
   end

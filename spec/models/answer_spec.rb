@@ -141,14 +141,14 @@ describe Answer do
     #can't use Factory Girl here, because we want to save it after setting expectation to get email
     answer    = Answer.new(:owner => recruit, :question => question, :content => "Some answer.")
 
-    UserMailer.should_receive(:deliver_new_answer).with(recruit.mentor, answer)
+    UserMailer.should_receive(:send_later).with(:deliver_new_answer, recruit.mentor, answer)
 
     answer.save!
   end
 
   it "should send email notification to mentor when changed" do
     answer = Factory(:answer)
-    UserMailer.should_receive(:deliver_changed_answer).with(answer.owner.mentor, answer)
+    UserMailer.should_receive(:send_later).with(:deliver_changed_answer, answer.owner.mentor, answer)
     answer.content = "changed"
     answer.save!
   end

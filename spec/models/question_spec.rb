@@ -71,7 +71,7 @@ describe Question do
     question  = Question.new(:title => "new question",
       :question_category => category)
 
-    UserMailer.should_receive(:deliver_new_question).with(recruit, question)
+    UserMailer.should_receive(:send_later).with(:deliver_new_question, recruit, question)
 
     question.save!
   end
@@ -82,7 +82,7 @@ describe Question do
     question  = Factory(:question, :title => "new question",
       :question_category => category, :user => Factory(:recruit))
 
-    UserMailer.should_receive(:deliver_new_question).with(recruit, question)
+    UserMailer.should_receive(:send_later).with(:deliver_new_question, recruit, question)
     question.approved = true
     question.save!
   end

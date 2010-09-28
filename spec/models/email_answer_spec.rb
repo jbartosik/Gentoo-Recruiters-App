@@ -7,7 +7,7 @@ describe EmailAnswer do
     mail.subject  = "#{question.id + 1}-#{recruit.token}"
     mail.from     = recruit.email_address
 
-    UserMailer.should_receive(:deliver_unrecognized_email).with(recruit, mail)
+    UserMailer.should_receive(:send_later).with(:deliver_unrecognized_email, recruit, mail)
     EmailAnswer.answer_from_email(mail)
   end
 
@@ -18,7 +18,7 @@ describe EmailAnswer do
     mail.subject  = "#{question.id}-#{recruit.token}"
     mail.from     = recruit.email_address
 
-    UserMailer.should_receive(:deliver_unrecognized_email).with(recruit, mail)
+    UserMailer.should_receive(:send_later).with(:deliver_unrecognized_email, recruit, mail)
     EmailAnswer.answer_from_email(mail)
   end
 

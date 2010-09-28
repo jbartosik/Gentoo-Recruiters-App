@@ -36,7 +36,7 @@ class EmailAnswer < Answer
     question      = Question.first :conditions => { :id => subject.captures[0] }
 
     if(question.nil? || !question.content.is_a?(QuestionContentEmail))
-      UserMailer.deliver_unrecognized_email(user, email)
+      UserMailer.send_later(:deliver_unrecognized_email, user, email)
       return
     end
 
