@@ -1,5 +1,4 @@
 require 'spec_helper.rb'
-require 'message.rb'
 describe Mail::Message do
   it "should recognize signatures" do
     mails_dir   = "#{RAILS_ROOT}/spec/files"

@@ -1,6 +1,3 @@
-# This must not be automagically included.
-# If this is included automatically Mail gem will not load properly and
-# things will break.
 module Mail
   class Message
     def signatures

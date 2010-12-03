@@ -1,4 +1,3 @@
-require 'message.rb'
 class Receiver
   def self.receive(text)
     # For now email answers for questions are only emails app receives

@@ -14,7 +14,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # Model storing answers for questions with email content.
 # No user is allowed to do anything except viewing.
-require 'message.rb'
 class EmailAnswer < Answer
   fields do
     correct :boolean
