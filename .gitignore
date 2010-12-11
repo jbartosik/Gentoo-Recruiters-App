@@ -1,5 +1,4 @@
 db/*.sqlite3
-db/migrate
 db/seeds.rb
 log
 test

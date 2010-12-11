@@ -9,19 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101005121508) do
+ActiveRecord::Schema.define(:version => 20101211142354) do
 
   create_table "answers", :force => true do |t|
     t.text     "content",     :default => "",    :null => false
     t.boolean  "approved",    :default => false
     t.boolean  "reference",   :default => false
+    t.string   "feedback",    :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "question_id",                    :null => false
     t.integer  "owner_id"
-    t.string   "type"
-    t.string   "feedback",    :default => ""
     t.boolean  "correct"
+    t.string   "type"
   end
 
   add_index "answers", ["owner_id"], :name => "index_answers_on_owner_id"
@@ -158,15 +158,15 @@ ActiveRecord::Schema.define(:version => 20101005121508) do
     t.boolean  "administrator",                           :default => false
     t.string   "role",                                    :default => "recruit"
     t.string   "nick"
+    t.string   "openid"
     t.text     "contributions"
+    t.boolean  "project_lead",                            :default => false
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "mentor_id"
     t.string   "state",                                   :default => "active"
     t.datetime "key_timestamp"
-    t.boolean  "project_lead",                            :default => false
-    t.string   "token"
-    t.string   "openid"
   end
 
   add_index "users", ["mentor_id"], :name => "index_users_on_mentor_id"
