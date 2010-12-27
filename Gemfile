@@ -1,6 +1,7 @@
 source :gemcutter
 
-gem 'rails', '2.3.5'
+gem 'rails', '2.3.8'
+gem 'rack', '1.1.0'
 gem 'mail'
 gem 'gpgme'
 gem 'hobo'
@@ -16,6 +17,7 @@ group :test do
   gem 'email_spec', '0.6.2'
   gem 'shoulda'
   gem 'factory_girl'
+  gem 'launchy'
 end
 
 group :cucumber do
