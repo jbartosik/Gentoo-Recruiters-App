@@ -3,6 +3,10 @@ This will be web based application for Gentoo Recruiters team.
 To start testing application you should:
 
 1.Install git.
+
+1.1. External dependencies:
+     app-crypt/gpgme
+
 2.Get sources
 
   git clone git://git.overlays.gentoo.org/proj/recruiting-webapp.git
