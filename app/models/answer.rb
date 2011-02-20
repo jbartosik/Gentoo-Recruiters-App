@@ -149,12 +149,12 @@ class Answer < ActiveRecord::Base
   protected
     # Sends email notification about new answer to mentor of owner
     def notify_new_answer
-      UserMailer.send_later(:deliver_new_answer, owner.mentor, self) unless owner._?.mentor.nil?
+      UserMailer.delay.deliver_new_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end
 
     # Sends email notification about changed answer to mentor of owner
     def notify_changed_answer
-      UserMailer.send_later(:deliver_changed_answer, owner.mentor, self) unless owner._?.mentor.nil?
+      UserMailer.delay.deliver_changed_answer(owner.mentor, self) unless owner._?.mentor.nil?
     end
 
 end

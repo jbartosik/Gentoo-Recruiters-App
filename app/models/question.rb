@@ -186,7 +186,7 @@ class Question < ActiveRecord::Base
       # If question category isn't assigned don't try to access it
       if question_category && approved
         for user in question_category.users
-          UserMailer.send_later(:deliver_new_question, user, self)
+          UserMailer.delay.deliver_new_question(user, self)
         end
       end
     end

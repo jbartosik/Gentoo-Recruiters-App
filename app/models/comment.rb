@@ -47,6 +47,6 @@ class Comment < ActiveRecord::Base
   protected
     # Sends notification about new comment to owner of mentor
     def notify_new_comment
-      UserMailer.send_later(:deliver_new_comment, answer.owner, self)
+      UserMailer.delay.deliver_new_comment(answer.owner, self)
     end
 end
