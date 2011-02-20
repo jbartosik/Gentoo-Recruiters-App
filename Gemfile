@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '2.3.8'
+gem 'rails', '2.3.11'
 gem 'rack', '1.1.0'
 gem 'mail'
 gem 'gpgme'
