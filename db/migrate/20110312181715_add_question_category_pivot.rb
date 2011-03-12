@@ -6,6 +6,9 @@ class AddQuestionCategoryPivot < ActiveRecord::Migration
     end
     add_index :question_categories, [:question_id, :category_id], :unique => true
 
+    execute 'INSERT INTO question_categories (question_id, category_id)
+             SELECT id, category_id FROM questions WHERE category_id IS NOT NULL'
+
     remove_column :questions, :category_id
 
     remove_index :questions, :name => :index_questions_on_category_id rescue ActiveRecord::StatementInvalid
