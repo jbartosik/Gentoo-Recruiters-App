@@ -19,7 +19,12 @@ class SeedHelper
       hash = item_array[1]
 
       for field in replace_with_objects
-        hash[field] = @objects[hash[field]]
+        val = hash[field]
+        if val.is_a?(Array)
+          hash[field] = val.map { |n| @objects[n] }
+        else
+          hash[field] = @objects[val]
+        end
       end
 
       if block.nil?
@@ -56,21 +61,21 @@ User.destroy_all
 seeder = SeedHelper.new
 
 # Question categories
-seeder.objects['ebuild']    = Category.create! :name => 'Ebuild quiz'
-seeder.objects['mentoring'] = Category.create! :name => 'End of mentoring quiz'
-seeder.objects['non']       = Category.create! :name => 'Non-ebuild staff quiz'
+seeder.objects['ebuild']     = Category.create! :name => 'Ebuild quiz'
+seeder.objects['mentoring']  = Category.create! :name => 'End of mentoring quiz'
+seeder.objects['non_ebuild'] = Category.create! :name => 'Non-ebuild staff quiz'
 
 # Question groups
 seeder.objects['ebuild_group1'] = QuestionGroup.create! :name => 'ebuild_group1', :description => 'src_install implementations to comment on'
 
 # Questions with text content - load from YAML file
-seeder.read_yaml('db/fixtures/questions.yml', Question, ['category', 'question_group']) do |name, hash, objects, klass|
+seeder.read_yaml('db/fixtures/questions.yml', Question, ['categories', 'question_group']) do |name, hash, objects, klass|
   objects[name] = klass.create! (hash - {'content' => nil})
   objects["#{name}-content"] = QuestionContentText.create! :question => objects[name], :content => hash['content']
 end
 
 # Questions with multiple choice content - load from YAML file
-seeder.read_yaml('db/fixtures/questions-multichoice.yml', Question, ['category', 'question_group']) do |name, hash, objects, klass|
+seeder.read_yaml('db/fixtures/questions-multichoice.yml', Question, ['categories', 'question_group']) do |name, hash, objects, klass|
   objects[name] = klass.create!(hash - {'options' => nil, 'content' => nil})
   objects["#{name}-content"] = QuestionContentMultipleChoice.create! :question => objects[name], :content => hash['content']
   for opt in hash['options'].split(';')
@@ -80,7 +85,7 @@ seeder.read_yaml('db/fixtures/questions-multichoice.yml', Question, ['category',
 end
 
 # Questions with email content - load from YAML file
-seeder.read_yaml('db/fixtures/questions-email.yml', Question, ['category', 'question_group']) do |name, hash, objects, klass|
+seeder.read_yaml('db/fixtures/questions-email.yml', Question, ['categories', 'question_group']) do |name, hash, objects, klass|
   objects[name] = klass.create!(hash - {'content' => nil, 'req_text' => nil})
   objects["#{name}-content"] = QuestionContentEmail.create! :question => objects[name], :description=> hash['content'], :req_text => hash['req_text']
 end
