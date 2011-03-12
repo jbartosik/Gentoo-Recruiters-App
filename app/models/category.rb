@@ -25,7 +25,8 @@ class Category < ActiveRecord::Base
 
   validates_presence_of :name
 
-  has_many :questions
+  has_many :question_categories
+  has_many :questions, :through => :question_categories
   has_many :user_categories
   has_many :users, :through => :user_categories, :accessible => true
 

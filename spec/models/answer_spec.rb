@@ -250,7 +250,6 @@ describe Answer do
         (!produced_ans.attributes[i[0]]).should be_true # it can be nil or false
       end
     end
-
   end
 
   it "should produce proper updated answer from params" do
@@ -270,10 +269,10 @@ describe Answer do
   it "should properly return wrong answers of recruit" do
     recruit = Factory(:recruit)
     cat     = Factory(:category)
-    q1      = Factory(:question, :category => cat)
-    q2      = Factory(:question, :category => cat)
-    q3      = Factory(:question, :category => cat)
-    q4      = Factory(:question, :category => cat)
+    q1      = Factory(:question_category, :category => cat).question
+    q2      = Factory(:question_category, :category => cat).question
+    q3      = Factory(:question_category, :category => cat).question
+    q4      = Factory(:question_category, :category => cat).question
 
               Factory(:question_content_text, :question => q4)
 

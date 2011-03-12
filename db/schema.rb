@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110312173240) do
+ActiveRecord::Schema.define(:version => 20110312181715) do
 
   create_table "answers", :force => true do |t|
     t.text     "content",     :default => "",    :null => false
@@ -78,6 +78,13 @@ ActiveRecord::Schema.define(:version => 20110312173240) do
 
   add_index "project_acceptances", ["user_id"], :name => "index_project_acceptances_on_user_id"
 
+  create_table "question_categories", :force => true do |t|
+    t.integer "question_id", :null => false
+    t.integer "category_id", :null => false
+  end
+
+  add_index "question_categories", ["question_id", "category_id"], :name => "index_question_categories_on_question_id_and_category_id", :unique => true
+
   create_table "question_content_emails", :force => true do |t|
     t.text     "requirements", :default => "", :null => false
     t.text     "description"
@@ -120,11 +127,9 @@ ActiveRecord::Schema.define(:version => 20110312173240) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.integer  "category_id"
     t.integer  "question_group_id"
   end
 
-  add_index "questions", ["category_id"], :name => "index_questions_on_category_id"
   add_index "questions", ["question_group_id"], :name => "index_questions_on_question_group_id"
   add_index "questions", ["user_id"], :name => "index_questions_on_user_id"
 

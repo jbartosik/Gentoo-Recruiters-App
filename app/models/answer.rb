@@ -45,7 +45,7 @@ class Answer < ActiveRecord::Base
     :joins => :owner, :conditions => { 'users.mentor_id', mentor } } }
 
   named_scope   :in_category, lambda { |category| {
-    :joins => :question, :conditions => { 'questions.category_id', category} } }
+    :joins => {:question => :question_categories}, :conditions => { 'question_categories.category_id', category} } }
 
   named_scope   :with_feedback, lambda { |opt| {
     :conditions => { :feedback => opt } } }

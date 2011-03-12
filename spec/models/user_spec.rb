@@ -310,7 +310,7 @@ describe User do
     q1      = Factory(:question)
               Factory(:question_content_multiple_choice, :question => q1)
               Factory(:user_category,
-                      :category => q1.category,
+                      :category => q1.categories.first,
                       :user => recruit)
 
     recruit.answered_all_multi_choice_questions?.should be_false
@@ -337,7 +337,7 @@ describe User do
 
     q1 = Factory(:question)
     Factory(:user_category, :user => recruit,
-      :category => q1.category)
+      :category => q1.categories.first)
     recruit.progress.should == "Answered 0 of 1 questions."
 
     Factory(:answer, :owner => recruit, :question => q1)

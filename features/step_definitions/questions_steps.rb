@@ -12,8 +12,7 @@ end
 Given /^a question "([^\"]*)" in category "([^\"]*)"$/ do |title, category|
   Given "a question \"#{title}\""
   Given "a category \"#{category}\""
-  @question.category = @category
-  @question.save!
+  QuestionCategory.create!(:category => @category, :question => @question)
 end
 
 Given /^a question "([^\"]*)" in group "([^\"]*)"$/ do |title, group|

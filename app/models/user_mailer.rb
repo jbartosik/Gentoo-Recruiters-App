@@ -32,8 +32,7 @@ class UserMailer < ActionMailer::Base
 
   def new_question(user, question)
     common(user, "New question")
-    @body = { :title=> question.title, :category => question.category,
-      :id => question.id}
+    @body = { :title=> question.title, :id => question.id}
   end
 
   def new_answer(user, answer)

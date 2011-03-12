@@ -12,19 +12,27 @@ def recruit_with_answered_and_unanswered_questions(n=5)
     for i in 1..n
       # answered and unanswered ungrouped questions
       category =        Factory(:category)
-      r.answered.push   Factory(:question, :category => category)
-      r.unanswered.push Factory(:question, :category => category)
+      r.answered.push   Factory(:question_category, :category => category).question
+      r.unanswered.push Factory(:question_category, :category => category).question
 
       Factory(:answer, :owner => r.recruit, :question => r.answered.last)
 
       # and answered and unanswered question in one group
       group =           Factory(:question_group)
-      r.answered.push   Factory(:question, :category => category, :question_group => group)
+      r.answered.push   Factory(:question_category,
+                                :category => category,
+                                :question => Factory(:question, :question_group => group)
+                               ).question
                         Factory(:user_question_group, :user => r.recruit, :question => r.answered.last)
       # This question isn't unanswered! This is question user can't answer
-                        Factory(:question, :category => category, :question_group => group)
+                        Factory(:question_category,
+                                :category => category,
+                                :question => Factory(:question, :question_group => group))
       # add a unanswered grouped question
-      r.unanswered.push Factory(:question, :category => category, :question_group => Factory(:question_group))
+      r.unanswered.push Factory(:question_category,
+                                :category => category,
+                                :question => Factory(:question, :question_group => Factory(:question_group))
+                               ).question
                         Factory(:user_question_group, :user => r.recruit, :question => r.unanswered.last)
 
       Factory(:answer, :owner => r.recruit, :question => r.answered.last)
@@ -51,14 +59,18 @@ def recruit_with_answers_in_categories(mentor = nil, n_categories = 5, n_ans_in_
     r.categories.push     Factory(:category)
     r.answers_in_cat.push []
     for i in 1..n_ans_in_cat
-      question                    = Factory(:question, :category => r.categories.last)
+      question                    = Factory(:question_category, :category => r.categories.last).question
       r.all_answers.push          Factory(:answer, :owner => r.recruit, :question => question)
       r.answers_in_cat.last.push  r.all_answers.last
 
       # group of two questions, answered
       group                       = Factory(:question_group)
-      question                    = Factory(:question, :category => r.categories.last, :question_group => group)
-                                    Factory(:question, :category => r.categories.last, :question_group => group)
+      question                    = Factory(:question_category,
+                                            :category => r.categories.last,
+                                            :question => Factory(:question, :question_group => group)).question
+                                    Factory(:question_category,
+                                            :category => r.categories.last,
+                                            :question => Factory(:question, :question_group => group))
                                     Factory(:user_question_group, :user => r.recruit, :question => question)
       r.all_answers.push          Factory(:answer, :owner => r.recruit, :question => question)
       r.answers_in_cat.last.push  r.all_answers.last

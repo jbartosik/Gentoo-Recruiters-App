@@ -49,9 +49,10 @@ class User < ActiveRecord::Base
   named_scope :mentorless_recruits, :conditions => { :role => 'recruit', :mentor_id => nil}
   named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS
     (SELECT questions.id FROM questions
-    INNER JOIN categories cat ON questions.category_id = cat.id INNER JOIN
-    user_categories ON user_categories.category_id = cat.id  WHERE
-    user_categories.user_id = users.id AND questions.question_group_id IS NULL AND NOT EXISTS (
+    INNER JOIN question_categories ON question_categories.question_id = questions.id
+    INNER JOIN categories cat ON question_categories.category_id = cat.id
+    INNER JOIN user_categories ON user_categories.category_id = cat.id
+    WHERE user_categories.user_id = users.id AND questions.question_group_id IS NULL AND NOT EXISTS (
     SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))
     AND NOT EXISTS
     (SELECT questions.id FROM questions INNER JOIN user_question_groups ON questions.id = user_question_groups.question_id

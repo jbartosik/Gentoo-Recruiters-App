@@ -70,7 +70,9 @@ describe UserCategory do
     for n in 1..5
       groups_in_cat.push Factory(:question_group)
       for i in 1..n
-        Factory(:question, :category => category, :question_group => groups_in_cat.last)
+        Factory(:question_category,
+                :category => category,
+                :question => Factory(:question, :question_group => groups_in_cat.last))
       end
     end
 

@@ -39,7 +39,8 @@ class Question < ActiveRecord::Base
   #maybe add a page for not complete questions
 
   belongs_to  :user, :creator => true
-  belongs_to  :category
+  has_many    :question_categories
+  has_many    :categories, :through => :question_categories
   belongs_to  :question_group
   has_many    :answers
   has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]
@@ -58,7 +59,7 @@ class Question < ActiveRecord::Base
       return true if new_record?
 
       # when it's not new record allow changing only some properties
-      return only_changed?(:title, :content, :documentation, :category)
+      return only_changed?(:title, :content, :documentation)
     end
 
     false
@@ -89,7 +90,7 @@ class Question < ActiveRecord::Base
   end
 
   named_scope :unanswered_ungrouped, lambda { |uid|{
-      :joins => {:category => :user_categories},
+      :joins => {:question_categories => {:category => :user_categories}},
       :conditions => [ 'user_categories.user_id = ? AND questions.question_group_id IS NULL ' +
       'AND NOT EXISTS (' +
       'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)',
@@ -109,7 +110,7 @@ class Question < ActiveRecord::Base
       :conditions => ['questions.id != ?', id]}}
 
   named_scope :ungrouped_questions_of_user, lambda { |user_id|{
-    :joins => {:category => :user_categories},
+    :joins => {:question_categories => {:category => :user_categories}},
     :conditions => ['user_categories.user_id = ? AND questions.question_group_id IS NULL', user_id]}}
 
   named_scope :grouped_questions_of_user, lambda { |user_id|{
@@ -120,7 +121,7 @@ class Question < ActiveRecord::Base
     :conditions => { :user_id => user_id, :approved => false }}}
 
   named_scope :unanswered, lambda { |uid|{
-      :joins => {:category => {:user_categories => :user}},
+      :joins => {:question_categories => {:category => {:user_categories => :user}}},
       :conditions => [ 'users.id = ? AND NOT EXISTS ( ' +
       'SELECT * FROM answers WHERE answers.owner_id = ? AND answers.question_id = questions.id)', uid, uid]}}
 
@@ -183,9 +184,8 @@ class Question < ActiveRecord::Base
   protected
     # Sends notification about new question (TODO: check for group).
     def notify_new_question
-      # If category isn't assigned don't try to access it
-      if category && approved
-        for user in category.users
+      if approved
+        for user in categories.*.users.flatten
           UserMailer.delay.deliver_new_question(user, self)
         end
       end
@@ -193,7 +193,7 @@ class Question < ActiveRecord::Base
 
     # Sends notification about new question (TODO: check for group).
     def notify_approved_question
-      if category && !approved_was && approved
+      if !approved_was && approved
         notify_new_question
       end
     end

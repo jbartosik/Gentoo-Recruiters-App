@@ -63,7 +63,7 @@ Feature: Clean UI
 
     Given following questions:
       |question 1|category|
-      |question 3|category|
+      |question 2|category|
       |question 3|category|
     Given email question content for "question 1"
     Given text content "something" for question "question 2"

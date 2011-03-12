@@ -51,6 +51,11 @@
     q.name  { Factory.next(:category) }
   end
 
+  Factory.define :question_category do |qc|
+    qc.association :question
+    qc.association :category
+  end
+
   Factory.sequence :question do |n|
     "question-#{n}"
   end
@@ -58,7 +63,9 @@
   # it'll belong to new category by default
   Factory.define :question do |q|
     q.title             { Factory.next(:question) }
-    q.category { Factory(:category)}
+    q.after_build { |q|
+      q.categories = [Factory.build :category]
+    }
   end
 
   Factory.sequence :answer do |n|

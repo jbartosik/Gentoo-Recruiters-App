@@ -68,8 +68,8 @@ describe Question do
   it "should send email notifications to watching recruits when created by recruiter" do
     category  = Factory(:category)
     recruit   = Factory(:recruit, :categories => [category])
-    question  = Question.new(:title => "new question",
-      :category => category)
+    question  = Factory.build(:question)
+    question.categories << category
 
     UserMailer.should_receive_delayed(:deliver_new_question, recruit, question)
 
@@ -79,19 +79,19 @@ describe Question do
   it "should send email notifications to watching recruits when approved" do
     category  = Factory(:category)
     recruit   = Factory(:recruit, :categories => [category])
-    question  = Factory(:question, :title => "new question",
-      :category => category, :user => Factory(:recruit))
+    question  = Factory(:question, :user => Factory(:recruit))
+    question.categories << category
 
     UserMailer.should_receive_delayed(:deliver_new_question, recruit, question)
     question.approved = true
     question.save!
   end
 
-  it "should not send email notifications to watching recruits when approved is changed" do
+  it "should not send email notifications to watching recruits when approved is not changed" do
     category  = Factory(:category)
     recruit   = Factory(:recruit, :categories => [category])
-    question  = Factory(:question, :title => "new question",
-      :category => category, :user => Factory(:recruit), :approved => true)
+    question  = Factory(:question, :user => Factory(:recruit), :approved => true)
+    question.categories << category
 
     UserMailer.should_not_receive(:deliver_new_question).with(recruit, question)
 
@@ -146,7 +146,6 @@ describe Question do
     question.should     be_editable_by(recruit)
     question.should     be_editable_by(recruit, :title)
     question.should     be_editable_by(recruit, :documentation)
-    question.should     be_editable_by(recruit, :category)
 
     question.should_not be_editable_by(recruit, :user)
     question.should_not be_editable_by(recruit, :approved)
@@ -159,7 +158,6 @@ describe Question do
     question.should     be_editable_by(recruit)
     question.should     be_editable_by(recruit, :title)
     question.should     be_editable_by(recruit, :documentation)
-    question.should     be_editable_by(recruit, :category)
 
     question.should_not be_editable_by(recruit, :user)
     question.should_not be_editable_by(recruit, :approved)
@@ -172,7 +170,6 @@ describe Question do
     question.should be_editable_by(admin)
     question.should be_editable_by(admin, :title)
     question.should be_editable_by(admin, :documentation)
-    question.should be_editable_by(admin, :category)
     question.should be_editable_by(admin, :approved)
 
     question.should_not be_editable_by(admin, :user)
