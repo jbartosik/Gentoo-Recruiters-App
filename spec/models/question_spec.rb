@@ -163,7 +163,7 @@ describe Question do
     question.should_not be_editable_by(recruit, :approved)
   end
 
-  it "should allow admin to edit all attributes execpt user" do
+  it "should allow admin to edit all attributes except user" do
     admin = Factory(:administrator)
     question = Factory(:question, :user => Factory(:recruit))
 

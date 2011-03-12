@@ -303,7 +303,7 @@ describe User do
     Factory(:administrator).questions_to_approve.should == [q]
   end
 
-  it "should properly recognie if user answera all multiple choice questions" do
+  it "should properly recognize if user answera all multiple choice questions" do
     recruit = Factory(:recruit)
     recruit.answered_all_multi_choice_questions?.should be_true
 
