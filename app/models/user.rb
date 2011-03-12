@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   has_many    :user_categories
   has_many    :user_question_groups
-  has_many    :question_categories, :through => :user_categories, :accessible => true, :uniq => true
+  has_many    :categories, :through => :user_categories, :accessible => true, :uniq => true
   has_many    :grouped_questions, :through => :user_question_groups
   has_many    :answers, :foreign_key => :owner_id
   has_many    :answered_questions, :through => :answers, :class_name => "Question", :source => :question
@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
   named_scope :mentorless_recruits, :conditions => { :role => 'recruit', :mentor_id => nil}
   named_scope :recruits_answered_all, :conditions => "role = 'recruit' AND NOT EXISTS
     (SELECT questions.id FROM questions
-    INNER JOIN question_categories cat ON questions.question_category_id = cat.id INNER JOIN
-    user_categories ON user_categories.question_category_id = cat.id  WHERE
+    INNER JOIN categories cat ON questions.category_id = cat.id INNER JOIN
+    user_categories ON user_categories.category_id = cat.id  WHERE
     user_categories.user_id = users.id AND questions.question_group_id IS NULL AND NOT EXISTS (
     SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))
     AND NOT EXISTS
@@ -224,7 +224,7 @@ class User < ActiveRecord::Base
       return mentor_picked_up_or_resigned? if mentor_changed?
 
       # make sure recruiters change only what they are allowed to
-      return false unless only_changed?(:question_categories, :role, :nick)
+      return false unless only_changed?(:categories, :role, :nick)
 
       # and make sure change to role wasn't changed or was promotion of recruit
       # to mentor or demotion of mentor to recruit

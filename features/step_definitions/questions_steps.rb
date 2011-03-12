@@ -11,8 +11,8 @@ end
 
 Given /^a question "([^\"]*)" in category "([^\"]*)"$/ do |title, category|
   Given "a question \"#{title}\""
-  Given "a question category \"#{category}\""
-  @question.question_category = @question_category
+  Given "a category \"#{category}\""
+  @question.category = @category
   @question.save!
 end
 

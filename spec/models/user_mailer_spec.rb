@@ -10,7 +10,7 @@ describe UserMailer do
     notification.should deliver_to(recruit.email_address)
     notification.should deliver_from("no-reply@localhost")
     notification.should have_text(/There is a new question "#{question.title}"/)
-    notification.should have_text(/in category "#{question.question_category.name}" you are assigned to./)
+    notification.should have_text(/in category "#{question.category.name}" you are assigned to./)
     notification.should have_text(/http:\/\/localhost:3000\/questions\/#{question.id}/)
     notification.should have_subject('New question')
   end

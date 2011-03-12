@@ -64,13 +64,13 @@ describe UserCategory do
     end
   end
 
-  it "should associate user with one question from each group from question category on creation" do
-    category      = Factory(:question_category)
+  it "should associate user with one question from each group from category on creation" do
+    category      = Factory(:category)
     groups_in_cat = []
     for n in 1..5
       groups_in_cat.push Factory(:question_group)
       for i in 1..n
-        Factory(:question, :question_category => category, :question_group => groups_in_cat.last)
+        Factory(:question, :category => category, :question_group => groups_in_cat.last)
       end
     end
 
@@ -79,7 +79,7 @@ describe UserCategory do
     end
 
     recruit = Factory(:recruit)
-              Factory(:user_category, :user => recruit, :question_category => category)
+              Factory(:user_category, :user => recruit, :category => category)
 
     for group in groups_in_cat
       has_question_from_group = group.questions.inject(false) do |result, question|

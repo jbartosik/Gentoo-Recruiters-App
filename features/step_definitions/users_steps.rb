@@ -14,9 +14,9 @@ end
 
 Given /^user "([^\"]*)" has category "([^\"]*)"$/ do |user_name, category_name|
   Given "user \"#{user_name}\""
-  Given "a question category \"#{category_name}\""
-  unless @user.question_categories.include?(@question_category)
-    @user.question_categories.push(@question_category)
+  Given "a category \"#{category_name}\""
+  unless @user.categories.include?(@category)
+    @user.categories.push(@category)
   end
   @user.save!
 end
@@ -30,8 +30,8 @@ Given /^"([^\"]*)" answered question "([^\"]*)"$/ do |user, question|
 end
 
 Given /^user "([^\"]*)" answered all questions in "([^\"]*)"$/ do |user_name,  category_name|
-  Given "a question category \"#{category_name}\""
-  for q in @question_category.questions
+  Given "a category \"#{category_name}\""
+  for q in @category.questions
     if q.question_group.nil?
       Given "\"#{user_name}\" answered question \"#{q.title}\""
     end

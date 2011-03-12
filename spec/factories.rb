@@ -43,12 +43,12 @@
     u.nick          { |u| u.name }
   end
 
-  Factory.sequence :question_category do |n|
-    "question category-#{n}"
+  Factory.sequence :category do |n|
+    "category-#{n}"
   end
 
-  Factory.define :question_category do |q|
-    q.name  { Factory.next(:question_category) }
+  Factory.define :category do |q|
+    q.name  { Factory.next(:category) }
   end
 
   Factory.sequence :question do |n|
@@ -58,7 +58,7 @@
   # it'll belong to new category by default
   Factory.define :question do |q|
     q.title             { Factory.next(:question) }
-    q.question_category { Factory(:question_category)}
+    q.category { Factory(:category)}
   end
 
   Factory.sequence :answer do |n|
@@ -81,7 +81,7 @@
 
   Factory.define :user_category do |q|
     q.user              { Factory(:recruit) }
-    q.question_category { Factory(:question_category) }
+    q.category { Factory(:category) }
   end
 
   Factory.sequence :comment do |n|

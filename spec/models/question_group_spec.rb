@@ -18,12 +18,12 @@ describe QuestionGroup do
   end
 
   it "should return proper in_category results" do
-    category      = Factory(:question_category)
+    category      = Factory(:category)
     groups_in_cat = []
     for n in 1..5
       groups_in_cat.push Factory(:question_group)
       for i in 1..n
-        Factory(:question, :question_category => category, :question_group => groups_in_cat.last)
+        Factory(:question, :category => category, :question_group => groups_in_cat.last)
       end
     end
 
@@ -39,12 +39,12 @@ describe QuestionGroup do
 
   it "should return proper unassociated_in_category results" do
     recruit       = Factory(:recruit)
-    category      = Factory(:question_category)
+    category      = Factory(:category)
     groups_in_cat = []
     for n in 1..5
       groups_in_cat.push Factory(:question_group)
       for i in 1..n
-        Factory(:question, :question_category => category, :question_group => groups_in_cat.last)
+        Factory(:question, :category => category, :question_group => groups_in_cat.last)
       end
     end
 

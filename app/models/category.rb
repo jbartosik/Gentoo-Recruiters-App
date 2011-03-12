@@ -14,7 +14,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # Questions are arranged in categories. Recruit should answer question in some
 # categories.
-class QuestionCategory < ActiveRecord::Base
+class Category < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
@@ -34,6 +34,6 @@ class QuestionCategory < ActiveRecord::Base
   # Array of arrays [Category name, Category id], includes also
   # ['All Categories', nil] array.
   def self.as_select_opts
-    [['All Categories', nil]] + QuestionCategory.all(:select => 'name, id').collect{ |q| [q.name, q.id]}
+    [['All Categories', nil]] + self.all(:select => 'name, id').collect{ |q| [q.name, q.id]}
   end
 end

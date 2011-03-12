@@ -1,7 +1,7 @@
 email_q1:
   title:              Gentoo-dev-announce posting
   documentation:
-  question_category:  ebuild
+  category:  ebuild
   content:            "Email a major eclass change announcement. Replace all
                       @gentoo.org addresses with @localhost addresses. Remember to sign the email.
                       The from field should match email you set in the application.

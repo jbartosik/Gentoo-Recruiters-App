@@ -269,11 +269,11 @@ describe Answer do
 
   it "should properly return wrong answers of recruit" do
     recruit = Factory(:recruit)
-    cat     = Factory(:question_category)
-    q1      = Factory(:question, :question_category => cat)
-    q2      = Factory(:question, :question_category => cat)
-    q3      = Factory(:question, :question_category => cat)
-    q4      = Factory(:question, :question_category => cat)
+    cat     = Factory(:category)
+    q1      = Factory(:question, :category => cat)
+    q2      = Factory(:question, :category => cat)
+    q3      = Factory(:question, :category => cat)
+    q4      = Factory(:question, :category => cat)
 
               Factory(:question_content_text, :question => q4)
 

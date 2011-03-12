@@ -18,7 +18,7 @@
 
     <section class="users recruits" if="&this.role.is_recruit?">
 
-      <if:question_categories>
+      <if:categories>
         You are currently assigned to categories:
         <collection/>
         View questions:
@@ -53,7 +53,7 @@
       <unless test="&this.recruits.empty?">
         Check <a with="&Answer" action="my_recruits">answers</a> of recruits you mentor.
         You also can view answers of the recruits you mentor in categories:
-        <collection with="&QuestionCategory.all">
+        <collection with="&Category.all">
           <a href="/answers/my_recruits_cat/#{this.id}"><name/></a>
         </collection>
       </unless>
