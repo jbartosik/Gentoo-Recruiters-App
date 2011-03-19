@@ -271,7 +271,7 @@ describe User do
     end
   end
 
-  it "should allow only administrator to destory" do
+  it "should allow only administrator to destroy" do
     user = Factory(:recruit)
     for u in fabricate_users(:recruit, :mentor, :recruiter) + [Guest.new]
       user.should_not be_destroyable_by(u)
