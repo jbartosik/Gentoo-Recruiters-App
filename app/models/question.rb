@@ -40,7 +40,7 @@ class Question < ActiveRecord::Base
 
   belongs_to  :user, :creator => true
   has_many    :question_categories
-  has_many    :categories, :through => :question_categories
+  has_many    :categories, :through => :question_categories, :accessible => true
   belongs_to  :question_group
   has_many    :answers
   has_one     :reference_answer, :class_name => "Answer", :conditions => ["answers.reference = ?", true]

@@ -24,4 +24,6 @@ class QuestionCategory < ActiveRecord::Base
   belongs_to :question, :null => false, :index => false
   belongs_to :category, :null => false, :index => false
   index [:question_id, :category_id], :unique => true
+
+  include Permissions::AnyoneCanViewAdminCanChange
 end

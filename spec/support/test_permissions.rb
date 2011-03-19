@@ -71,6 +71,7 @@ module Permissions
     # if testee is nil it will yield block in for each user in users
     # giving user as parameter to generate testee
     def allow_all(users, testee = nil)
+      users = [users] unless users.is_a?(Array)
       for user in users
         testee = yield(user) if testee.nil?
 
