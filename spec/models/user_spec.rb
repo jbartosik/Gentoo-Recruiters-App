@@ -291,7 +291,7 @@ describe User do
     lead.any_pending_project_acceptances?.should be_false
   end
 
-  it "should reurn proper questions to approve" do
+  it "should return proper questions to approve" do
     for u in fabricate_users(:recruit, :mentor, :recruiter) + [Guest.new]
       u.questions_to_approve.should == []
     end
