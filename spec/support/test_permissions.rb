@@ -55,7 +55,7 @@ module Permissions
     end
 
     # if testee is nil it will yield block in for each user in users
-    # giving user as paramter to generate testee
+    # giving user as parameter to generate testee
     def deny_all(users, testee = nil)
       for user in users
         testee = yield(user) if testee.nil?
@@ -69,7 +69,7 @@ module Permissions
     end
 
     # if testee is nil it will yield block in for each user in users
-    # giving user as paramter to generate testee
+    # giving user as parameter to generate testee
     def allow_all(users, testee = nil)
       for user in users
         testee = yield(user) if testee.nil?
