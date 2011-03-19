@@ -57,7 +57,8 @@ class User < ActiveRecord::Base
     AND NOT EXISTS
     (SELECT questions.id FROM questions INNER JOIN user_question_groups ON questions.id = user_question_groups.question_id
      WHERE user_question_groups.user_id = users.id AND NOT EXISTS (
-     SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))"
+     SELECT answers.id FROM answers WHERE answers.question_id = questions.id AND answers.owner_id = users.id))
+    AND id IN (SELECT user_id FROM user_categories)"
 
   # --- Signup lifecycle --- #
   lifecycle do

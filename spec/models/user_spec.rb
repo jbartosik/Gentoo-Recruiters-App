@@ -123,10 +123,15 @@ describe User do
     Factory(:recruit).answered_all_questions?.should  be_true
   end
 
+  it "should not consider recruits with no categories as answered all" do
+    r = Factory(:recruit)
+    r.categories.should be_empty
+    User.recruits_answered_all.count.should == 0
+  end
+
   it "should return proper recruits with all questions` answered" do
-    # recruits that should be returned
-    correct_answered_all = [Factory(:recruit)]
-    correct_answered_all.push recruit_with_answers_in_categories.recruit
+    # recruit that should be returned
+    correct_answered_all = [recruit_with_answers_in_categories.recruit]
 
     # and some other users
     recruit_with_answered_and_unanswered_questions
@@ -134,10 +139,7 @@ describe User do
     Factory(:mentor)
     Factory(:recruiter)
 
-    answered_all = User.recruits_answered_all
-
-    (answered_all - correct_answered_all).should be_empty
-    (correct_answered_all - answered_all).should be_empty
+    User.recruits_answered_all.should == correct_answered_all
   end
 
   it "should allow recruiters to change nick of other users" do

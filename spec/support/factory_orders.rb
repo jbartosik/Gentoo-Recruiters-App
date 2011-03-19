@@ -56,20 +56,23 @@ def recruit_with_answers_in_categories(mentor = nil, n_categories = 5, n_ans_in_
   r.answers_in_cat  = []
   r.all_answers     = []
   for i in 1..n_categories
-    r.categories.push     Factory(:category)
+    c = Factory(:category)
+    r.categories.push c
+    r.recruit.categories.push c
+
     r.answers_in_cat.push []
     for i in 1..n_ans_in_cat
-      question                    = Factory(:question_category, :category => r.categories.last).question
+      question                    = Factory(:question_category, :category => c).question
       r.all_answers.push          Factory(:answer, :owner => r.recruit, :question => question)
       r.answers_in_cat.last.push  r.all_answers.last
 
       # group of two questions, answered
       group                       = Factory(:question_group)
       question                    = Factory(:question_category,
-                                            :category => r.categories.last,
+                                            :category => c,
                                             :question => Factory(:question, :question_group => group)).question
                                     Factory(:question_category,
-                                            :category => r.categories.last,
+                                            :category => c,
                                             :question => Factory(:question, :question_group => group))
                                     Factory(:user_question_group, :user => r.recruit, :question => question)
       r.all_answers.push          Factory(:answer, :owner => r.recruit, :question => question)
