@@ -82,8 +82,8 @@ class User < ActiveRecord::Base
   validate                :recruit_cant_mentor
   validate                :mentors_and_recruiters_must_have_nick
   validate                :mentor_is_gentoo_dev_long_enough
-  validates_uniqueness_of :nick, :if => :nick
-  validates_uniqueness_of :openid, :if => :openid
+  validates_uniqueness_of :nick, :allow_blank => true
+  validates_uniqueness_of :openid, :allow_blank => true
 
   never_show              :project_lead
 

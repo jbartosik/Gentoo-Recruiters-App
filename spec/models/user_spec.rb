@@ -347,4 +347,30 @@ describe User do
     Factory(:answer, :owner => recruit, :question => q2)
     recruit.progress.should == "Answered 2 of 2 questions."
   end
+
+  it "should allow many users with empty nick and openid" do
+    r1 = Factory(:recruit)
+    r2 = Factory(:recruit)
+
+    r1.nick.should be_nil
+    r1.openid.should be_nil
+    r1.should be_valid
+
+    r2.nick.should be_nil
+    r2.openid.should be_nil
+    r2.should be_valid
+
+    r1.id.equal?(r2.id).should be_false
+
+    u3 = Factory(:recruit, :nick => '', :openid => '')
+    u3.nick.should_not be_nil
+    u3.openid.should_not be_nil
+    u3.should be_valid
+
+    u4 = User.new(:name => 'example', :email_address => 'example@example.com', :nick => '', :openid => '')
+    u4.nick.should_not be_nil
+    u4.openid.should_not be_nil
+    u4.should be_valid
+    u4.save!
+  end
 end
