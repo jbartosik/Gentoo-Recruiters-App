@@ -13,5 +13,5 @@
 #   You should have received a copy of the GNU Affero General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module RichTypes
-  Role = HoboFields::EnumString.for(:recruit, :mentor, :recruiter)
+  Role = HoboFields::EnumString.for(:recruit, :mentor, :developer, :recruiter)
 end

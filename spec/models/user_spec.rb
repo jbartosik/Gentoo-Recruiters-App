@@ -70,24 +70,19 @@ describe User do
     end
   end
 
-  it "should allow recruiter to promote recruits to mentors" do
-    recruit       = Factory(:recruit)
-    recruit.role  = :mentor
-    for user in [Factory(:recruiter), Factory(:administrator)]
-      recruit.should be_updatable_by(user)
-      recruit.should be_editable_by(user, :role)
+  it "should allow recruiter to change roles between recruit, developer and mentor" do
+    allowed_roles = [:recruit, :developer, :mentor]
+    for old_role in allowed_roles
+      for new_role in allowed_roles
+        user = Factory(old_role)
+        user.role  = new_role
+        for user in [Factory(:recruiter), Factory(:administrator)]
+          user.should be_updatable_by(user)
+          user.should be_editable_by(user, :role)
+        end
+      end
     end
   end
-
-  it "should allow recruiter to demote mentors to recruits" do
-    recruit       = Factory(:mentor)
-    recruit.role  = :recruit
-    for user in [Factory(:recruiter), Factory(:administrator)]
-      recruit.should be_updatable_by(user)
-      recruit.should be_editable_by(user, :role)
-    end
-  end
-
 
   it "should return proper all_questions" do
     r = recruit_with_answered_and_unanswered_questions

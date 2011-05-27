@@ -231,9 +231,8 @@ class User < ActiveRecord::Base
       # and make sure change to role wasn't changed or was promotion of recruit
       # to mentor or demotion of mentor to recruit
       return true unless role_changed?
-      return true if role.is_mentor? && RichTypes::Role.new(role_was).is_recruit?
-      return true if role.is_recruit? && RichTypes::Role.new(role_was).is_mentor?
-
+      changable = [RichTypes::Role.new(:recruit), RichTypes::Role.new(:developer), RichTypes::Role.new(:mentor)]
+      return true if changable.include?(RichTypes::Role.new(role)) and changable.include?(RichTypes::Role.new(role_was))
       false
     end
 

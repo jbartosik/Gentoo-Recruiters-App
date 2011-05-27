@@ -5,6 +5,13 @@
     u.mentor        { Factory(:mentor) }
   end
 
+  Factory.define :developer, :class => User do |u|
+    u.sequence(:name) { |n| "developer-#{n}" }
+    u.email_address { |u| "#{u.name}@developers.org" }
+    u.role          :developer
+    u.nick          { |u| u.name }
+  end
+
   Factory.define :mentor, :class => User do |u|
     u.sequence(:name) { |n| "mentor-#{n}" }
     u.email_address { |u| "#{u.name}@recruiters.org" }
