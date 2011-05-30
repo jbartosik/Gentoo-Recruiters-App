@@ -33,3 +33,16 @@ Feature: Answering text question
     And I fill in "Some question." for "question_content_text[content]"
     And press "Save"
     Then I should see "Changes to the question content text were saved" within ".flash.notice"
+
+  Scenario: See question content when creating new answer
+    Given text content "some question" for question "question"
+    And I am logged in as "recruit"
+    When I am on show "question" question page
+    And I follow "Answer it!"
+    Then I should see "fake" as question content
+
+  Scenario: See question content when editing answer
+    Given answer of "recruit" for question "example question"
+    And I am logged in as "recruit"
+    When I am on answer of "recruit" for question "example question" page
+    Then I should see "fake" as question content

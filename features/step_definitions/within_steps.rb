@@ -1,5 +1,6 @@
 {
-  'as a role' => '.role-tag.view.user-role'
+  'as a role' => '.role-tag.view.user-role',
+  'as question content' => '.view.question-content'
 }.
 each do |within, selector|
   Then /^I should( not)? see "([^"]*)" #{within}$/ do |negation, text|
