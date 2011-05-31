@@ -101,3 +101,10 @@ Feature: Clean UI
     Then I should see "Enter one requirement per line."
     And I should see "Each requirement should be 'Field : regexp to match' (including spaces around colon)."
     And I should see "If you want to use colon in field and regexp then escape it with backslash."
+
+  Scenario: Don't show '(Not Available)' on the answer page
+    Given a question "question"
+    And "recruit" answered question "question"
+    When I am logged in as "recruit"
+    And I am on answer of "recruit" for question "question" page
+    Then I should not see "(Not Available)"

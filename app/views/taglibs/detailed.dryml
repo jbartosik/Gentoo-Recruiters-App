@@ -31,7 +31,7 @@
   </div>
 
   <with:question.reference_answer param="reference-answer">
-    <card if="&can_view?">
+    <card if="& this and can_view?">
       <header:>
         <h5>Reference answer:</h5>
       </header:>
