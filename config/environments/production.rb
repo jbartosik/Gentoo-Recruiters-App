@@ -24,5 +24,12 @@ config.action_view.cache_template_loading            = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
+# We care about email errors
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.delivery_method = :sendmail
+config.action_mailer.sendmail_settings = { :location => '/usr/sbin/sendmail', :arguments => '-i -t -f recruiters@gentoo.org' }
+# Real hosting location
+config.action_mailer.default_url_options = { :host => 'recruiting.gentoo.org' }
+
 # Enable threaded mode
 # config.threadsafe!
