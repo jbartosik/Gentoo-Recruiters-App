@@ -2,7 +2,7 @@
 </def>
 
 <def tag="home-page" for="Guest">
-  Hello. Your not currently logged in. Feel free to browse publicly available resources.
+  Hello. You're not currently logged in. Feel free to browse the publicly available resources.
 </def>
 
 <def tag="home-page" for="User">
