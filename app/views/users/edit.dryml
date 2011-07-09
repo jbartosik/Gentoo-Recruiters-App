@@ -1,4 +1,13 @@
-<edit-page if="&current_user.valid?" />
+<edit-page if="&current_user.valid?">
+  <prepend-content-body:>
+    <div if="&can_edit?(:mentor)">
+      If you want to start or stop mentoring this recruit go back to <a>show page for this user</a> and click 'Start/Stop mentoring this recruit' button.
+    </div>
+    <else>
+      You can not change mentor for this user (possible reasons are: you're not logged in, you don't have mentor role, someone else is mentor for this user).
+    </else>
+  </prepend-content-body:>
+</edit-page>
 <else>
   <edit-page>
     <body:>

@@ -108,3 +108,20 @@ Feature: Clean UI
     When I am logged in as "recruit"
     And I am on answer of "recruit" for question "question" page
     Then I should not see "(Not Available)"
+
+  Scenario: Show message telling how to start mentoring recruit on user edit page
+    Given I am logged in as "mentor" who is "mentor"
+    And user "recruit" who is "recruit"
+    Then I should see instructions on becoming mentor for "recruit"
+
+  Scenario: Show message telling how to start mentoring recruit on user edit page
+    Given user "recruit" who is "recruit"
+    Then I should see explanation that I can't become mentor for "recruit"
+
+    Given I am logged in as "recruit2" who is "recruit"
+    Then I should see explanation that I can't become mentor for "recruit"
+
+    When I follow "Log out"
+    Given I am logged in as "mentor" who is "mentor"
+    And user "mentor2" is mentor of "recruit"
+    Then I should see explanation that I can't become mentor for "recruit"
