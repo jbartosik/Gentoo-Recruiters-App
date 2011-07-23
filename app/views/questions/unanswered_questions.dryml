@@ -1,4 +1,5 @@
 <index-page>
+  <count:></count:>
   <content-body:>
     <repeat with="&current_user.unanswered_questions">
       <card/>
