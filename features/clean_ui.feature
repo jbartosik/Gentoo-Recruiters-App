@@ -125,3 +125,10 @@ Feature: Clean UI
     Given I am logged in as "mentor" who is "mentor"
     And user "mentor2" is mentor of "recruit"
     Then I should see explanation that I can't become mentor for "recruit"
+
+
+  Scenario: Don't show "recruit this recruit" button on non-recruit pages
+    Given I am logged in as "recruiter" who is "recruiter"
+    And user "recruiter2" who is "recruiter"
+    When I am on show "recruiter2" user page
+    Then I should not see tag <input class="button submit-button" type="submit" value="Start mentoring this recruit">

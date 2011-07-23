@@ -15,7 +15,7 @@
       <actions:><submit label="This recruit needs your acceptance"/></actions:>
     </form>
 
-    <if test="&this.editable_by?(current_user, :mentor)">
+    <if test="&this.editable_by?(current_user, :mentor) and this.role.is_recruit?">
       <form if="&this.mentor.nil?">
         <input value="&current_user.id" type="hidden" name="user[mentor_id]"/>
         <submit label="Start mentoring this recruit"/>
