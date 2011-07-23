@@ -43,3 +43,19 @@ Feature: Viewing question listings
     Then I should see "q3"
     And I should not see following:
       |q1|q2|
+
+
+  Scenario: On user page show links to answers
+    Given I am logged in as "recruiter" who is "recruiter"
+    And following questions:
+      |q1|cat1|
+      |q2|cat1|
+    And user "recruit" has category "cat1"
+    And answer of "recruit" for question "q1"
+
+    When I am on show "recruit" user page
+    And I follow "Questions user should answer"
+    And I follow "view answer"
+
+    Then I should be on answer of "recruit" for question "q1" page
+

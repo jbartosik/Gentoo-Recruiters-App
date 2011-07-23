@@ -2,8 +2,8 @@
   <card class="question" param="default" merge>
     <header: param>
       <h4 param="heading"><a><name/></a></h4>
-      <if with="&this.answered?(user || current_user)">
-        answered
+      <if test="&this.answered?(user || current_user)">
+        answered (<a with="&this.answer_of(user || current_user)">view answer</a>)
       </if>
     </header:>
   </card>
