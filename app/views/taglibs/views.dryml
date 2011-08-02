@@ -10,7 +10,7 @@
   <%= this.content.to_html %>
   <ul>
     <repeat:options>
-      <li><%=this.content%></li>
+      <li><%= h this.content%></li>
     </repeat>
   </ul>
 </def>

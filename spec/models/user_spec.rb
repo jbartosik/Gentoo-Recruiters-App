@@ -8,6 +8,11 @@ describe User do
     new_user.role.should  == :recruit
   end
 
+  it "should escape emails" do
+    u = User.new :email_address => "<script>alert('foo')<script>@foo.com"
+    u.email_address.to_html.should == "&lt;script&gt;alert('foo')&lt;script&gt; at foo dot com"
+  end
+
   it { should allow_value(:mentor).for(:role) }
   it { should allow_value(:recruiter).for(:role) }
 
