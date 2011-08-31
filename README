@@ -58,3 +58,12 @@ There is example of this file in doc/config/config.yml.
 Seed
 
 If you want to edit seed remember you can use erb in db/fixtures/*.yml files.
+
+*******************************************************************************
+Possible problems
+
+* If
+
+    rake db:schema:load
+
+task fails due to database not accepting schema make sure you are not using MySQL in traditional mode.
