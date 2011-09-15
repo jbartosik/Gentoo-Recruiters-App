@@ -5,6 +5,8 @@ defaults: &defaults
     min_months_mentor_is_dev: 6
   seed:
     users_domain:               example.com
+  notifications:
+    new_user:                 recruiting@gentoo.org
 development:
   <<: *defaults
 production:

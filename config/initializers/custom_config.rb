@@ -1,7 +1,8 @@
 begin
   if Rails.env.test? || Rails.env.cucumber?
     # Tests must be run in known environment
-    APP_CONFIG = { 'developer_data' => { 'check' => false } }
+    APP_CONFIG = { 'developer_data' => { 'check' => false },
+                    'notifications' => { 'new_user' => 'example@example.com' } }
   else
     APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
   end
@@ -63,6 +64,12 @@ if APP_CONFIG['developer_data'].try['check']
   checker.config_must_have('min_months_mentor_is_dev')
   checker.config_must_have_one_of(['uri', 'data'])
 end
+
+checker = ConfigChecker.new(APP_CONFIG)
+checker.config_must_have('notifications',  Hash)
+checker.config = APP_CONFIG['notifications']
+checker.key_prefix  = 'notifications/'
+checker.config_must_have('new_user',  String)
 
 unless checker.errors.empty?
   puts "Error(s) while checking configuration:"

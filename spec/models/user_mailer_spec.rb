@@ -47,6 +47,17 @@ describe UserMailer do
     notification.should have_subject('New comment')
   end
 
+  it "should prepare proper new user notification" do
+    user         = Factory(:recruit)
+    to_address   = 'example@example.com'
+    notification = UserMailer.create_new_user(to_address, user)
+    notification.should deliver_to(to_address)
+    notification.should deliver_from("no-reply@localhost")
+    notification.should have_text(/A new user #{user.name} just signed up, profile of new user is:/)
+    notification.should have_text(/http:\/\/localhost:3000\/users\/#{user.id}/)
+    notification.should have_subject('New user')
+  end
+
   it "should prepare proper unrecognized message email" do
     user          = Factory(:recruit)
     mail          = TMail::Mail.new

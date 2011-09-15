@@ -378,4 +378,9 @@ describe User do
     u4.should be_valid
     u4.save!
   end
+
+  it "should notify recruiters when new user registers" do
+    UserMailer.should_receive_delayed(:deliver_new_answer)
+    user = Factory(:recruit, :mentor => nil)
+  end
 end

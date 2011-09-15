@@ -54,6 +54,12 @@ class UserMailer < ActionMailer::Base
     @body = { :question_title=> question_title(comment.answer), :id => comment.answer.id }
   end
 
+  def new_user(to, new_user)
+    user = User.new :email_address => to
+    common(user, "New user")
+    @body = { :name => new_user.name, :id => new_user.id }
+  end
+
   def unrecognized_email(user, email)
     common(user, "Your email sent to #{@app_name} wasn't recognized")
 

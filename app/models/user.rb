@@ -206,6 +206,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  after_create do |user|
+    # Notify configured email about new user
+    to_address = APP_CONFIG['notifications']['new_user']
+    to_address_provided = !(to_address.nil? or to_address.empty?)
+    UserMailer.delay.deliver_new_answer(to_address, user) if to_address_provided
+  end
+
   protected
 
     def only_recruiter_can_be_administrator
