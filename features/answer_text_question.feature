@@ -39,7 +39,7 @@ Feature: Answering text question
     And I am logged in as "recruit"
     When I am on show "question" question page
     And I follow "Answer it!"
-    Then I should see "fake" as question content
+    Then I should see "some question" as question content
 
   Scenario: See question content when editing answer
     Given answer of "recruit" for question "example question"
@@ -49,8 +49,7 @@ Feature: Answering text question
 
   Scenario: See question when answering
     Given I am logged in as "recruit"
-    And a question "question content" in category "category"
-    And text content "some question" for question "question"
+    And text content "some question content" for question "question"
     When I am on show "question" question page
     And I follow "Answer it!"
-    Then I should see "question content"
+    Then I should see "some question content"
