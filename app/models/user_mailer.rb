@@ -27,7 +27,9 @@ class UserMailer < ActionMailer::Base
 
   def forgot_password(user, key)
     common(user, "#{@app_name} -- forgotten password")
-    @body = { :user => user, :key => key, :app_name => app_name }
+    @body = { :user => user, :key => key, :app_name => @app_name,
+              :host => default_url_options[:host],
+              :port => default_url_options[:port] }
   end
 
   def new_question(user, question)

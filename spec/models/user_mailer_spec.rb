@@ -66,4 +66,14 @@ describe UserMailer do
     # don't test rest of the message
     notification.should have_text(/If you are answering question check if your message has proper subject./)
   end
+
+  it "should prepare proper forgotten password email" do
+    user = Factory(:recruit)
+
+    notification = UserMailer.create_forgot_password(user, user.lifecycle.key)
+
+    notification.should deliver_to(user.email_address)
+    notification.should deliver_from("no-reply@localhost")
+    notification.should have_subject("#{@app_name} -- forgotten password")
+  end
 end
