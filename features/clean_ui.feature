@@ -143,3 +143,8 @@ Feature: Clean UI
     When I am on unanswered questions page
     Then I should not see /There are \d+/
 
+  Scenario: Let users know that they should use markdown
+    Given I am logged in as "recruit" who is "recruit"
+    And a question "question"
+    When I am on answer "question" question page
+    Then I should see "You can use markdown in your answer." as hint

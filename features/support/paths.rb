@@ -53,6 +53,9 @@ module NavigationHelpers
     when /show "([^\"]*)" question page/
       question_path(Question.find_by_title($1))
 
+    when /answer "([^\"]*)" question page/
+      new_answer_for_question_path(Question.find_by_title($1))
+
     when /new email question content for "([^\"]*)" page/
       new_question_content_email_for_question_path(Question.find_by_title($1))
     # Add more mappings here.
