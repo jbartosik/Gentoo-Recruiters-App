@@ -5,6 +5,7 @@
       # but result is always posted to AnswersController#update
       # so action must be specified explicitly
     %>
+    <h5>Question:</h5>  <view:question.content/>
     <form action="&update_answer_path(this.id)" method="PUT"/>
   </content-body:>
 </edit-page>
