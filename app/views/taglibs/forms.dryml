@@ -47,5 +47,29 @@
     <div param="actions">
       <submit label="#{ht 'question_content_emails.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>
+    <after-submit uri="#{'/questions/' + QuestionContentEmail.find(params[:id]).question_id.to_s if not params[:id].nil?}"/>
   </form>
+</def>
+
+<def tag="form" for="QuestionContentMultipleChoice">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="content, options, question" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_content_multiple_choices.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+    <after-submit uri="#{'/questions/' + QuestionContentMultipleChoice.find(params[:id]).question_id.to_s if not params[:id].nil?}"/>
+  </form>
+</def>
+
+<def tag="form" for="QuestionContentText">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="content, question" param/>
+    <div param="actions">
+      <submit label="#{ht 'question_content_texts.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+    <after-submit uri="#{'/questions/' + QuestionContentText.find(params[:id]).question_id.to_s if not params[:id].nil?}"/>
+  </form>
+
 </def>
