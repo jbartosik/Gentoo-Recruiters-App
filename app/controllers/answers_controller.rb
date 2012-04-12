@@ -15,8 +15,7 @@
 class AnswersController < ApplicationController
 
   hobo_model_controller
-
-  auto_actions      :all, :except => [:index, :new]
+  auto_actions      :all, :except => [:index, :new, :show]
   auto_actions_for  :question, :new
   index_action      :my_recruits, :my_recruits_cat
 
@@ -30,5 +29,24 @@ class AnswersController < ApplicationController
     # This creates answer with type deduced from params
     # (as opposed answer with type Answer)
     hobo_create Answer.new_from params
+  end
+
+  def show
+    owner_id = Answer.find(params[:id]).owner_id
+    answers = Answer.find_all_by_owner_id(owner_id)
+    answer_id = answers.index{|x| x.id==params[:id].to_i}
+    user  = User.find(owner_id)
+    redirect_to "/users/#{user.id}-#{user.name.gsub(' ','-')}/answer/#{answer_id}"
+  end
+  def show_answer
+     owner_id = (params[:user]).match(/\d+/)[0]
+     if (not owner_id.nil?)
+       answers = Answer.find_all_by_owner_id(owner_id)
+       answer = answers[params[:answer_id].to_i]
+       raise Exception if answers.nil? or answer.nil?
+       params[:id] = answer.id
+       hobo_show
+     else raise Exception
+     end
   end
 end

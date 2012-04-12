@@ -5,6 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.openid_login_users 'users/openid_login', :controller => 'users', :action => 'openid_login', :conditions => {:method => :get}
   map.complete_openid_users 'users/complete_openid', :controller => 'users', :action => 'complete_openid', :conditions => {:method => :get}
+  map.show_answers '/users/:user/answer/:answer_id',:controller => 'answers', :action => 'show_answer',
+                                      :user => ':user',:answer_id=>':answer_id'
 
   Hobo.add_routes(map)
 

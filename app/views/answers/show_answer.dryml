@@ -1,0 +1,7 @@
+<show-page>
+  <content-body:>
+    <detailed/>
+    <collection:comments/>
+    <a href="&new_comment_for_answer_path(this.id)" if="&this.owner.mentor_is?(current_user)">Comment this answer</a>
+  </content-body:>
+</show-page>

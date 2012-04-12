@@ -73,3 +73,37 @@
 
   </section>
 </def>
+
+<def tag="show-page" for="Answer">
+  <page merge title="#{ht 'answers.show.title', :default=>['Answer'] }">
+
+    <body: class="show-page answer" param/>
+
+    <content: param>
+          <header param="content-header">
+            <h2 param="heading">
+              <ht key="answers.show.heading" name="&this.respond_to?(:name) ? this.name : ''">
+                <a with="Answer #{params[:answer_id]}"/>
+              </ht>
+            </h2>
+
+            <record-flags fields="approved, reference, correct" param/>
+
+            <a:owner param="creator-link"/>
+
+            <a action="edit" if="&can_edit?" param="edit-link">
+              <ht key="answers.actions.edit" name="&this.respond_to?(:name) ? this.name : ''">
+                Edit Answer
+              </ht>
+            </a>
+          </header>
+
+          <section param="content-body">
+            <view:content param="description"/>
+            <field-list fields="feedback, question" param/>
+          </section>
+    </content:>
+
+  </page>
+</def>
+
